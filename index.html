@@ -263,6 +263,23 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .cat-opt{border:1.5px solid var(--border);border-radius:var(--r-md);padding:8px 6px;text-align:center;font-size:12px;font-weight:500;cursor:pointer;transition:all .12s;background:none;font-family:var(--font-sans);color:var(--text-2);}
 .cat-opt:hover{border-color:var(--border-2);color:var(--text-1);}
 .cat-opt.selected{border-color:var(--blue);background:var(--blue-dim);color:var(--blue);}
+/* ACADEMIA DETAIL */
+.academia-detail-wrap{max-width:700px;margin:0 auto;}
+.academia-detail-banner{height:100px;border-radius:var(--r-lg);margin-bottom:-32px;display:flex;align-items:flex-end;padding:14px 18px;}
+.academia-detail-top{display:flex;align-items:flex-end;justify-content:space-between;padding:0 4px;margin-bottom:14px;}
+.academia-detail-logo{width:64px;height:64px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;border:3px solid var(--white);flex-shrink:0;}
+.academia-detail-name{font-family:var(--font-serif);font-size:22px;margin-bottom:2px;}
+.academia-detail-loc{font-size:13px;color:var(--text-3);margin-bottom:12px;}
+.academia-detail-desc{font-size:13.5px;color:var(--text-2);line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.contact-row{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.contact-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);}
+.contact-icon{width:32px;height:32px;border-radius:var(--r-sm);background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.contact-link{color:var(--blue);text-decoration:none;}
+.contact-link:hover{text-decoration:underline;}
+.pending-badge{display:inline-flex;align-items:center;gap:5px;background:var(--amber-dim);color:var(--amber);border-radius:var(--r-pill);padding:4px 12px;font-size:11px;font-weight:500;margin-bottom:14px;}
+.verified-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-dim);color:var(--teal);border-radius:var(--r-pill);padding:4px 12px;font-size:11px;font-weight:500;margin-bottom:14px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--text-3);font-size:13px;font-family:var(--font-sans);cursor:pointer;margin-bottom:20px;padding:0;}
+.back-btn:hover{color:var(--text-1);}
 </style>
 </head>
 <body>
@@ -338,6 +355,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
       <div class="nav-sep"></div>
       <div class="nav-label">Directorio</div>
       <button class="nav-btn" id="nav-academias" onclick="switchTab('academias')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1L1 5l7 4 7-4-7-4z"/><path d="M1 10l7 4 7-4"/><path d="M1 7.5l7 4 7-4"/></svg></span>Academias</button>
+      <button class="nav-btn" id="nav-academia-detail" style="display:none;"></button>
       <button class="nav-btn" id="nav-olimpiadas" onclick="switchTab('olimpiadas')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="4"/><path d="M4 9l-2 5h12l-2-5"/></svg></span>Olimpiadas</button>
       <div class="nav-sep"></div>
       <button class="nav-btn" id="nav-mensajes" onclick="switchTab('mensajes')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12a1 1 0 011 1v7a1 1 0 01-1 1H5l-3 2V4a1 1 0 011-1z"/></svg></span>Mensajes</button>
@@ -389,6 +407,11 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
         </div>
       </div>
 
+      <!-- ACADEMIA DETALLE -->
+      <div id="tab-academia-detail" class="tab">
+        <div class="academia-detail-wrap" id="academiaDetailContent"></div>
+      </div>
+
       <!-- OLIMPIADAS -->
       <div id="tab-olimpiadas" class="tab">
         <div class="olimpiadas-wrap">
@@ -419,8 +442,13 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
       <div id="tab-cuenta" class="tab">
         <div class="profile-wrap">
           <div class="profile-banner"></div>
-          <div class="profile-top"><div class="profile-av" id="profileAv">S</div><button class="btn btn-ghost btn-sm" style="margin-bottom:8px;">editar perfil</button></div>
-          <div class="profile-name" id="profileName">…</div>
+          <div class="profile-top">
+            <div class="profile-av" id="profileAv">S</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;">
+            <div class="profile-name" id="profileName">…</div>
+            <button class="btn btn-ghost btn-sm" onclick="openEditProfile()">editar perfil</button>
+          </div>
           <div class="profile-handle" id="profileHandle">…</div>
           <div class="profile-bio" id="profileBio">Matemático olímpico en Zeta.</div>
           <div class="profile-stats">
@@ -429,10 +457,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
             <div><div class="pstat-num" id="myFollowing">0</div><div class="pstat-label">siguiendo</div></div>
             <div><div class="pstat-num" id="myPoints">0</div><div class="pstat-label">puntos</div></div>
           </div>
-          <div class="badge-row">
-            <span class="badge"><span style="color:var(--blue)">◆</span> IPMO Bronze 2025</span>
-            <span class="badge"><span style="color:var(--purple)">◆</span> OMA Mención Especial</span>
-          </div>
+          <div class="badge-row" id="myBadges"></div>
         </div>
       </div>
 
@@ -480,21 +505,60 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('newAcademiaModal')">✕</button>
     <div class="modal-title">Agregar academia</div>
-    <div class="modal-sub">Sumá un centro de preparación olímpica.</div>
+    <div class="modal-sub">Sumá un centro de preparación olímpica. Será revisada antes de mostrarse públicamente.</div>
     <div style="display:flex;flex-direction:column;gap:14px;">
       <div class="field" id="fa-name"><label class="label">Nombre *</label><input class="input" id="ac-name" type="text" placeholder="Centro Matemático Avanzado"/><span class="field-error">Campo requerido.</span></div>
       <div class="field"><label class="label">Siglas</label><input class="input" id="ac-logo" type="text" placeholder="CMA" maxlength="4"/></div>
       <div class="field" id="fa-loc"><label class="label">Ubicación *</label><input class="input" id="ac-loc" type="text" placeholder="Palermo, Buenos Aires"/><span class="field-error">Campo requerido.</span></div>
-      <div class="field"><label class="label">Descripción</label><textarea class="input" id="ac-desc" placeholder="¿Qué ofrece? ¿Nivel?" style="min-height:64px;"></textarea></div>
+      <div class="field"><label class="label">Descripción</label><textarea class="input" id="ac-desc" placeholder="¿Qué ofrece? ¿Qué nivel? ¿Cuántos estudiantes?" style="min-height:64px;"></textarea></div>
+      <div class="field"><label class="label">Email de contacto</label><input class="input" id="ac-email" type="email" placeholder="contacto@academia.com"/></div>
+      <div class="field"><label class="label">Teléfono / WhatsApp</label><input class="input" id="ac-phone" type="text" placeholder="+54 11 1234-5678"/></div>
+      <div class="field"><label class="label">Sitio web</label><input class="input" id="ac-web" type="url" placeholder="https://academia.com"/></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button class="btn btn-ghost" onclick="closeModal('newAcademiaModal')">Cancelar</button>
-        <button class="btn btn-solid" id="academiaBtn" onclick="publishAcademia()">Agregar</button>
+        <button class="btn btn-solid" id="academiaBtn" onclick="publishAcademia()">Enviar para revisión</button>
       </div>
     </div>
   </div>
 </div>
 
 <div id="toast"></div>
+
+<!-- MODAL: EDITAR PERFIL -->
+<div class="modal-backdrop" id="editProfileModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('editProfileModal')">✕</button>
+    <div class="modal-title">Editar perfil</div>
+    <div class="modal-sub">Actualizá tu información pública.</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field"><label class="label">Nombre completo</label><input class="input" id="ep-name" type="text" placeholder="Santiago García"/></div>
+      <div class="field"><label class="label">Usuario</label><input class="input" id="ep-handle" type="text" placeholder="santiago"/></div>
+      <div class="field"><label class="label">País</label><input class="input" id="ep-country" type="text" placeholder="Argentina"/></div>
+      <div class="field"><label class="label">Bio</label><textarea class="input" id="ep-bio" placeholder="Contá algo sobre vos…" style="min-height:72px;"></textarea></div>
+      <div class="field">
+        <label class="label">Medallas / logros</label>
+        <input class="input" id="ep-badges" type="text" placeholder="IMO Plata 2024, OMA Oro, USAMO…"/>
+        <span style="font-size:11px;color:var(--text-3);margin-top:3px;">Separalos con comas. Serán revisados por el equipo de Zeta.</span>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn btn-ghost" onclick="closeModal('editProfileModal')">Cancelar</button>
+        <button class="btn btn-solid" id="saveProfileBtn" onclick="saveProfile()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONFIRMAR BORRADO -->
+<div class="modal-backdrop" id="confirmDeleteModal">
+  <div class="modal" style="max-width:360px;">
+    <div class="modal-title" style="font-size:18px;">¿Estás seguro?</div>
+    <div style="font-size:13px;color:var(--text-2);margin:8px 0 24px;">Esta acción no se puede deshacer.</div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeModal('confirmDeleteModal')">Cancelar</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn">Borrar</button>
+    </div>
+  </div>
+</div>
 
 <!-- FIREBASE SDK -->
 <script type="module">
@@ -504,7 +568,8 @@ import { getAuth, createUserWithEmailAndPassword,
          onAuthStateChanged, updateProfile }          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs,
          onSnapshot, query, orderBy, serverTimestamp,
-         doc, updateDoc, getDoc, setDoc, increment }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+         doc, updateDoc, getDoc, setDoc, increment,
+         deleteDoc }                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* ── CONFIG ── */
 const firebaseConfig = {
@@ -538,6 +603,14 @@ const catMeta  = {
   geometria:     { label:'Geometría',     cls:'tag-teal',   av:'av-teal'   },
   otro:          { label:'Otro',          cls:'tag-blue',   av:'av-blue'   },
 };
+
+/* ── SAFETY TIMEOUT ── */
+setTimeout(() => {
+  if (document.getElementById('loadingScreen').style.display !== 'none') {
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('auth-screen').style.display   = 'flex';
+  }
+}, 5000);
 
 /* ── AUTH STATE LISTENER ── */
 onAuthStateChanged(auth, async user => {
@@ -587,9 +660,19 @@ function updateUIUser() {
   document.getElementById('chipAv').textContent      = initials;
   document.getElementById('chipName').textContent    = userProfile.handle || '…';
   document.getElementById('profileAv').textContent   = initials;
-  document.getElementById('profileName').textContent = userProfile.name;
-  document.getElementById('profileHandle').textContent = `@${userProfile.handle} · ${userProfile.country || 'Argentina'}`;
+  document.getElementById('profileName').textContent = userProfile.name || '…';
+  document.getElementById('profileHandle').textContent = `@${userProfile.handle||'…'} · ${userProfile.country || 'Argentina'}`;
+  document.getElementById('profileBio').textContent  = userProfile.bio || 'Matemático olímpico en Zeta.';
   ['pav1','pav2','pav3'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = initials; });
+
+  // badges
+  const badgeRow = document.getElementById('myBadges');
+  if (badgeRow && userProfile.badges?.length) {
+    const colors = ['var(--blue)','var(--purple)','var(--teal)','var(--amber)'];
+    badgeRow.innerHTML = userProfile.badges.map((b,i) =>
+      `<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)}</span>`
+    ).join('');
+  }
 }
 
 /* ── AUTH ── */
@@ -763,12 +846,13 @@ function loadMessages() {
       const init = (m.fromName || 'U').charAt(0).toUpperCase();
       const av   = avColors[Math.abs(hashStr(m.fromHandle||'')) % avColors.length];
       const ts   = m.createdAt?.toDate ? timeAgo(m.createdAt.toDate()) : 'ahora';
-      return `<div class="msg-row">
+      return `<div class="msg-row" style="position:relative;">
         <div class="av ${av} av-40">${init}</div>
         <div class="msg-info"><div class="msg-name">${m.fromHandle||'usuario'}</div><div class="msg-prev">${escHtml(m.preview||'')}</div></div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
           <span class="msg-time">${ts}</span>
           ${m.read ? '' : '<div class="msg-dot"></div>'}
+          <button onclick="event.stopPropagation();deleteMessage('${m.id}')" style="font-size:11px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;" title="Borrar">🗑</button>
         </div>
       </div>`;
     }).join('');
@@ -885,48 +969,85 @@ window.publishPost = async () => {
 
 /* ── ACADEMIAS ── */
 async function loadAcademias() {
-  const snap = await getDocs(collection(db, 'academias'));
-  const academias = snap.docs.map(d => ({id:d.id,...d.data()}));
-
-  // Si no hay ninguna, cargar las de ejemplo
-  if (academias.length === 0) {
-    const defaults = [
-      { name:'Olimpíada Matemática Argentina', logo:'OMA', loc:'Buenos Aires, Argentina', stats:'★★★★★ · 340 estudiantes', color:'av-blue' },
-      { name:'Centro de Matemática Avanzada',  logo:'CMA', loc:'Palermo, Buenos Aires',   stats:'★★★★☆ · 120 estudiantes', color:'av-purple' },
-      { name:'IMPA',                            logo:'IMPA',loc:'Río de Janeiro, Brasil',  stats:'★★★★★ · 800+ estudiantes', color:'av-teal' },
-    ];
-    for (const a of defaults) await addDoc(collection(db,'academias'), {...a, createdAt: serverTimestamp()});
-    renderAcademias(defaults);
-  } else {
+  try {
+    const snap = await getDocs(collection(db, 'academias'));
+    const academias = snap.docs.map(d => ({id:d.id,...d.data()}));
     renderAcademias(academias);
+  } catch(e) {
+    console.warn('loadAcademias:', e);
+    renderAcademias([]);
   }
 }
 
 function renderAcademias(academias) {
   const list = document.getElementById('academiaList');
-  list.innerHTML = academias.map((a,i) => `
-    <div class="card academia-card">
+  if (academias.length === 0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">⊙</div><div class="empty-text">No hay academias todavía. ¡Agregá la primera!</div></div>`;
+    return;
+  }
+  list.innerHTML = academias.map((a,i) => {
+    const isOwn = currentUser && a.submittedBy === currentUser.uid;
+    return `<div class="card academia-card" style="cursor:pointer;" onclick="openAcademiaDetail(${JSON.stringify(a).replace(/"/g,'&quot;')})">
       <div class="academia-logo ${a.color||avColors[i%avColors.length]}">${a.logo}</div>
       <div class="academia-info">
-        <div class="academia-name">${a.name}</div>
+        <div class="academia-name">${a.name} ${a.verified ? '<span style="color:var(--teal);font-size:11px;">✓ verificada</span>' : '<span style="color:var(--amber);font-size:11px;">· pendiente</span>'}</div>
         <div class="academia-loc">${a.loc}</div>
-        <div class="academia-stats">${a.stats}</div>
+        <div class="academia-stats">${a.stats||a.desc||''}</div>
       </div>
-      <button class="btn-follow" onclick="toggleFollow(this)">seguir</button>
-    </div>`).join('');
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+        <button class="btn-follow" onclick="event.stopPropagation();toggleFollow(this)">seguir</button>
+        ${isOwn ? `<button onclick="event.stopPropagation();deleteAcademia('${a.id}')" style="font-size:11px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;" title="Borrar">🗑 borrar</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
 }
+
+window.openAcademiaDetail = (a) => {
+  const av    = a.color || 'av-blue';
+  const bgMap = { 'av-blue':'var(--blue-dim)', 'av-purple':'var(--purple-dim)', 'av-teal':'var(--teal-dim)', 'av-amber':'var(--amber-dim)' };
+  const bg    = bgMap[av] || 'var(--blue-dim)';
+
+  document.getElementById('academiaDetailContent').innerHTML = `
+    <button class="back-btn" onclick="switchTab('academias')">← Volver a academias</button>
+    <div class="academia-detail-banner" style="background:${bg};"></div>
+    <div class="academia-detail-top">
+      <div class="academia-detail-logo ${av}">${a.logo}</div>
+      <button class="btn-follow" onclick="toggleFollow(this)">seguir</button>
+    </div>
+    <div class="academia-detail-name">${a.name}</div>
+    <div class="academia-detail-loc">📍 ${a.loc}</div>
+    ${a.verified
+      ? `<div class="verified-badge">✓ Academia verificada por Zeta</div>`
+      : `<div class="pending-badge">⏳ Pendiente de verificación</div>`}
+    <div class="academia-detail-desc">${a.desc || a.stats || 'Sin descripción.'}</div>
+    <div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Contacto</div>
+    <div class="contact-row">
+      ${a.email ? `<div class="contact-item"><div class="contact-icon">✉</div><a class="contact-link" href="mailto:${a.email}">${a.email}</a></div>` : ''}
+      ${a.phone ? `<div class="contact-item"><div class="contact-icon">📱</div><span>${a.phone}</span></div>` : ''}
+      ${a.web   ? `<div class="contact-item"><div class="contact-icon">🌐</div><a class="contact-link" href="${a.web}" target="_blank" rel="noopener">${a.web}</a></div>` : ''}
+      ${!a.email && !a.phone && !a.web ? `<div style="color:var(--text-3);font-size:13px;">No se proporcionó información de contacto.</div>` : ''}
+    </div>`;
+
+  // Switch to detail tab without touching sidebar
+  document.querySelectorAll('.tab').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-academia-detail').classList.add('active');
+};
 
 window.openNewAcademia = () => {
   openModal('newAcademiaModal');
-  ['ac-name','ac-logo','ac-loc','ac-desc'].forEach(id => { document.getElementById(id).value=''; });
+  ['ac-name','ac-logo','ac-loc','ac-desc','ac-email','ac-phone','ac-web'].forEach(id => { document.getElementById(id).value=''; });
   ['fa-name','fa-loc'].forEach(id => document.getElementById(id).classList.remove('has-error'));
 };
 
 window.publishAcademia = async () => {
-  const name = document.getElementById('ac-name').value.trim();
-  const logo = document.getElementById('ac-logo').value.trim() || name.slice(0,3).toUpperCase();
-  const loc  = document.getElementById('ac-loc').value.trim();
-  const desc = document.getElementById('ac-desc').value.trim() || 'Academia de matemáticas';
+  const name  = document.getElementById('ac-name').value.trim();
+  const logo  = document.getElementById('ac-logo').value.trim() || name.slice(0,3).toUpperCase();
+  const loc   = document.getElementById('ac-loc').value.trim();
+  const desc  = document.getElementById('ac-desc').value.trim();
+  const email = document.getElementById('ac-email').value.trim();
+  const phone = document.getElementById('ac-phone').value.trim();
+  const web   = document.getElementById('ac-web').value.trim();
+
   document.getElementById('fa-name').classList.toggle('has-error', !name);
   document.getElementById('fa-loc').classList.toggle('has-error', !loc);
   if (!name || !loc) return;
@@ -938,17 +1059,20 @@ window.publishAcademia = async () => {
   try {
     const colorIdx = (await getDocs(collection(db,'academias'))).size % avColors.length;
     await addDoc(collection(db,'academias'), {
-      name, logo, loc, stats: desc,
+      name, logo, loc, desc, email, phone, web,
+      stats: desc,
       color: avColors[colorIdx],
+      verified: false,          // admin tiene que aprobarla
+      submittedBy: currentUser.uid,
       createdAt: serverTimestamp()
     });
     closeModal('newAcademiaModal');
     loadAcademias();
-    toast('✓ Academia agregada');
+    toast('✓ Academia enviada — la revisaremos pronto');
   } catch {
     toast('Error al guardar. Intentá de nuevo.');
   } finally {
-    btn.innerHTML = 'Agregar';
+    btn.innerHTML = 'Enviar para revisión';
     btn.disabled = false;
   }
 };
@@ -1077,6 +1201,97 @@ function timeAgo(date) {
   if (s<60) return 'ahora'; if (s<3600) return `hace ${Math.floor(s/60)} min`;
   if (s<86400) return `hace ${Math.floor(s/3600)}h`; return `hace ${Math.floor(s/86400)}d`;
 }
+
+/* ── EDIT PROFILE ── */
+window.openEditProfile = () => {
+  document.getElementById('ep-name').value    = userProfile.name    || '';
+  document.getElementById('ep-handle').value  = userProfile.handle  || '';
+  document.getElementById('ep-country').value = userProfile.country || '';
+  document.getElementById('ep-bio').value     = userProfile.bio     || '';
+  document.getElementById('ep-badges').value  = (userProfile.badges || []).join(', ');
+  openModal('editProfileModal');
+};
+
+window.saveProfile = async () => {
+  const name    = document.getElementById('ep-name').value.trim();
+  const handle  = document.getElementById('ep-handle').value.trim().replace('@','');
+  const country = document.getElementById('ep-country').value.trim();
+  const bio     = document.getElementById('ep-bio').value.trim();
+  const badges  = document.getElementById('ep-badges').value.split(',').map(b=>b.trim()).filter(Boolean);
+
+  if (!name || !handle) { toast('Nombre y usuario son obligatorios'); return; }
+
+  const btn = document.getElementById('saveProfileBtn');
+  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>';
+  btn.disabled = true;
+
+  try {
+    await updateDoc(doc(db, 'users', currentUser.uid), { name, handle, country, bio, badges, updatedAt: serverTimestamp() });
+    await updateProfile(currentUser, { displayName: name });
+    userProfile = { ...userProfile, name, handle, country, bio, badges };
+
+    // Update UI
+    const initials = name.charAt(0).toUpperCase();
+    document.getElementById('profileAv').textContent    = initials;
+    document.getElementById('profileName').textContent  = name;
+    document.getElementById('profileHandle').textContent= `@${handle} · ${country}`;
+    document.getElementById('profileBio').textContent   = bio || 'Matemático olímpico en Zeta.';
+    document.getElementById('chipAv').textContent       = initials;
+    document.getElementById('chipName').textContent     = handle;
+    ['pav1','pav2','pav3'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=initials; });
+
+    // Update badges display
+    const badgeRow = document.getElementById('myBadges');
+    if (badgeRow) {
+      const colors = ['var(--blue)','var(--purple)','var(--teal)','var(--amber)'];
+      badgeRow.innerHTML = badges.map((b,i) => `<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)} <span style="font-size:10px;color:var(--text-3);">· pendiente verificación</span></span>`).join('');
+    }
+
+    closeModal('editProfileModal');
+    toast('✓ Perfil actualizado');
+  } catch(e) {
+    toast('Error al guardar. Intentá de nuevo.');
+    console.warn(e);
+  } finally {
+    btn.innerHTML = 'Guardar';
+    btn.disabled = false;
+  }
+};
+
+/* ── CONFIRM DELETE HELPER ── */
+function confirmDelete(message, onConfirm) {
+  const modal = document.getElementById('confirmDeleteModal');
+  modal.querySelector('div:nth-child(2)').textContent = message;
+  const btn = document.getElementById('confirmDeleteBtn');
+  const newBtn = btn.cloneNode(true); // remove old listeners
+  btn.parentNode.replaceChild(newBtn, btn);
+  newBtn.addEventListener('click', async () => {
+    closeModal('confirmDeleteModal');
+    await onConfirm();
+  });
+  openModal('confirmDeleteModal');
+}
+
+/* ── DELETE MESSAGE ── */
+window.deleteMessage = (msgId) => {
+  confirmDelete('¿Borrar este mensaje? No se puede deshacer.', async () => {
+    try {
+      await deleteDoc(doc(db, 'users', currentUser.uid, 'messages', msgId));
+      toast('✓ Mensaje borrado');
+    } catch { toast('Error al borrar.'); }
+  });
+};
+
+/* ── DELETE ACADEMIA ── */
+window.deleteAcademia = (academiaId) => {
+  confirmDelete('¿Borrar esta academia? No se puede deshacer.', async () => {
+    try {
+      await deleteDoc(doc(db, 'academias', academiaId));
+      loadAcademias();
+      toast('✓ Academia borrada');
+    } catch { toast('Error al borrar.'); }
+  });
+};
 </script>
 </body>
 </html>
