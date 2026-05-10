@@ -23,29 +23,20 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;}
 body{font-family:var(--font-sans);font-size:14px;line-height:1.55;color:var(--text-1);background:var(--white);-webkit-font-smoothing:antialiased;overflow:hidden;}
-::-webkit-scrollbar{width:5px;height:5px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px;}
-
-/* AVATARS */
-.av{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:500;flex-shrink:0;user-select:none;}
-.av-blue{background:var(--blue-dim);color:var(--blue);}
-.av-purple{background:var(--purple-dim);color:var(--purple);}
-.av-teal{background:var(--teal-dim);color:var(--teal);}
-.av-amber{background:var(--amber-dim);color:var(--amber);}
+::-webkit-scrollbar{width:5px;height:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px;}
+.av{border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:500;flex-shrink:0;user-select:none;background-size:cover;background-position:center;}
+.av-blue{background-color:var(--blue-dim);color:var(--blue);}
+.av-purple{background-color:var(--purple-dim);color:var(--purple);}
+.av-teal{background-color:var(--teal-dim);color:var(--teal);}
+.av-amber{background-color:var(--amber-dim);color:var(--amber);}
 .av-28{width:28px;height:28px;font-size:10px;}
 .av-32{width:32px;height:32px;font-size:12px;}
 .av-40{width:40px;height:40px;font-size:13px;}
-.av-64{width:64px;height:64px;font-size:22px;font-family:var(--font-serif);font-style:italic;}
-
-/* TAGS */
 .tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:var(--r-pill);white-space:nowrap;}
 .tag-blue{background:var(--blue-dim);color:var(--blue);}
 .tag-purple{background:var(--purple-dim);color:var(--purple);}
 .tag-teal{background:var(--teal-dim);color:var(--teal);}
 .tag-amber{background:var(--amber-dim);color:var(--amber);}
-
-/* BUTTONS */
 button{cursor:pointer;font-family:var(--font-sans);}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:none;border-radius:var(--r-pill);font-size:13px;font-weight:500;padding:8px 18px;transition:opacity .15s,background .15s,transform .1s;white-space:nowrap;}
 .btn:active{transform:scale(.97);}
@@ -53,6 +44,8 @@ button{cursor:pointer;font-family:var(--font-sans);}
 .btn-solid:hover{opacity:.82;}
 .btn-ghost{background:var(--surface-2);color:var(--text-1);border:1px solid var(--border);}
 .btn-ghost:hover{background:var(--surface-3);}
+.btn-danger{background:var(--danger);color:var(--white);}
+.btn-danger:hover{opacity:.85;}
 .btn-sm{font-size:12px;padding:5px 13px;}
 .btn-follow{background:none;border:1px solid var(--border-2);border-radius:var(--r-pill);padding:5px 14px;font-size:12px;font-weight:500;color:var(--text-1);transition:all .15s;}
 .btn-follow:hover{background:var(--surface-2);}
@@ -60,27 +53,22 @@ button{cursor:pointer;font-family:var(--font-sans);}
 .action-pill{display:inline-flex;align-items:center;gap:5px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 13px;font-size:12px;color:var(--text-2);transition:background .12s,color .12s;}
 .action-pill:hover{background:var(--surface-3);color:var(--text-1);}
 .action-pill.on{background:var(--blue-dim);border-color:var(--blue-dim);color:var(--blue);}
-
-/* INPUTS */
 .input{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:9px 13px;font-family:var(--font-sans);font-size:13.5px;color:var(--text-1);outline:none;transition:border-color .15s,background .15s,box-shadow .15s;}
 .input::placeholder{color:var(--text-3);}
 .input:focus{border-color:var(--blue);background:var(--surface);box-shadow:var(--shadow-focus);}
 .input-pill{border-radius:var(--r-pill);padding:7px 14px;}
 textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
+select.input{appearance:none;cursor:pointer;}
 .field{display:flex;flex-direction:column;gap:5px;}
 .label{font-size:12px;font-weight:500;color:var(--text-2);}
 .field-error{font-size:11px;color:var(--danger);display:none;}
 .field.has-error .input{border-color:var(--danger);}
 .field.has-error .field-error{display:block;}
-
-/* CARD */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);transition:border-color .15s;}
 .card:hover{border-color:var(--border-2);}
-
-/* MODAL */
-.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:900;align-items:center;justify-content:center;animation:bdFadeIn .2s var(--ease-out);}
-.modal-backdrop.open{display:flex;}
-@keyframes bdFadeIn{from{opacity:0}to{opacity:1}}
+.modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:900;align-items:center;justify-content:center;}
+.modal-backdrop.open{display:flex;animation:bdIn .2s var(--ease-out);}
+@keyframes bdIn{from{opacity:0}to{opacity:1}}
 .modal{background:var(--surface);border-radius:var(--r-xl);padding:32px;width:100%;max-width:440px;box-shadow:var(--shadow-lg);animation:modalIn .25s var(--ease-out);position:relative;max-height:90vh;overflow-y:auto;}
 .modal-wide{max-width:580px;}
 @keyframes modalIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
@@ -88,18 +76,12 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .modal-close:hover{background:var(--surface-3);}
 .modal-title{font-family:var(--font-serif);font-size:22px;margin-bottom:6px;}
 .modal-sub{font-size:13px;color:var(--text-3);margin-bottom:24px;}
-
-/* TOAST */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--black);color:var(--white);padding:10px 20px;border-radius:var(--r-pill);font-size:13px;font-weight:500;z-index:9999;pointer-events:none;transition:transform .3s var(--ease-out),opacity .3s;opacity:0;white-space:nowrap;}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
-
-/* SPINNER */
 .spinner{display:inline-block;width:18px;height:18px;border:2px solid var(--border-2);border-top-color:var(--blue);border-radius:50%;animation:spin .6s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-overlay{position:fixed;inset:0;background:var(--white);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:9998;}
 .loading-logo{font-family:var(--font-serif);font-style:italic;font-size:48px;color:var(--black);}
-
-/* APP SHELL */
 .app{display:flex;flex-direction:column;height:100vh;}
 .header{height:var(--header-h);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(249,249,247,.9);backdrop-filter:blur(12px);z-index:200;flex-shrink:0;position:sticky;top:0;}
 .logo{font-family:var(--font-serif);font-style:italic;font-size:26px;letter-spacing:-.5px;color:var(--black);display:flex;align-items:baseline;gap:6px;cursor:pointer;user-select:none;}
@@ -108,9 +90,9 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .search-wrap{position:relative;}
 .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:13px;pointer-events:none;}
 .search-input{padding-left:32px!important;}
-.search-dropdown{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);z-index:500;overflow:hidden;max-height:280px;overflow-y:auto;}
-.search-dropdown.open{display:block;animation:fadeSlideDown .15s var(--ease-out);}
-@keyframes fadeSlideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.search-dropdown{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);z-index:500;overflow:hidden;max-height:300px;overflow-y:auto;}
+.search-dropdown.open{display:block;animation:slideDown .15s var(--ease-out);}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .search-item{padding:10px 14px;cursor:pointer;transition:background .1s;border-bottom:1px solid var(--surface-2);}
 .search-item:last-child{border-bottom:none;}
 .search-item:hover{background:var(--surface-2);}
@@ -123,7 +105,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .notif-btn:hover{background:var(--surface-2);}
 .notif-badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;background:var(--blue);color:var(--white);border-radius:99px;font-size:9px;font-weight:600;display:flex;align-items:center;justify-content:center;padding:0 3px;border:2px solid var(--white);}
 .notif-panel{display:none;position:absolute;top:calc(100% + 8px);right:0;width:310px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);z-index:500;overflow:hidden;}
-.notif-panel.open{display:block;animation:fadeSlideDown .15s var(--ease-out);}
+.notif-panel.open{display:block;animation:slideDown .15s var(--ease-out);}
 .notif-head{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .notif-head-title{font-size:13.5px;font-weight:500;}
 .notif-mark{font-size:11.5px;color:var(--blue);background:none;border:none;font-family:var(--font-sans);}
@@ -137,8 +119,6 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .notif-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:4px;}
 .user-chip{display:flex;align-items:center;gap:7px;padding:4px 10px 4px 4px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:background .12s;font-size:12.5px;font-weight:500;}
 .user-chip:hover{background:var(--surface-2);}
-
-/* SIDEBAR */
 .body{display:flex;flex:1;overflow:hidden;}
 .sidebar{width:var(--sidebar-w);border-right:1px solid var(--border);padding:14px 10px;display:flex;flex-direction:column;gap:1px;flex-shrink:0;overflow-y:auto;}
 .nav-btn{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:var(--r-sm);border:none;background:none;width:100%;text-align:left;color:var(--text-2);font-size:13.5px;font-weight:400;font-family:var(--font-sans);transition:background .1s,color .1s;cursor:pointer;}
@@ -148,21 +128,16 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .nav-icon svg{width:15px;height:15px;}
 .nav-sep{height:1px;background:var(--border);margin:6px 0;}
 .nav-label{font-size:10px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;padding:3px 11px;margin-top:3px;}
-
-/* MAIN */
 .main{flex:1;overflow-y:auto;padding:28px 32px;}
 .tab{display:none;}
 .tab.active{display:block;animation:fadeUp .18s var(--ease-out);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-
-/* FEED */
 .feed-wrap{max-width:620px;margin:0 auto;}
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
 .filter-pill{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 14px;font-size:12px;font-weight:500;color:var(--text-2);cursor:pointer;font-family:var(--font-sans);transition:all .12s;}
 .filter-pill:hover{background:var(--surface-3);color:var(--text-1);}
 .filter-pill.active{background:var(--black);color:var(--white);border-color:var(--black);}
 .post-card{padding:18px;margin-bottom:12px;}
-.post-card.hidden{display:none;}
 .post-head{display:flex;align-items:center;gap:10px;margin-bottom:13px;}
 .post-user{flex:1;}
 .post-username{font-size:13px;font-weight:500;}
@@ -183,8 +158,6 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .comment-input{flex:1;padding:7px 13px!important;font-size:12.5px!important;border-radius:var(--r-pill)!important;}
 .empty{text-align:center;padding:52px 0;color:var(--text-3);}
 .empty-icon{font-size:28px;margin-bottom:10px;}
-
-/* PROOFS */
 .proofs-wrap{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
 .proof-card{overflow:hidden;}
 .proof-head{padding:13px 18px;background:var(--surface-2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
@@ -192,8 +165,6 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .proof-body{padding:15px 18px;font-family:var(--font-mono);font-size:12.5px;line-height:1.8;color:var(--text-2);}
 .proof-foot{padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:6px;flex-direction:column;}
 .proof-actions{display:flex;gap:6px;}
-
-/* ACADEMIAS */
 .academias-wrap{max-width:720px;margin:0 auto;}
 .section-h{font-family:var(--font-serif);font-size:20px;font-weight:400;margin-bottom:14px;}
 .academia-list{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
@@ -203,8 +174,22 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .academia-name{font-size:13.5px;font-weight:500;}
 .academia-loc{font-size:11.5px;color:var(--text-3);margin-top:2px;}
 .academia-stats{font-size:11.5px;color:var(--text-2);margin-top:2px;}
-
-/* OLIMPIADAS */
+.academia-detail-wrap{max-width:700px;margin:0 auto;}
+.academia-detail-banner{height:100px;border-radius:var(--r-lg);margin-bottom:-32px;}
+.academia-detail-top{display:flex;align-items:flex-end;justify-content:space-between;padding:0 4px;margin-bottom:14px;}
+.academia-detail-logo{width:64px;height:64px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;border:3px solid var(--white);}
+.academia-detail-name{font-family:var(--font-serif);font-size:22px;margin-bottom:2px;}
+.academia-detail-loc{font-size:13px;color:var(--text-3);margin-bottom:12px;}
+.academia-detail-desc{font-size:13.5px;color:var(--text-2);line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.contact-row{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.contact-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);}
+.contact-icon{width:32px;height:32px;border-radius:var(--r-sm);background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.contact-link{color:var(--blue);text-decoration:none;}
+.contact-link:hover{text-decoration:underline;}
+.pending-badge{display:inline-flex;align-items:center;gap:5px;background:var(--amber-dim);color:var(--amber);border-radius:var(--r-pill);padding:4px 12px;font-size:11px;font-weight:500;margin-bottom:14px;}
+.verified-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-dim);color:var(--teal);border-radius:var(--r-pill);padding:4px 12px;font-size:11px;font-weight:500;margin-bottom:14px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--text-3);font-size:13px;font-family:var(--font-sans);cursor:pointer;margin-bottom:20px;padding:0;}
+.back-btn:hover{color:var(--text-1);}
 .olimpiadas-wrap{max-width:720px;margin:0 auto;}
 .olimpiada-card{padding:15px 18px;margin-bottom:8px;display:flex;align-items:center;gap:13px;}
 .olimpiada-info{flex:1;}
@@ -216,8 +201,6 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .ranking-table tbody tr:hover td{background:var(--surface-2);}
 .rank-num{font-family:var(--font-mono);color:var(--text-3);font-weight:500;width:32px;}
 .rank-pts{font-family:var(--font-mono);font-weight:500;}
-
-/* MENSAJES */
 .msgs-wrap{max-width:700px;margin:0 auto;}
 .msg-row{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:var(--r-sm);cursor:pointer;transition:background .1s;border-bottom:1px solid var(--surface-2);}
 .msg-row:hover{background:var(--surface-2);}
@@ -226,12 +209,10 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .msg-prev{font-size:12px;color:var(--text-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .msg-time{font-size:11px;color:var(--text-3);}
 .msg-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;}
-
-/* PERFIL */
 .profile-wrap{max-width:620px;margin:0 auto;}
 .profile-banner{height:110px;background:linear-gradient(135deg,var(--blue-dim) 0%,var(--purple-dim) 100%);border-radius:var(--r-lg);margin-bottom:-38px;}
-.profile-top{display:flex;align-items:flex-end;justify-content:space-between;padding:0 4px;margin-bottom:14px;}
-.profile-av{width:70px;height:70px;border-radius:50%;background:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;font-style:italic;color:var(--blue);border:3px solid var(--white);}
+.profile-top{display:flex;align-items:flex-end;padding:0 4px;margin-bottom:14px;}
+.profile-av{width:70px;height:70px;border-radius:50%;background-color:var(--blue-dim);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:28px;font-style:italic;color:var(--blue);border:3px solid var(--white);background-size:cover;background-position:center;}
 .profile-name{font-family:var(--font-serif);font-size:22px;margin-bottom:2px;}
 .profile-handle{font-size:12.5px;color:var(--text-3);margin-bottom:8px;}
 .profile-bio{font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:16px;}
@@ -240,8 +221,8 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .pstat-label{font-size:11px;color:var(--text-3);margin-top:1px;}
 .badge-row{display:flex;gap:7px;flex-wrap:wrap;}
 .badge{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border);border-radius:var(--r-pill);font-size:12px;color:var(--text-2);}
-
-/* AUTH */
+.avatar-upload-zone{width:80px;height:80px;border-radius:50%;border:2px dashed var(--border-2);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;background-size:cover;background-position:center;transition:border-color .15s;margin:0 auto 8px;}
+.avatar-upload-zone:hover{border-color:var(--blue);}
 #auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--white);padding:24px;}
 .auth-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:40px 36px;box-shadow:var(--shadow-md);}
 .auth-logo{font-family:var(--font-serif);font-style:italic;font-size:42px;color:var(--black);text-align:center;margin-bottom:4px;line-height:1;}
@@ -257,38 +238,15 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 .auth-sep::before{left:0;}.auth-sep::after{right:0;}
 .auth-error{font-size:12px;color:var(--danger);text-align:center;display:none;}
 .auth-error.show{display:block;}
-
-/* NEW POST */
 .category-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
 .cat-opt{border:1.5px solid var(--border);border-radius:var(--r-md);padding:8px 6px;text-align:center;font-size:12px;font-weight:500;cursor:pointer;transition:all .12s;background:none;font-family:var(--font-sans);color:var(--text-2);}
 .cat-opt:hover{border-color:var(--border-2);color:var(--text-1);}
 .cat-opt.selected{border-color:var(--blue);background:var(--blue-dim);color:var(--blue);}
-/* ACADEMIA DETAIL */
-.academia-detail-wrap{max-width:700px;margin:0 auto;}
-.academia-detail-banner{height:100px;border-radius:var(--r-lg);margin-bottom:-32px;display:flex;align-items:flex-end;padding:14px 18px;}
-.academia-detail-top{display:flex;align-items:flex-end;justify-content:space-between;padding:0 4px;margin-bottom:14px;}
-.academia-detail-logo{width:64px;height:64px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;border:3px solid var(--white);flex-shrink:0;}
-.academia-detail-name{font-family:var(--font-serif);font-size:22px;margin-bottom:2px;}
-.academia-detail-loc{font-size:13px;color:var(--text-3);margin-bottom:12px;}
-.academia-detail-desc{font-size:13.5px;color:var(--text-2);line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
-.contact-row{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
-.contact-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);}
-.contact-icon{width:32px;height:32px;border-radius:var(--r-sm);background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-.contact-link{color:var(--blue);text-decoration:none;}
-.contact-link:hover{text-decoration:underline;}
-.pending-badge{display:inline-flex;align-items:center;gap:5px;background:var(--amber-dim);color:var(--amber);border-radius:var(--r-pill);padding:4px 12px;font-size:11px;font-weight:500;margin-bottom:14px;}
-.verified-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-dim);color:var(--teal);border-radius:var(--r-pill);padding:4px 12px;font-size:11px;font-weight:500;margin-bottom:14px;}
-.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--text-3);font-size:13px;font-family:var(--font-sans);cursor:pointer;margin-bottom:20px;padding:0;}
-.back-btn:hover{color:var(--text-1);}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
-<div class="loading-overlay" id="loadingScreen">
-  <div class="loading-logo">ζ</div>
-  <div class="spinner"></div>
-</div>
+<div class="loading-overlay" id="loadingScreen"><div class="loading-logo">ζ</div><div class="spinner"></div></div>
 
 <!-- AUTH -->
 <div id="auth-screen" style="display:none;">
@@ -300,14 +258,14 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
       <button class="auth-tab" onclick="authSwitch('register')">Registrarse</button>
     </div>
     <div class="auth-form">
-      <!-- LOGIN -->
       <div class="auth-form-panel active" id="af-login">
         <div class="field"><label class="label">Email</label><input class="input" id="login-email" type="email" placeholder="tu@email.com"/></div>
         <div class="field"><label class="label">Contraseña</label><input class="input" id="login-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
         <div class="auth-error" id="login-error">Email o contraseña incorrectos.</div>
         <button class="btn btn-solid" id="loginBtn" style="width:100%;margin-top:4px;" onclick="doLogin()">Entrar</button>
+        <div class="auth-sep">o</div>
+        <button class="btn btn-ghost" style="width:100%;" onclick="guestLogin()">Ver como invitado</button>
       </div>
-      <!-- REGISTER -->
       <div class="auth-form-panel" id="af-register">
         <div class="field" id="f-rname"><label class="label">Nombre completo</label><input class="input" id="reg-name" type="text" placeholder="Santiago García"/><span class="field-error">Campo requerido.</span></div>
         <div class="field" id="f-rhandle"><label class="label">Usuario</label><input class="input" id="reg-handle" type="text" placeholder="santiago"/><span class="field-error">Campo requerido.</span></div>
@@ -328,12 +286,12 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
     <div class="header-search">
       <div class="search-wrap">
         <span class="search-icon">⌕</span>
-        <input class="input input-pill search-input" id="searchInput" type="text" placeholder="buscar…" autocomplete="off" oninput="doSearch(this.value)" onfocus="openSearch()"/>
+        <input class="input input-pill search-input" id="searchInput" type="text" placeholder="buscar usuarios, posts…" autocomplete="off" oninput="doSearch(this.value)" onfocus="openSearchDD()"/>
         <div class="search-dropdown" id="searchDD"></div>
       </div>
     </div>
     <div class="header-right">
-      <button class="btn btn-solid btn-sm" onclick="openNewPost()">+ Post</button>
+      <button class="btn btn-solid btn-sm" id="btnNewPost" onclick="openNewPost()">+ Post</button>
       <div class="notif-wrap">
         <button class="notif-btn" id="notifBtn" onclick="toggleNotif()">🔔<div class="notif-badge" id="notifBadge" style="display:none;">0</div></button>
         <div class="notif-panel" id="notifPanel">
@@ -341,8 +299,8 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
           <div id="notifList"><div style="padding:20px;text-align:center;color:var(--text-3);font-size:13px;">Sin notificaciones</div></div>
         </div>
       </div>
-      <div class="user-chip" onclick="switchTab('cuenta')" id="userChip">
-        <div class="av av-blue av-32" id="chipAv">S</div>
+      <div class="user-chip" onclick="onChipClick()" id="userChip">
+        <div class="av av-blue av-32" id="chipAv">?</div>
         <span id="chipName">…</span>
       </div>
     </div>
@@ -359,8 +317,9 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
       <button class="nav-btn" id="nav-olimpiadas" onclick="switchTab('olimpiadas')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="4"/><path d="M4 9l-2 5h12l-2-5"/></svg></span>Olimpiadas</button>
       <div class="nav-sep"></div>
       <button class="nav-btn" id="nav-mensajes" onclick="switchTab('mensajes')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h12a1 1 0 011 1v7a1 1 0 01-1 1H5l-3 2V4a1 1 0 011-1z"/></svg></span>Mensajes</button>
-      <button class="nav-btn" id="nav-feedback" onclick="switchTab('feedback')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.9 3.8L14 5.6l-3 2.9.7 4.1L8 10.5l-3.7 2.1.7-4.1-3-2.9 4.1-.8z"/></svg></span>Sugerencias <span id="feedbackDot" style="display:none;width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;"></span></button>
+      <button class="nav-btn" id="nav-feedback" onclick="switchTab('feedback')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1l1.9 3.8L14 5.6l-3 2.9.7 4.1L8 10.5l-3.7 2.1.7-4.1-3-2.9 4.1-.8z"/></svg></span>Sugerencias<span id="feedbackDot" style="display:none;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-left:auto;flex-shrink:0;"></span></button>
       <button class="nav-btn" id="nav-admin" style="display:none;" onclick="switchTab('admin')"><span class="nav-icon">⚙</span>Admin</button>
+      <button class="nav-btn" id="nav-user-profile" style="display:none;"></button>
       <button class="nav-btn" id="nav-cuenta" onclick="switchTab('cuenta')"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5"/></svg></span>Mi cuenta</button>
       <div class="nav-sep"></div>
       <button class="nav-btn" onclick="doLogout()" style="color:var(--text-3);"><span class="nav-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2H3a1 1 0 00-1 1v10a1 1 0 001 1h3M10 11l3-3-3-3M13 8H6"/></svg></span>Cerrar sesión</button>
@@ -400,7 +359,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
             <h2 class="section-h" style="margin-bottom:0;">Academias</h2>
             <button class="btn btn-solid btn-sm" onclick="openNewAcademia()">+ Academia</button>
           </div>
-          <div class="academia-list" id="academiaList"><div style="text-align:center;padding:20px 0;"><div class="spinner" style="margin:auto;"></div></div></div>
+          <div class="academia-list" id="academiaList"><div style="text-align:center;padding:20px;"><div class="spinner" style="margin:auto;"></div></div></div>
           <h2 class="section-h">Profesores</h2>
           <div class="academia-list">
             <div class="card academia-card"><div class="av av-blue av-40" style="border-radius:8px;">JG</div><div class="academia-info"><div class="academia-name">Juan Gómez</div><div class="academia-loc">Teoría de números · 8 años</div><div class="academia-stats">★★★★★ · 54 reseñas</div></div><button class="btn-follow" onclick="toggleFollow(this)">seguir</button></div>
@@ -418,10 +377,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
       <div id="tab-olimpiadas" class="tab">
         <div class="olimpiadas-wrap">
           <h2 class="section-h" style="margin-bottom:14px;">Próximas competencias</h2>
-          <div class="card olimpiada-card"><div class="olimpiada-info"><div class="olimpiada-name">OMA — Nivel 3</div><div class="olimpiada-meta">Mayo · Agosto · Octubre 2025</div></div><span class="tag tag-blue">Argentina</span></div>
-          <div class="card olimpiada-card"><div class="olimpiada-info"><div class="olimpiada-name">OMCS — Cono Sur</div><div class="olimpiada-meta">Julio 2025 · Santiago, Chile</div></div><span class="tag tag-teal">Regional</span></div>
-          <div class="card olimpiada-card"><div class="olimpiada-info"><div class="olimpiada-name">Iberoamericana de Matemáticas</div><div class="olimpiada-meta">Septiembre 2025 · Montevideo</div></div><span class="tag tag-teal">Internacional</span></div>
-          <div class="card olimpiada-card"><div class="olimpiada-info"><div class="olimpiada-name">IMO 2025</div><div class="olimpiada-meta">Julio 2025 · Australia</div></div><span class="tag tag-purple">Mundial</span></div>
+          <div id="olimpiadasList"><div style="text-align:center;padding:20px;"><div class="spinner" style="margin:auto;"></div></div></div>
           <h2 class="section-h" style="margin:26px 0 14px;">Ranking global</h2>
           <div class="card" style="overflow:hidden;">
             <table class="ranking-table">
@@ -436,44 +392,44 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
       <div id="tab-mensajes" class="tab">
         <div class="msgs-wrap">
           <h2 class="section-h" style="margin-bottom:14px;">Mensajes</h2>
-          <div id="msgList"></div>
+          <div id="msgList"><div class="empty"><div class="empty-icon">✉</div><div class="empty-text">No tenés mensajes todavía.</div></div></div>
         </div>
       </div>
 
-      <!-- SUGERENCIAS (todos pueden enviar) -->
+      <!-- SUGERENCIAS -->
       <div id="tab-feedback" class="tab">
         <div style="max-width:560px;margin:0 auto;">
           <h2 style="font-family:var(--font-serif);font-size:22px;font-weight:400;margin-bottom:6px;">Sugerencias</h2>
-          <p style="font-size:13px;color:var(--text-3);margin-bottom:28px;">¿Tenés una idea para mejorar Zeta? Mandala acá. El equipo la va a leer.</p>
+          <p style="font-size:13px;color:var(--text-3);margin-bottom:28px;">¿Tenés una idea para mejorar Zeta? Mandala acá.</p>
           <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:16px;">
-            <div class="field">
-              <label class="label">Tu sugerencia</label>
-              <textarea class="input" id="fb-text" placeholder="Escribí tu idea, problema o feedback…" style="min-height:120px;"></textarea>
-            </div>
-            <div class="field">
-              <label class="label">Categoría</label>
-              <select class="input" id="fb-cat">
-                <option value="feature">Nueva funcionalidad</option>
-                <option value="bug">Reportar un error</option>
-                <option value="diseno">Diseño / UX</option>
-                <option value="contenido">Contenido matemático</option>
-                <option value="otro">Otro</option>
-              </select>
-            </div>
-            <div style="display:flex;justify-content:flex-end;">
-              <button class="btn btn-solid" id="sendFeedbackBtn" onclick="sendFeedback()">Enviar sugerencia</button>
-            </div>
+            <div class="field"><label class="label">Tu sugerencia</label><textarea class="input" id="fb-text" placeholder="Escribí tu idea, problema o feedback…" style="min-height:120px;"></textarea></div>
+            <div class="field"><label class="label">Categoría</label><select class="input" id="fb-cat"><option value="feature">Nueva funcionalidad</option><option value="bug">Reportar un error</option><option value="diseno">Diseño / UX</option><option value="contenido">Contenido matemático</option><option value="otro">Otro</option></select></div>
+            <div style="display:flex;justify-content:flex-end;"><button class="btn btn-solid" id="sendFeedbackBtn" onclick="sendFeedback()">Enviar sugerencia</button></div>
           </div>
           <div id="myFeedbackList" style="margin-top:24px;"></div>
         </div>
       </div>
 
-      <!-- ADMIN (solo Santiago) -->
+      <!-- ADMIN -->
       <div id="tab-admin" class="tab">
         <div style="max-width:700px;margin:0 auto;">
-          <h2 style="font-family:var(--font-serif);font-size:22px;font-weight:400;margin-bottom:6px;">Panel de sugerencias</h2>
+          <h2 style="font-family:var(--font-serif);font-size:22px;font-weight:400;margin-bottom:6px;">Panel de administración</h2>
           <p style="font-size:13px;color:var(--text-3);margin-bottom:24px;">Solo vos podés ver esto.</p>
-          <div class="filters" style="margin-bottom:20px;">
+
+          <!-- ADMIN: Olimpiadas -->
+          <div class="card" style="padding:20px;margin-bottom:24px;">
+            <div style="font-size:15px;font-weight:500;margin-bottom:14px;">➕ Agregar olimpiada</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="field"><label class="label">Nombre</label><input class="input" id="ol-name" type="text" placeholder="IMO 2026"/></div>
+              <div class="field"><label class="label">Fecha / período</label><input class="input" id="ol-date" type="text" placeholder="Julio 2026 · Australia"/></div>
+              <div class="field"><label class="label">Alcance</label><select class="input" id="ol-scope"><option value="argentina">Argentina</option><option value="regional">Regional</option><option value="internacional">Internacional</option><option value="mundial">Mundial</option></select></div>
+              <div style="display:flex;justify-content:flex-end;"><button class="btn btn-solid btn-sm" onclick="addOlimpiada()">Agregar</button></div>
+            </div>
+          </div>
+
+          <!-- ADMIN: Sugerencias -->
+          <div style="font-size:15px;font-weight:500;margin-bottom:14px;">📬 Sugerencias recibidas</div>
+          <div class="filters" style="margin-bottom:16px;">
             <button class="filter-pill active" onclick="filterFeedback('todos',this)">Todas</button>
             <button class="filter-pill" onclick="filterFeedback('feature',this)">Features</button>
             <button class="filter-pill" onclick="filterFeedback('bug',this)">Bugs</button>
@@ -485,7 +441,12 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
         </div>
       </div>
 
-      <!-- CUENTA -->
+      <!-- PERFIL DE USUARIO -->
+      <div id="tab-user-profile" class="tab">
+        <div class="profile-wrap" id="userProfileContent"></div>
+      </div>
+
+      <!-- MI CUENTA -->
       <div id="tab-cuenta" class="tab">
         <div class="profile-wrap">
           <div class="profile-banner"></div>
@@ -519,8 +480,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
     <div class="modal-title">Nuevo post</div>
     <div class="modal-sub">Compartí un problema matemático con la comunidad.</div>
     <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field">
-        <label class="label">Categoría</label>
+      <div class="field"><label class="label">Categoría</label>
         <div class="category-grid">
           <button class="cat-opt selected" data-cat="divisibilidad" onclick="selectCat(this)">Divisibilidad</button>
           <button class="cat-opt" data-cat="desigualdades" onclick="selectCat(this)">Desigualdades</button>
@@ -530,15 +490,8 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
           <button class="cat-opt" data-cat="otro" onclick="selectCat(this)">Otro</button>
         </div>
       </div>
-      <div class="field" id="f-problem">
-        <label class="label">Enunciado del problema *</label>
-        <textarea class="input" id="np-problem" placeholder="Escribí el enunciado. Podés usar: √ ∑ ∫ ≤ ≥ ∞ ∈ ∀ ∃ ∎" style="min-height:100px;"></textarea>
-        <span class="field-error">El enunciado es obligatorio.</span>
-      </div>
-      <div class="field">
-        <label class="label">Descripción / contexto (opcional)</label>
-        <textarea class="input" id="np-desc" placeholder="Contexto, hint, fuente…" style="min-height:64px;"></textarea>
-      </div>
+      <div class="field" id="f-problem"><label class="label">Enunciado *</label><textarea class="input" id="np-problem" placeholder="Escribí el enunciado. Podés usar: √ ∑ ∫ ≤ ≥ ∞ ∈ ∀ ∃ ∎" style="min-height:100px;"></textarea><span class="field-error">El enunciado es obligatorio.</span></div>
+      <div class="field"><label class="label">Descripción (opcional)</label><textarea class="input" id="np-desc" placeholder="Contexto, hint, fuente…" style="min-height:64px;"></textarea></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button class="btn btn-ghost" onclick="closeModal('newPostModal')">Cancelar</button>
         <button class="btn btn-solid" id="publishBtn" onclick="publishPost()">Publicar</button>
@@ -552,13 +505,13 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('newAcademiaModal')">✕</button>
     <div class="modal-title">Agregar academia</div>
-    <div class="modal-sub">Sumá un centro de preparación olímpica. Será revisada antes de mostrarse públicamente.</div>
+    <div class="modal-sub">Será revisada antes de mostrarse públicamente.</div>
     <div style="display:flex;flex-direction:column;gap:14px;">
       <div class="field" id="fa-name"><label class="label">Nombre *</label><input class="input" id="ac-name" type="text" placeholder="Centro Matemático Avanzado"/><span class="field-error">Campo requerido.</span></div>
       <div class="field"><label class="label">Siglas</label><input class="input" id="ac-logo" type="text" placeholder="CMA" maxlength="4"/></div>
       <div class="field" id="fa-loc"><label class="label">Ubicación *</label><input class="input" id="ac-loc" type="text" placeholder="Palermo, Buenos Aires"/><span class="field-error">Campo requerido.</span></div>
-      <div class="field"><label class="label">Descripción</label><textarea class="input" id="ac-desc" placeholder="¿Qué ofrece? ¿Qué nivel? ¿Cuántos estudiantes?" style="min-height:64px;"></textarea></div>
-      <div class="field"><label class="label">Email de contacto</label><input class="input" id="ac-email" type="email" placeholder="contacto@academia.com"/></div>
+      <div class="field"><label class="label">Descripción</label><textarea class="input" id="ac-desc" placeholder="¿Qué ofrece?" style="min-height:64px;"></textarea></div>
+      <div class="field"><label class="label">Email</label><input class="input" id="ac-email" type="email" placeholder="contacto@academia.com"/></div>
       <div class="field"><label class="label">Teléfono / WhatsApp</label><input class="input" id="ac-phone" type="text" placeholder="+54 11 1234-5678"/></div>
       <div class="field"><label class="label">Sitio web</label><input class="input" id="ac-web" type="url" placeholder="https://academia.com"/></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
@@ -569,8 +522,6 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
   </div>
 </div>
 
-<div id="toast"></div>
-
 <!-- MODAL: EDITAR PERFIL -->
 <div class="modal-backdrop" id="editProfileModal">
   <div class="modal">
@@ -578,15 +529,16 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
     <div class="modal-title">Editar perfil</div>
     <div class="modal-sub">Actualizá tu información pública.</div>
     <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="text-align:center;">
+        <div class="avatar-upload-zone" id="avatarPreview" onclick="document.getElementById('avatarFileInput').click()" title="Cambiar foto"></div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:4px;">Clic para cambiar foto · máx 2MB</div>
+        <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleAvatarFile(this)"/>
+      </div>
       <div class="field"><label class="label">Nombre completo</label><input class="input" id="ep-name" type="text" placeholder="Santiago García"/></div>
       <div class="field"><label class="label">Usuario</label><input class="input" id="ep-handle" type="text" placeholder="santiago"/></div>
       <div class="field"><label class="label">País</label><input class="input" id="ep-country" type="text" placeholder="Argentina"/></div>
       <div class="field"><label class="label">Bio</label><textarea class="input" id="ep-bio" placeholder="Contá algo sobre vos…" style="min-height:72px;"></textarea></div>
-      <div class="field">
-        <label class="label">Medallas / logros</label>
-        <input class="input" id="ep-badges" type="text" placeholder="IMO Plata 2024, OMA Oro, USAMO…"/>
-        <span style="font-size:11px;color:var(--text-3);margin-top:3px;">Separalos con comas. Serán revisados por el equipo de Zeta.</span>
-      </div>
+      <div class="field"><label class="label">Medallas / logros</label><input class="input" id="ep-badges" type="text" placeholder="IMO Plata 2024, OMA Oro…"/><span style="font-size:11px;color:var(--text-3);margin-top:3px;">Separalos con comas. Serán revisados.</span></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button class="btn btn-ghost" onclick="closeModal('editProfileModal')">Cancelar</button>
         <button class="btn btn-solid" id="saveProfileBtn" onclick="saveProfile()">Guardar</button>
@@ -599,7 +551,7 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
 <div class="modal-backdrop" id="confirmDeleteModal">
   <div class="modal" style="max-width:360px;">
     <div class="modal-title" style="font-size:18px;">¿Estás seguro?</div>
-    <div style="font-size:13px;color:var(--text-2);margin:8px 0 24px;">Esta acción no se puede deshacer.</div>
+    <div id="confirmDeleteMsg" style="font-size:13px;color:var(--text-2);margin:8px 0 24px;">Esta acción no se puede deshacer.</div>
     <div style="display:flex;gap:8px;justify-content:flex-end;">
       <button class="btn btn-ghost" onclick="closeModal('confirmDeleteModal')">Cancelar</button>
       <button class="btn btn-danger" id="confirmDeleteBtn">Borrar</button>
@@ -607,18 +559,57 @@ textarea.input{resize:vertical;min-height:80px;border-radius:var(--r-md);}
   </div>
 </div>
 
-<!-- FIREBASE SDK -->
+<!-- MODAL: REQUIERE LOGIN -->
+<div class="modal-backdrop" id="loginRequiredModal">
+  <div class="modal" style="max-width:360px;text-align:center;">
+    <div class="modal-title">ζ Zeta</div>
+    <div style="font-size:14px;color:var(--text-2);margin:10px 0 24px;">Para hacer esto necesitás iniciar sesión o crear una cuenta.</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button class="btn btn-solid" style="width:100%;" onclick="closeModal('loginRequiredModal');doLogout()">Iniciar sesión / Registrarse</button>
+      <button class="btn btn-ghost" style="width:100%;" onclick="closeModal('loginRequiredModal')">Seguir como invitado</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
 <script type="module">
 import { initializeApp }                              from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword,
          signInWithEmailAndPassword, signOut,
-         onAuthStateChanged, updateProfile }          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+         onAuthStateChanged, updateProfile,
+         signInAnonymously }                          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs,
          onSnapshot, query, orderBy, serverTimestamp,
          doc, updateDoc, getDoc, setDoc, increment,
-         deleteDoc }                                   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+         deleteDoc, where }                           from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-/* ── CONFIG ── */
+/* ══════════════════════════════════════
+   HELPERS — siempre primero
+══════════════════════════════════════ */
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function hl(t, q) {
+  if (!q) return t;
+  return t.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<b>$1</b>');
+}
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  return h;
+}
+function timeAgo(date) {
+  const s = Math.floor((Date.now() - date) / 1000);
+  if (s < 60)    return 'ahora';
+  if (s < 3600)  return `hace ${Math.floor(s/60)} min`;
+  if (s < 86400) return `hace ${Math.floor(s/3600)}h`;
+  return `hace ${Math.floor(s/86400)}d`;
+}
+
+/* ══════════════════════════════════════
+   CONFIG & STATE
+══════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "AIzaSyB4Z9ylPiFQ9snh4-7SVqvApQveZP3nkgc",
   authDomain: "zeta-app-a3d82.firebaseapp.com",
@@ -627,59 +618,73 @@ const firebaseConfig = {
   messagingSenderId: "593128225076",
   appId: "1:593128225076:web:fc7b950ba1c8e737b70d61"
 };
+const fbApp   = initializeApp(firebaseConfig);
+const auth    = getAuth(fbApp);
+const db      = getFirestore(fbApp);
 
-const fbApp = initializeApp(firebaseConfig);
-const auth  = getAuth(fbApp);
-const db    = getFirestore(fbApp);
+// ⚠️ Reemplazá con tu UID real (Firebase → Authentication → Users → User UID)
+const OWNER_UID = 'MJk8a3IYY5eo61Y53rOxS3O2Ue53';
 
-/* ── STATE ── */
 let currentUser      = null;
 let userProfile      = null;
+let isGuest          = false;
 let selectedCat      = 'divisibilidad';
 let currentFilter    = 'todos';
-let notifCount       = 0;
 let postsUnsubscribe = null;
 let allPostsCache    = [];
+let allFeedbackCache = [];
+let pendingAvatarDataURL = null; // foto pendiente antes de guardar
 
 const avColors = ['av-blue','av-purple','av-teal','av-amber'];
 const catMeta  = {
-  divisibilidad: { label:'Divisibilidad', cls:'tag-blue',   av:'av-blue'   },
-  desigualdades: { label:'Desigualdades', cls:'tag-purple', av:'av-purple' },
-  funciones:     { label:'Funciones',     cls:'tag-teal',   av:'av-teal'   },
-  combinatoria:  { label:'Combinatoria',  cls:'tag-amber',  av:'av-amber'  },
-  geometria:     { label:'Geometría',     cls:'tag-teal',   av:'av-teal'   },
-  otro:          { label:'Otro',          cls:'tag-blue',   av:'av-blue'   },
+  divisibilidad: { label:'Divisibilidad', cls:'tag-blue'   },
+  desigualdades: { label:'Desigualdades', cls:'tag-purple' },
+  funciones:     { label:'Funciones',     cls:'tag-teal'   },
+  combinatoria:  { label:'Combinatoria',  cls:'tag-amber'  },
+  geometria:     { label:'Geometría',     cls:'tag-teal'   },
+  otro:          { label:'Otro',          cls:'tag-blue'   },
+};
+const scopeTag = {
+  argentina:     'tag-blue',
+  regional:      'tag-teal',
+  internacional: 'tag-teal',
+  mundial:       'tag-purple',
 };
 
-/* ── SAFETY TIMEOUT ── */
+/* ── Safety timeout ── */
 setTimeout(() => {
-  if (document.getElementById('loadingScreen').style.display !== 'none') {
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('auth-screen').style.display   = 'flex';
+  const ls = document.getElementById('loadingScreen');
+  if (ls && ls.style.display !== 'none') {
+    ls.style.display = 'none';
+    document.getElementById('auth-screen').style.display = 'flex';
   }
-}, 5000);
+}, 6000);
 
-/* ── AUTH STATE LISTENER ── */
+/* ══════════════════════════════════════
+   AUTH
+══════════════════════════════════════ */
 onAuthStateChanged(auth, async user => {
   try {
-    if (user) {
-      currentUser = user;
+    if (user && !user.isAnonymous) {
+      currentUser = user; isGuest = false;
       try {
-        const snap = await getDoc(doc(db, 'users', user.uid));
-        userProfile = snap.exists()
-          ? snap.data()
-          : { name: user.displayName || 'Usuario', handle: user.email.split('@')[0], country: 'Argentina' };
+        const snap = await getDoc(doc(db,'users',user.uid));
+        userProfile = snap.exists() ? snap.data()
+          : { name:user.displayName||'Usuario', handle:user.email.split('@')[0], country:'Argentina', bio:'', badges:[], avatar:'' };
       } catch {
-        userProfile = { name: user.displayName || 'Usuario', handle: user.email.split('@')[0], country: 'Argentina' };
+        userProfile = { name:user.displayName||'Usuario', handle:user.email.split('@')[0], country:'Argentina', bio:'', badges:[], avatar:'' };
       }
-      showApp();
+      showApp(false);
+    } else if (user?.isAnonymous) {
+      currentUser = user; isGuest = true;
+      userProfile = { name:'Invitado', handle:'invitado', country:'', bio:'', badges:[], avatar:'' };
+      showApp(true);
     } else {
-      currentUser = null;
-      userProfile = null;
+      currentUser = null; userProfile = null; isGuest = false;
       document.getElementById('loadingScreen').style.display = 'none';
       document.getElementById('auth-screen').style.display   = 'flex';
       document.getElementById('app').style.display           = 'none';
-      if (postsUnsubscribe) postsUnsubscribe();
+      if (postsUnsubscribe) { postsUnsubscribe(); postsUnsubscribe = null; }
     }
   } catch(e) {
     console.error('Auth error:', e);
@@ -688,51 +693,6 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-function showApp() {
-  document.getElementById('loadingScreen').style.display = 'none';
-  document.getElementById('auth-screen').style.display   = 'none';
-  document.getElementById('app').style.display           = 'flex';
-
-  // Mostrar panel admin solo para el dueño de Zeta
-  // Reemplazá este string con tu UID real de Firebase Auth
-  const OWNER_UID = currentUser.uid; // temporalmente todos son admin — reemplazar con tu UID fijo
-  if (currentUser.uid === OWNER_UID) {
-    document.getElementById('nav-admin').style.display = 'flex';
-    try { loadAdminFeedback(); } catch(e) { console.warn(e); }
-  }
-
-  try { updateUIUser(); }        catch(e) { console.warn('updateUIUser:', e); }
-  try { listenPosts(); }         catch(e) { console.warn('listenPosts:', e); }
-  try { loadAcademias(); }       catch(e) { console.warn('loadAcademias:', e); }
-  try { listenNotifications(); } catch(e) { console.warn('listenNotifications:', e); }
-  try { loadMessages(); }        catch(e) { console.warn('loadMessages:', e); }
-  try { loadRanking(); }         catch(e) { console.warn('loadRanking:', e); }
-  try { listenProfileStats(); }  catch(e) { console.warn('listenProfileStats:', e); }
-  try { loadMyFeedback(); }      catch(e) { console.warn('loadMyFeedback:', e); }
-}
-
-/* ── UPDATE UI WITH USER ── */
-function updateUIUser() {
-  const initials = (userProfile.name || 'U').charAt(0).toUpperCase();
-  document.getElementById('chipAv').textContent      = initials;
-  document.getElementById('chipName').textContent    = userProfile.handle || '…';
-  document.getElementById('profileAv').textContent   = initials;
-  document.getElementById('profileName').textContent = userProfile.name || '…';
-  document.getElementById('profileHandle').textContent = `@${userProfile.handle||'…'} · ${userProfile.country || 'Argentina'}`;
-  document.getElementById('profileBio').textContent  = userProfile.bio || 'Matemático olímpico en Zeta.';
-  ['pav1','pav2','pav3'].forEach(id => { const el = document.getElementById(id); if(el) el.textContent = initials; });
-
-  // badges
-  const badgeRow = document.getElementById('myBadges');
-  if (badgeRow && userProfile.badges?.length) {
-    const colors = ['var(--blue)','var(--purple)','var(--teal)','var(--amber)'];
-    badgeRow.innerHTML = userProfile.badges.map((b,i) =>
-      `<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)}</span>`
-    ).join('');
-  }
-}
-
-/* ── AUTH ── */
 window.authSwitch = (mode) => {
   document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', mode==='login'?i===0:i===1));
   document.getElementById('af-login').classList.toggle('active', mode==='login');
@@ -743,15 +703,13 @@ window.doLogin = async () => {
   const email = document.getElementById('login-email').value.trim();
   const pass  = document.getElementById('login-pass').value;
   const btn   = document.getElementById('loginBtn');
-  btn.innerHTML = '<div class="spinner"></div>';
-  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>'; btn.disabled = true;
   try {
     await signInWithEmailAndPassword(auth, email, pass);
     document.getElementById('login-error').classList.remove('show');
   } catch {
     document.getElementById('login-error').classList.add('show');
-    btn.innerHTML = 'Entrar';
-    btn.disabled = false;
+    btn.innerHTML = 'Entrar'; btn.disabled = false;
   }
 };
 
@@ -761,189 +719,143 @@ window.doRegister = async () => {
   const email   = document.getElementById('reg-email').value.trim();
   const pass    = document.getElementById('reg-pass').value;
   const country = document.getElementById('reg-country').value.trim() || 'Argentina';
-
   let ok = true;
-  document.getElementById('f-rname').classList.toggle('has-error', !name);   if(!name) ok=false;
-  document.getElementById('f-rhandle').classList.toggle('has-error', !handle); if(!handle) ok=false;
-  document.getElementById('f-remail').classList.toggle('has-error', !/\S+@\S+\.\S+/.test(email)); if(!/\S+@\S+\.\S+/.test(email)) ok=false;
-  document.getElementById('f-rpass').classList.toggle('has-error', pass.length<6); if(pass.length<6) ok=false;
+  document.getElementById('f-rname').classList.toggle('has-error',!name);   if(!name) ok=false;
+  document.getElementById('f-rhandle').classList.toggle('has-error',!handle); if(!handle) ok=false;
+  document.getElementById('f-remail').classList.toggle('has-error',!/\S+@\S+\.\S+/.test(email)); if(!/\S+@\S+\.\S+/.test(email)) ok=false;
+  document.getElementById('f-rpass').classList.toggle('has-error',pass.length<6); if(pass.length<6) ok=false;
   if (!ok) return;
-
   const btn = document.getElementById('registerBtn');
-  btn.innerHTML = '<div class="spinner"></div>';
-  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div>'; btn.disabled = true;
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
     await updateProfile(cred.user, { displayName: name });
-    await setDoc(doc(db, 'users', cred.user.uid), { name, handle, country, email, createdAt: serverTimestamp() });
-    document.getElementById('reg-error').classList.remove('show');
+    await setDoc(doc(db,'users',cred.user.uid), {
+      name, handle, country, email, bio:'', badges:[], avatar:'',
+      followers:0, following:0, createdAt: serverTimestamp()
+    });
   } catch(e) {
-    document.getElementById('reg-error').textContent = e.code === 'auth/email-already-in-use' ? 'Este email ya está registrado.' : 'Error al registrarse. Intentá de nuevo.';
+    document.getElementById('reg-error').textContent = e.code==='auth/email-already-in-use'?'Email ya registrado.':'Error al registrarse.';
     document.getElementById('reg-error').classList.add('show');
-    btn.innerHTML = 'Crear cuenta';
-    btn.disabled = false;
+    btn.innerHTML = 'Crear cuenta'; btn.disabled = false;
   }
 };
 
-window.doLogout = async () => {
-  await signOut(auth);
+window.guestLogin = async () => {
+  try { await signInAnonymously(auth); } catch { toast('Error al entrar como invitado'); }
 };
 
-/* ── POSTS (real-time) ── */
+window.doLogout = async () => { await signOut(auth); };
+
+/* Guest gate — llama esto antes de cualquier acción que requiere login */
+function requireAuth() {
+  if (isGuest || !currentUser) {
+    openModal('loginRequiredModal');
+    return false;
+  }
+  return true;
+}
+
+/* ══════════════════════════════════════
+   SHOW APP
+══════════════════════════════════════ */
+function showApp(guest) {
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('auth-screen').style.display   = 'none';
+  document.getElementById('app').style.display           = 'flex';
+
+  if (guest) {
+    document.getElementById('chipAv').textContent   = '?';
+    document.getElementById('chipName').textContent = 'Invitado';
+    document.getElementById('btnNewPost').style.display = 'none';
+  } else {
+    document.getElementById('btnNewPost').style.display = 'flex';
+    updateUIUser();
+    if (currentUser.uid === OWNER_UID) {
+      document.getElementById('nav-admin').style.display = 'flex';
+      loadAdminFeedback();
+    }
+    listenNotifications();
+    loadMessages();
+    listenProfileStats();
+    loadMyFeedback();
+  }
+  listenPosts();
+  loadAcademias();
+  loadRanking();
+  loadOlimpiadas();
+}
+
+function updateUIUser() {
+  const init   = (userProfile.name||'U').charAt(0).toUpperCase();
+  const avatar = userProfile.avatar || '';
+  const setAv  = (id) => {
+    const el = document.getElementById(id); if (!el) return;
+    if (avatar) { el.style.backgroundImage=`url(${avatar})`; el.style.backgroundSize='cover'; el.textContent=''; }
+    else        { el.style.backgroundImage=''; el.textContent=init; }
+  };
+  setAv('chipAv'); setAv('profileAv');
+  document.getElementById('chipName').textContent          = userProfile.handle||'…';
+  document.getElementById('profileName').textContent       = userProfile.name||'…';
+  document.getElementById('profileHandle').textContent     = `@${userProfile.handle||'…'} · ${userProfile.country||'Argentina'}`;
+  document.getElementById('profileBio').textContent        = userProfile.bio||'Matemático olímpico en Zeta.';
+  ['pav1','pav2','pav3'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=init; });
+  const br = document.getElementById('myBadges');
+  if (br && userProfile.badges?.length) {
+    const colors = ['var(--blue)','var(--purple)','var(--teal)','var(--amber)'];
+    br.innerHTML = userProfile.badges.map((b,i) =>
+      `<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)}</span>`
+    ).join('');
+  }
+}
+
+window.onChipClick = () => {
+  if (isGuest) openModal('loginRequiredModal');
+  else switchTab('cuenta');
+};
+
+/* ══════════════════════════════════════
+   POSTS
+══════════════════════════════════════ */
 function listenPosts() {
-  const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+  const q = query(collection(db,'posts'), orderBy('createdAt','desc'));
   postsUnsubscribe = onSnapshot(q, snap => {
-    allPostsCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allPostsCache = snap.docs.map(d => ({id:d.id,...d.data()}));
     renderPosts(allPostsCache);
-    updateMyPostCount(allPostsCache);
-    updateMyPoints(allPostsCache);
-    loadRanking();
-  });
-}
-
-/* ── PROFILE STATS LIVE ── */
-function listenProfileStats() {
-  onSnapshot(doc(db, 'users', currentUser.uid), snap => {
-    if (!snap.exists()) return;
-    const data = snap.data();
-    document.getElementById('myFollowers').textContent = data.followers || 0;
-    document.getElementById('myFollowing').textContent = data.following || 0;
-  });
-}
-
-function updateMyPostCount(posts) {
-  if (!currentUser) return;
-  document.getElementById('myPostCount').textContent = posts.filter(p => p.authorId === currentUser.uid).length;
-}
-
-function updateMyPoints(posts) {
-  if (!currentUser) return;
-  const mine = posts.filter(p => p.authorId === currentUser.uid);
-  const pts  = mine.reduce((acc, p) => acc + (p.likes || 0) * 2 + 10, 0);
-  document.getElementById('myPoints').textContent = pts;
-}
-
-/* ── RANKING (real users) ── */
-async function loadRanking() {
-  const [postsSnap, usersSnap] = await Promise.all([
-    getDocs(collection(db, 'posts')),
-    getDocs(collection(db, 'users'))
-  ]);
-  const posts = postsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-  const users = usersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-
-  const ranked = users.map(u => {
-    const myPosts = posts.filter(p => p.authorId === u.id);
-    const pts = myPosts.reduce((acc, p) => acc + (p.likes || 0) * 2 + 10, 0);
-    return { ...u, postCount: myPosts.length, pts };
-  }).sort((a, b) => b.pts - a.pts);
-
-  const tbody = document.getElementById('rankingBody');
-  if (!tbody) return;
-  if (ranked.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-3);">Aún no hay usuarios.</td></tr>`;
-    return;
-  }
-  tbody.innerHTML = ranked.map((u, i) => {
-    const init = (u.name || 'U').charAt(0).toUpperCase();
-    const av   = avColors[Math.abs(hashStr(u.handle||'')) % avColors.length];
-    const isMe = currentUser && u.id === currentUser.uid;
-    return `<tr ${isMe ? 'style="background:var(--blue-dim);"' : ''}>
-      <td class="rank-num" ${isMe ? 'style="color:var(--blue);"' : ''}>${i+1}</td>
-      <td><div style="display:flex;align-items:center;gap:8px;">
-        <div class="av ${av} av-28">${init}</div>
-        <b>${u.handle||'usuario'}</b>
-        ${isMe ? '<span style="font-size:11px;color:var(--blue);margin-left:4px;">tú</span>' : ''}
-      </div></td>
-      <td style="color:var(--text-3)">${u.country||'—'}</td>
-      <td style="color:var(--text-3)">${u.postCount}</td>
-      <td class="rank-pts" ${isMe ? 'style="color:var(--blue);"' : ''}>${u.pts}</td>
-    </tr>`;
-  }).join('');
-}
-
-/* ── NOTIFICATIONS (real) ── */
-function listenNotifications() {
-  const q = query(collection(db, 'users', currentUser.uid, 'notifications'), orderBy('createdAt', 'desc'));
-  onSnapshot(q, snap => {
-    const notifs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    const unread = notifs.filter(n => !n.read).length;
-    const badge = document.getElementById('notifBadge');
-    badge.textContent = unread;
-    badge.style.display = unread > 0 ? 'flex' : 'none';
-    const list = document.getElementById('notifList');
-    if (notifs.length === 0) {
-      list.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-3);font-size:13px;">Sin notificaciones</div>`;
-      return;
-    }
-    list.innerHTML = notifs.map(n => {
-      const init = (n.fromName || 'U').charAt(0).toUpperCase();
-      const ts   = n.createdAt?.toDate ? timeAgo(n.createdAt.toDate()) : 'ahora';
-      return `<div class="notif-item ${n.read?'':'unread'}" onclick="readNotifReal('${n.id}')">
-        <div class="av av-blue av-32">${init}</div>
-        <div style="flex:1"><div class="notif-text">${escHtml(n.text)}</div><div class="notif-time">${ts}</div></div>
-        ${n.read ? '' : '<div class="notif-dot"></div>'}
-      </div>`;
-    }).join('');
-  });
-}
-
-/* ── MESSAGES (real) ── */
-function loadMessages() {
-  const q = query(collection(db, 'users', currentUser.uid, 'messages'), orderBy('createdAt', 'desc'));
-  onSnapshot(q, snap => {
-    const msgs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    const list = document.getElementById('msgList');
-    if (!list) return;
-    if (msgs.length === 0) {
-      list.innerHTML = `<div class="empty"><div class="empty-icon">✉</div><div class="empty-text">No tenés mensajes todavía.<br>Cuando alguien te escriba aparecerá acá.</div></div>`;
-      return;
-    }
-    list.innerHTML = msgs.map(m => {
-      const init = (m.fromName || 'U').charAt(0).toUpperCase();
-      const av   = avColors[Math.abs(hashStr(m.fromHandle||'')) % avColors.length];
-      const ts   = m.createdAt?.toDate ? timeAgo(m.createdAt.toDate()) : 'ahora';
-      return `<div class="msg-row" style="position:relative;">
-        <div class="av ${av} av-40">${init}</div>
-        <div class="msg-info"><div class="msg-name">${m.fromHandle||'usuario'}</div><div class="msg-prev">${escHtml(m.preview||'')}</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
-          <span class="msg-time">${ts}</span>
-          ${m.read ? '' : '<div class="msg-dot"></div>'}
-          <button onclick="event.stopPropagation();deleteMessage('${m.id}')" style="font-size:11px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;" title="Borrar">🗑</button>
-        </div>
-      </div>`;
-    }).join('');
+    if (!isGuest) { updateMyPostCount(allPostsCache); updateMyPoints(allPostsCache); loadRanking(); }
   });
 }
 
 function renderPosts(posts) {
-  const feed = document.getElementById('postsFeed');
-  const filtered = currentFilter === 'todos' ? posts : posts.filter(p => p.cat === currentFilter);
-  document.getElementById('emptyFeed').style.display = filtered.length === 0 ? 'block' : 'none';
+  const feed     = document.getElementById('postsFeed');
+  const filtered = currentFilter==='todos' ? posts : posts.filter(p=>p.cat===currentFilter);
+  document.getElementById('emptyFeed').style.display = filtered.length===0 ? 'block':'none';
+  if (filtered.length===0) { feed.innerHTML=''; return; }
 
-  if (filtered.length === 0) { feed.innerHTML = ''; return; }
-
+  const myInit = (userProfile?.name||'U').charAt(0).toUpperCase();
   feed.innerHTML = filtered.map(p => {
-    const meta  = catMeta[p.cat] || catMeta.outro;
-    const init  = (p.authorName || 'U').charAt(0).toUpperCase();
-    const av    = avColors[Math.abs(hashStr(p.authorHandle||'')) % avColors.length];
-    const isOwn = currentUser && p.authorId === currentUser.uid;
-    const ts    = p.createdAt?.toDate ? timeAgo(p.createdAt.toDate()) : 'ahora';
-    const comments = p.comments || [];
-    return `
-    <div class="card post-card" data-cat="${p.cat}" data-id="${p.id}">
+    const meta     = catMeta[p.cat] || catMeta.otro;
+    const init     = (p.authorName||'U').charAt(0).toUpperCase();
+    const av       = avColors[Math.abs(hashStr(p.authorHandle||''))%avColors.length];
+    const isOwn    = !isGuest && currentUser && p.authorId===currentUser.uid;
+    const ts       = p.createdAt?.toDate ? timeAgo(p.createdAt.toDate()) : 'ahora';
+    const comments = p.comments||[];
+    return `<div class="card post-card" data-id="${p.id}">
       <div class="post-head">
-        <div class="av ${av} av-32">${init}</div>
+        <div class="av ${av} av-32" style="${p.authorAvatar?`background-image:url(${p.authorAvatar});background-size:cover;`:''}">${p.authorAvatar?'':init}</div>
         <div class="post-user">
-          <div class="post-username">${p.authorHandle || 'usuario'} ${isOwn?'<span class="post-own-badge">tuyo</span>':''}</div>
-          <div class="post-meta">${p.authorCountry||''} · ${ts}</div>
+          <div class="post-username" style="cursor:pointer;" onclick="openUserProfile('${p.authorId}','${escHtml(p.authorHandle||'')}')">
+            ${escHtml(p.authorHandle||'usuario')} ${isOwn?'<span class="post-own-badge">tuyo</span>':''}
+          </div>
+          <div class="post-meta">${escHtml(p.authorCountry||'')} · ${ts}</div>
         </div>
         <span class="tag ${meta.cls}">${meta.label}</span>
+        ${isOwn?`<button onclick="deletePost('${p.id}')" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:13px;padding:0;margin-left:4px;">🗑</button>`:''}
       </div>
       <div class="problem-block">${escHtml(p.problem)}</div>
-      ${p.desc ? `<div class="post-desc">${escHtml(p.desc)}</div>` : ''}
+      ${p.desc?`<div class="post-desc">${escHtml(p.desc)}</div>`:''}
       <div class="post-actions">
-        <button class="action-pill" onclick="toggleLike(this,${p.likes||0})">▲ <span>${p.likes||0}</span></button>
+        <button class="action-pill" onclick="${isGuest?`openModal('loginRequiredModal')`:`toggleLike(this,${p.likes||0})`}">▲ <span>${p.likes||0}</span></button>
         <button class="action-pill" onclick="toggleComments(this)">◎ <span class="cc">${comments.length}</span></button>
         <button class="action-pill">↗</button>
       </div>
@@ -951,41 +863,49 @@ function renderPosts(posts) {
         ${comments.map(c=>`
           <div class="comment">
             <div class="av av-blue av-28">${(c.user||'U').charAt(0).toUpperCase()}</div>
-            <div class="comment-body">
-              <div class="comment-user">${c.user}</div>
-              <div class="comment-text">${escHtml(c.text)}</div>
-              <div class="comment-time">${c.time||'ahora'}</div>
-            </div>
+            <div class="comment-body"><div class="comment-user">${escHtml(c.user||'usuario')}</div><div class="comment-text">${escHtml(c.text)}</div><div class="comment-time">${c.time||'ahora'}</div></div>
           </div>`).join('')}
-        <div class="comment-compose">
-          <div class="av av-blue av-28">${(userProfile?.name||'U').charAt(0).toUpperCase()}</div>
-          <input class="input comment-input" type="text" placeholder="${comments.length===0?'sé el primero en comentar…':'comentar…'}" onkeydown="submitComment(event,this)" data-postid="${p.id}"/>
-          <button class="btn btn-solid btn-sm" onclick="submitCommentBtn(this)">↵</button>
-        </div>
+        ${isGuest
+          ?`<div style="text-align:center;padding:10px 0;"><button class="btn btn-ghost btn-sm" onclick="openModal('loginRequiredModal')">Iniciá sesión para comentar</button></div>`
+          :`<div class="comment-compose">
+              <div class="av av-blue av-28" style="${userProfile?.avatar?`background-image:url(${userProfile.avatar});background-size:cover;`:''}">${userProfile?.avatar?'':myInit}</div>
+              <input class="input comment-input" type="text" placeholder="${comments.length===0?'sé el primero…':'comentar…'}" onkeydown="submitComment(event,this)" data-postid="${p.id}"/>
+              <button class="btn btn-solid btn-sm" onclick="submitCommentBtn(this)">↵</button>
+            </div>`}
       </div>
     </div>`;
   }).join('');
 }
 
 window.filterPosts = (cat, btn) => {
-  document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#tab-posts .filter-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   currentFilter = cat;
   renderPosts(allPostsCache);
 };
 
-/* ── PUBLISH POST ── */
+function updateMyPostCount(posts) {
+  if (!currentUser) return;
+  document.getElementById('myPostCount').textContent = posts.filter(p=>p.authorId===currentUser.uid).length;
+}
+function updateMyPoints(posts) {
+  if (!currentUser) return;
+  const mine = posts.filter(p=>p.authorId===currentUser.uid);
+  document.getElementById('myPoints').textContent = mine.reduce((a,p)=>a+(p.likes||0)*2+10,0);
+}
+
 window.openNewPost = () => {
+  if (!requireAuth()) return;
   openModal('newPostModal');
   document.getElementById('np-problem').value = '';
-  document.getElementById('np-desc').value = '';
+  document.getElementById('np-desc').value    = '';
   document.getElementById('f-problem').classList.remove('has-error');
   selectedCat = 'divisibilidad';
-  document.querySelectorAll('.cat-opt').forEach(b => b.classList.toggle('selected', b.dataset.cat==='divisibilidad'));
+  document.querySelectorAll('.cat-opt').forEach(b=>b.classList.toggle('selected',b.dataset.cat==='divisibilidad'));
 };
 
 window.selectCat = (btn) => {
-  document.querySelectorAll('.cat-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.cat-opt').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
   selectedCat = btn.dataset.cat;
 };
@@ -993,371 +913,520 @@ window.selectCat = (btn) => {
 window.publishPost = async () => {
   const problem = document.getElementById('np-problem').value.trim();
   const desc    = document.getElementById('np-desc').value.trim();
-  document.getElementById('f-problem').classList.toggle('has-error', !problem);
+  document.getElementById('f-problem').classList.toggle('has-error',!problem);
   if (!problem) return;
-
   const btn = document.getElementById('publishBtn');
-  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>';
-  btn.disabled = true;
-
+  btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
   try {
-    await addDoc(collection(db, 'posts'), {
-      cat:           selectedCat,
-      problem,
-      desc,
-      authorId:      currentUser.uid,
-      authorName:    userProfile.name,
-      authorHandle:  userProfile.handle,
-      authorCountry: userProfile.country || 'Argentina',
-      likes:         0,
-      comments:      [],
-      createdAt:     serverTimestamp()
+    await addDoc(collection(db,'posts'),{
+      cat:selectedCat, problem, desc,
+      authorId:currentUser.uid, authorName:userProfile.name,
+      authorHandle:userProfile.handle, authorCountry:userProfile.country||'Argentina',
+      authorAvatar:userProfile.avatar||'',
+      likes:0, comments:[], createdAt:serverTimestamp()
     });
     closeModal('newPostModal');
-    switchTab('posts');
+    switchTab('posts'); currentFilter='todos';
+    document.querySelectorAll('#tab-posts .filter-pill').forEach((b,i)=>b.classList.toggle('active',i===0));
     toast('✓ Post publicado');
-  } catch(e) {
-    toast('Error al publicar. Intentá de nuevo.');
-  } finally {
-    btn.innerHTML = 'Publicar';
-    btn.disabled = false;
-  }
+  } catch(e) { toast('Error al publicar.'); console.warn(e); }
+  finally { btn.innerHTML='Publicar'; btn.disabled=false; }
 };
 
-/* ── ACADEMIAS ── */
-async function loadAcademias() {
-  try {
-    const snap = await getDocs(collection(db, 'academias'));
-    const academias = snap.docs.map(d => ({id:d.id,...d.data()}));
-    renderAcademias(academias);
-  } catch(e) {
-    console.warn('loadAcademias:', e);
-    renderAcademias([]);
+window.deletePost = (id) => confirmDelete('¿Borrar este post?', async()=>{
+  try { await deleteDoc(doc(db,'posts',id)); toast('✓ Post borrado'); } catch { toast('Error.'); }
+});
+
+/* ══════════════════════════════════════
+   COMMENTS
+══════════════════════════════════════ */
+window.toggleComments = (btn) => {
+  const card = btn.closest('.post-card,.proof-card');
+  const wrap = card.querySelector('.comments-wrap');
+  const open = wrap.classList.toggle('open');
+  btn.classList.toggle('on', open);
+  if (open) setTimeout(()=>card.querySelector('.comment-input')?.focus(),50);
+};
+window.submitComment    = (e, input) => { if(e.key==='Enter'&&input.value.trim()) addComment(input); };
+window.submitCommentBtn = (btn)      => { const i=btn.previousElementSibling; if(i.value.trim()) addComment(i); };
+
+async function addComment(input) {
+  if (!requireAuth()) return;
+  const text=input.value.trim(), postId=input.dataset.postid;
+  const wrap=input.closest('.comments-wrap'), row=input.closest('.comment-compose'), card=input.closest('.post-card,.proof-card');
+  const c=document.createElement('div'); c.className='comment';
+  c.innerHTML=`<div class="av av-blue av-28">${(userProfile?.name||'U').charAt(0).toUpperCase()}</div><div class="comment-body"><div class="comment-user">${escHtml(userProfile?.handle||'tú')}</div><div class="comment-text">${escHtml(text)}</div><div class="comment-time">ahora</div></div>`;
+  wrap.insertBefore(c,row); input.value='';
+  const cc=card.querySelector('.cc'); if(cc) cc.textContent=parseInt(cc.textContent)+1;
+  if (postId) {
+    try {
+      const r=doc(db,'posts',postId), s=await getDoc(r);
+      if (s.exists()) {
+        const cms=s.data().comments||[];
+        cms.push({user:userProfile?.handle||'usuario',text,time:'ahora'});
+        await updateDoc(r,{comments:cms});
+      }
+    } catch {}
   }
 }
 
-function renderAcademias(academias) {
-  const list = document.getElementById('academiaList');
-  if (academias.length === 0) {
-    list.innerHTML = `<div class="empty"><div class="empty-icon">⊙</div><div class="empty-text">No hay academias todavía. ¡Agregá la primera!</div></div>`;
-    return;
+/* ══════════════════════════════════════
+   RANKING
+══════════════════════════════════════ */
+async function loadRanking() {
+  try {
+    const [ps,us] = await Promise.all([getDocs(collection(db,'posts')),getDocs(collection(db,'users'))]);
+    const posts=ps.docs.map(d=>d.data()), users=us.docs.map(d=>({id:d.id,...d.data()}));
+    const ranked=users.map(u=>{
+      const mp=posts.filter(p=>p.authorId===u.id);
+      return {...u,postCount:mp.length,pts:mp.reduce((a,p)=>a+(p.likes||0)*2+10,0)};
+    }).sort((a,b)=>b.pts-a.pts);
+    const tbody=document.getElementById('rankingBody'); if(!tbody) return;
+    if(!ranked.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text-3);">Aún no hay usuarios.</td></tr>`;return;}
+    tbody.innerHTML=ranked.map((u,i)=>{
+      const init=(u.name||'U').charAt(0).toUpperCase();
+      const av=avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
+      const isMe=!isGuest&&currentUser&&u.id===currentUser.uid;
+      return`<tr ${isMe?'style="background:var(--blue-dim);"':''}>
+        <td class="rank-num" ${isMe?'style="color:var(--blue);"':''}>${i+1}</td>
+        <td><div style="display:flex;align-items:center;gap:8px;cursor:pointer;" onclick="openUserProfile('${u.id}','${escHtml(u.handle||'')}')">
+          <div class="av ${av} av-28" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
+          <b>${escHtml(u.handle||'usuario')}</b>
+          ${isMe?'<span style="font-size:11px;color:var(--blue);margin-left:4px;">tú</span>':''}
+        </div></td>
+        <td style="color:var(--text-3)">${escHtml(u.country||'—')}</td>
+        <td style="color:var(--text-3)">${u.postCount}</td>
+        <td class="rank-pts" ${isMe?'style="color:var(--blue);"':''}>${u.pts}</td>
+      </tr>`;
+    }).join('');
+  } catch(e){console.warn('loadRanking:',e);}
+}
+
+/* ══════════════════════════════════════
+   OLIMPIADAS
+══════════════════════════════════════ */
+async function loadOlimpiadas() {
+  try {
+    const snap = await getDocs(query(collection(db,'olimpiadas'),orderBy('createdAt','asc')));
+    const items = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const list  = document.getElementById('olimpiadasList');
+    if (!list) return;
+    if (!items.length) {
+      list.innerHTML=`<div class="empty"><div class="empty-icon">🏆</div><div class="empty-text">No hay competencias cargadas todavía.</div></div>`;
+      return;
+    }
+    list.innerHTML=items.map(o=>`
+      <div class="card olimpiada-card">
+        <div class="olimpiada-info">
+          <div class="olimpiada-name">${escHtml(o.name)}</div>
+          <div class="olimpiada-meta">${escHtml(o.date)}</div>
+        </div>
+        <span class="tag ${scopeTag[o.scope]||'tag-blue'}">${escHtml(o.scope)}</span>
+        ${currentUser?.uid===OWNER_UID?`<button onclick="deleteOlimpiada('${o.id}')" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:13px;padding:0;">🗑</button>`:''}
+      </div>`).join('');
+  } catch(e){console.warn('loadOlimpiadas:',e);}
+}
+
+window.addOlimpiada = async () => {
+  const name  = document.getElementById('ol-name').value.trim();
+  const date  = document.getElementById('ol-date').value.trim();
+  const scope = document.getElementById('ol-scope').value;
+  if (!name||!date) { toast('Completá nombre y fecha'); return; }
+  try {
+    await addDoc(collection(db,'olimpiadas'),{name,date,scope,createdAt:serverTimestamp()});
+    document.getElementById('ol-name').value='';
+    document.getElementById('ol-date').value='';
+    toast('✓ Olimpiada agregada');
+    loadOlimpiadas();
+  } catch(e){toast('Error.');console.warn(e);}
+};
+
+window.deleteOlimpiada = (id) => confirmDelete('¿Borrar esta olimpiada?', async()=>{
+  try{await deleteDoc(doc(db,'olimpiadas',id));loadOlimpiadas();toast('✓ Borrada');}catch{toast('Error.');}
+});
+
+/* ══════════════════════════════════════
+   USER PROFILE VIEW
+══════════════════════════════════════ */
+window.openUserProfile = async (uid, handle) => {
+  if (!uid) return;
+  try {
+    const [us,ps] = await Promise.all([
+      getDoc(doc(db,'users',uid)),
+      getDocs(query(collection(db,'posts'),where('authorId','==',uid)))
+    ]);
+    const u=us.exists()?us.data():{name:handle,handle,country:'',bio:'',badges:[],avatar:''};
+    const posts=ps.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
+      const ta=a.createdAt?.toDate?.()?.getTime()||0;
+      const tb=b.createdAt?.toDate?.()?.getTime()||0;
+      return tb-ta;
+    });
+    const init=(u.name||'U').charAt(0).toUpperCase();
+    const av=avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
+    const colors=['var(--blue)','var(--purple)','var(--teal)','var(--amber)'];
+    const isMe=!isGuest&&currentUser&&uid===currentUser.uid;
+    document.getElementById('userProfileContent').innerHTML=`
+      <button class="back-btn" onclick="switchTab('posts')">← Volver</button>
+      <div class="profile-banner"></div>
+      <div class="profile-top">
+        <div class="profile-av ${av}" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
+        ${isMe?`<button class="btn btn-ghost btn-sm" onclick="switchTab('cuenta')">Mi perfil</button>`:''}
+      </div>
+      <div class="profile-name">${escHtml(u.name||handle)}</div>
+      <div class="profile-handle">@${escHtml(u.handle||handle)} · ${escHtml(u.country||'')}</div>
+      <div class="profile-bio" style="margin-bottom:16px;">${escHtml(u.bio||'Matemático olímpico en Zeta.')}</div>
+      ${u.badges?.length?`<div class="badge-row" style="margin-bottom:16px;">${u.badges.map((b,i)=>`<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)}</span>`).join('')}</div>`:''}
+      <div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">${posts.length} posts</div>
+      ${posts.map(p=>{
+        const meta=catMeta[p.cat]||catMeta.otro;
+        const ts=p.createdAt?.toDate?timeAgo(p.createdAt.toDate()):'ahora';
+        return`<div class="card post-card" style="margin-bottom:10px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <span class="tag ${meta.cls}">${meta.label}</span>
+            <span style="font-size:11px;color:var(--text-3);">${ts}</span>
+          </div>
+          <div class="problem-block">${escHtml(p.problem)}</div>
+          ${p.desc?`<div class="post-desc">${escHtml(p.desc)}</div>`:''}
+        </div>`;
+      }).join('')}
+      ${!posts.length?`<div class="empty"><div class="empty-icon">∅</div><div>Este usuario no publicó posts todavía.</div></div>`:''}`;
+    document.querySelectorAll('.tab').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    document.getElementById('tab-user-profile').classList.add('active');
+  } catch(e){console.warn(e);toast('Error al cargar perfil.');}
+};
+
+/* ══════════════════════════════════════
+   SEARCH (usuarios + posts)
+══════════════════════════════════════ */
+window.doSearch = async (q) => {
+  const dd = document.getElementById('searchDD');
+  if (!q.trim()) { dd.classList.remove('open'); return; }
+
+  // Buscar usuarios en Firestore
+  let userRows = [];
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    userRows = snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(u=>(u.handle||'').toLowerCase().includes(q.toLowerCase())||(u.name||'').toLowerCase().includes(q.toLowerCase()))
+      .slice(0,5)
+      .map(u=>{
+        const init=(u.name||'U').charAt(0).toUpperCase();
+        const av=avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
+        return`<div class="search-item" onclick="openUserProfile('${u.id}','${escHtml(u.handle||'')}');closeSearchDD()">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="av ${av} av-28" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
+            <div><div class="si-title">${hl(escHtml(u.handle||''),q)}</div><div class="si-meta">Usuario · ${escHtml(u.country||'')}</div></div>
+          </div>
+        </div>`;
+      });
+  } catch {}
+
+  // Posts del cache
+  const postRows = allPostsCache
+    .filter(p=>(p.problem||'').toLowerCase().includes(q.toLowerCase())||(p.authorHandle||'').toLowerCase().includes(q.toLowerCase()))
+    .slice(0,4)
+    .map(p=>`<div class="search-item" onclick="switchTab('posts');closeSearchDD()">
+      <div class="si-title">${hl(escHtml((p.problem||'').slice(0,60)),q)}…</div>
+      <div class="si-meta">Post · ${escHtml(p.authorHandle||'')}</div>
+    </div>`);
+
+  const all = [...userRows, ...postRows];
+  dd.innerHTML = all.length===0
+    ? `<div class="search-empty">Sin resultados para "<b>${escHtml(q)}</b>"</div>`
+    : all.join('');
+  dd.classList.add('open');
+};
+
+window.openSearchDD  = () => { if(document.getElementById('searchInput').value.trim()) doSearch(document.getElementById('searchInput').value); };
+window.closeSearchDD = () => { document.getElementById('searchDD').classList.remove('open'); document.getElementById('searchInput').value=''; };
+
+/* ══════════════════════════════════════
+   NOTIFICATIONS
+══════════════════════════════════════ */
+function listenNotifications() {
+  const q=query(collection(db,'users',currentUser.uid,'notifications'),orderBy('createdAt','desc'));
+  onSnapshot(q, snap=>{
+    const notifs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const unread=notifs.filter(n=>!n.read).length;
+    const badge=document.getElementById('notifBadge');
+    badge.textContent=unread; badge.style.display=unread>0?'flex':'none';
+    const list=document.getElementById('notifList');
+    if(!notifs.length){list.innerHTML=`<div style="padding:20px;text-align:center;color:var(--text-3);font-size:13px;">Sin notificaciones</div>`;return;}
+    list.innerHTML=notifs.map(n=>{
+      const init=(n.fromName||'U').charAt(0).toUpperCase();
+      const ts=n.createdAt?.toDate?timeAgo(n.createdAt.toDate()):'ahora';
+      return`<div class="notif-item ${n.read?'':'unread'}" onclick="readNotifReal('${n.id}')">
+        <div class="av av-blue av-32">${init}</div>
+        <div style="flex:1"><div class="notif-text">${escHtml(n.text)}</div><div class="notif-time">${ts}</div></div>
+        ${n.read?'':'<div class="notif-dot"></div>'}
+      </div>`;
+    }).join('');
+  });
+}
+window.toggleNotif   = ()  => document.getElementById('notifPanel').classList.toggle('open');
+window.readNotifReal = async(id) => { try{await updateDoc(doc(db,'users',currentUser.uid,'notifications',id),{read:true});}catch{}};
+window.markAllRead   = async()  => {
+  const s=await getDocs(query(collection(db,'users',currentUser.uid,'notifications')));
+  s.docs.forEach(d=>{if(!d.data().read)updateDoc(d.ref,{read:true});});
+};
+
+/* ══════════════════════════════════════
+   MESSAGES
+══════════════════════════════════════ */
+function loadMessages() {
+  const q=query(collection(db,'users',currentUser.uid,'messages'),orderBy('createdAt','desc'));
+  onSnapshot(q, snap=>{
+    const msgs=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const list=document.getElementById('msgList'); if(!list) return;
+    if(!msgs.length){list.innerHTML=`<div class="empty"><div class="empty-icon">✉</div><div class="empty-text">No tenés mensajes todavía.</div></div>`;return;}
+    list.innerHTML=msgs.map(m=>{
+      const init=(m.fromName||'U').charAt(0).toUpperCase();
+      const av=avColors[Math.abs(hashStr(m.fromHandle||''))%avColors.length];
+      const ts=m.createdAt?.toDate?timeAgo(m.createdAt.toDate()):'ahora';
+      return`<div class="msg-row">
+        <div class="av ${av} av-40">${init}</div>
+        <div class="msg-info"><div class="msg-name">${escHtml(m.fromHandle||'usuario')}</div><div class="msg-prev">${escHtml(m.preview||'')}</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
+          <span class="msg-time">${ts}</span>
+          ${m.read?'':'<div class="msg-dot"></div>'}
+          <button onclick="deleteMessage('${m.id}')" style="font-size:12px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;">🗑</button>
+        </div>
+      </div>`;
+    }).join('');
+  });
+}
+window.deleteMessage = (id) => confirmDelete('¿Borrar este mensaje?', async()=>{
+  try{await deleteDoc(doc(db,'users',currentUser.uid,'messages',id));toast('✓ Mensaje borrado');}catch{toast('Error.');}
+});
+
+/* ══════════════════════════════════════
+   PROFILE STATS LIVE
+══════════════════════════════════════ */
+function listenProfileStats() {
+  onSnapshot(doc(db,'users',currentUser.uid), snap=>{
+    if(!snap.exists()) return;
+    const d=snap.data();
+    document.getElementById('myFollowers').textContent=d.followers||0;
+    document.getElementById('myFollowing').textContent=d.following||0;
+  });
+}
+
+/* ══════════════════════════════════════
+   EDIT PROFILE + AVATAR
+══════════════════════════════════════ */
+window.openEditProfile = () => {
+  if (!requireAuth()) return;
+  pendingAvatarDataURL = null;
+  document.getElementById('ep-name').value    = userProfile.name    || '';
+  document.getElementById('ep-handle').value  = userProfile.handle  || '';
+  document.getElementById('ep-country').value = userProfile.country || '';
+  document.getElementById('ep-bio').value     = userProfile.bio     || '';
+  document.getElementById('ep-badges').value  = (userProfile.badges||[]).join(', ');
+  // Mostrar foto actual
+  const z = document.getElementById('avatarPreview');
+  if (z) {
+    if (userProfile.avatar) { z.style.backgroundImage=`url(${userProfile.avatar})`; z.style.backgroundSize='cover'; z.innerHTML=''; }
+    else { z.style.backgroundImage=''; z.innerHTML=`<span style="color:var(--text-3);font-size:22px;">📷</span>`; }
   }
-  list.innerHTML = academias.map((a,i) => {
-    const isOwn = currentUser && a.submittedBy === currentUser.uid;
-    return `<div class="card academia-card" style="cursor:pointer;" onclick="openAcademiaDetail(${JSON.stringify(a).replace(/"/g,'&quot;')})">
-      <div class="academia-logo ${a.color||avColors[i%avColors.length]}">${a.logo}</div>
+  openModal('editProfileModal');
+};
+
+window.handleAvatarFile = (input) => {
+  const file = input.files[0]; if(!file) return;
+  if (file.size > 2*1024*1024) { toast('La imagen no puede superar 2MB'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingAvatarDataURL = e.target.result;
+    const z = document.getElementById('avatarPreview');
+    if (z) { z.style.backgroundImage=`url(${e.target.result})`; z.style.backgroundSize='cover'; z.innerHTML=''; }
+  };
+  reader.readAsDataURL(file);
+};
+
+window.saveProfile = async () => {
+  const name    = document.getElementById('ep-name').value.trim();
+  const handle  = document.getElementById('ep-handle').value.trim().replace('@','');
+  const country = document.getElementById('ep-country').value.trim();
+  const bio     = document.getElementById('ep-bio').value.trim();
+  const badges  = document.getElementById('ep-badges').value.split(',').map(b=>b.trim()).filter(Boolean);
+  if (!name||!handle) { toast('Nombre y usuario son obligatorios'); return; }
+
+  const btn = document.getElementById('saveProfileBtn');
+  btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
+
+  try {
+    let avatarURL = userProfile.avatar || '';
+    // Guardar foto como base64 directo en Firestore (sin Firebase Storage)
+    if (pendingAvatarDataURL) {
+      avatarURL = pendingAvatarDataURL;
+    }
+
+    const data = {name,handle,country,bio,badges,avatar:avatarURL,updatedAt:serverTimestamp()};
+    await updateDoc(doc(db,'users',currentUser.uid), data);
+    await updateProfile(currentUser, {displayName:name});
+    userProfile = {...userProfile,name,handle,country,bio,badges,avatar:avatarURL};
+    updateUIUser();
+    closeModal('editProfileModal');
+    toast('✓ Perfil actualizado');
+  } catch(e) { toast('Error al guardar.'); console.warn(e); }
+  finally { btn.innerHTML='Guardar'; btn.disabled=false; }
+};
+
+/* ══════════════════════════════════════
+   ACADEMIAS
+══════════════════════════════════════ */
+async function loadAcademias() {
+  try {
+    const snap=await getDocs(collection(db,'academias'));
+    renderAcademias(snap.docs.map(d=>({id:d.id,...d.data()})));
+  } catch(e) { console.warn('loadAcademias:',e); renderAcademias([]); }
+}
+
+function renderAcademias(academias) {
+  const list=document.getElementById('academiaList');
+  if(!academias.length){list.innerHTML=`<div class="empty"><div class="empty-icon">⊙</div><div class="empty-text">No hay academias todavía. ¡Agregá la primera!</div></div>`;return;}
+  list.innerHTML=academias.map((a,i)=>{
+    const isOwn=!isGuest&&currentUser&&a.submittedBy===currentUser.uid;
+    return`<div class="card academia-card" style="cursor:pointer;" onclick="openAcademiaDetail(${JSON.stringify(a).replace(/"/g,'&quot;')})">
+      <div class="academia-logo ${a.color||avColors[i%avColors.length]}">${escHtml(a.logo||'')}</div>
       <div class="academia-info">
-        <div class="academia-name">${a.name} ${a.verified ? '<span style="color:var(--teal);font-size:11px;">✓ verificada</span>' : '<span style="color:var(--amber);font-size:11px;">· pendiente</span>'}</div>
-        <div class="academia-loc">${a.loc}</div>
-        <div class="academia-stats">${a.stats||a.desc||''}</div>
+        <div class="academia-name">${escHtml(a.name)} ${a.verified?'<span style="color:var(--teal);font-size:11px;">✓</span>':'<span style="color:var(--amber);font-size:11px;">· pendiente</span>'}</div>
+        <div class="academia-loc">${escHtml(a.loc||'')}</div>
+        <div class="academia-stats">${escHtml(a.stats||a.desc||'')}</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
         <button class="btn-follow" onclick="event.stopPropagation();toggleFollow(this)">seguir</button>
-        ${isOwn ? `<button onclick="event.stopPropagation();deleteAcademia('${a.id}')" style="font-size:11px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;" title="Borrar">🗑 borrar</button>` : ''}
+        ${isOwn?`<button onclick="event.stopPropagation();deleteAcademia('${a.id}')" style="font-size:11px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;">🗑 borrar</button>`:''}
       </div>
     </div>`;
   }).join('');
 }
 
 window.openAcademiaDetail = (a) => {
-  const av    = a.color || 'av-blue';
-  const bgMap = { 'av-blue':'var(--blue-dim)', 'av-purple':'var(--purple-dim)', 'av-teal':'var(--teal-dim)', 'av-amber':'var(--amber-dim)' };
-  const bg    = bgMap[av] || 'var(--blue-dim)';
-
-  document.getElementById('academiaDetailContent').innerHTML = `
+  const bgMap={'av-blue':'var(--blue-dim)','av-purple':'var(--purple-dim)','av-teal':'var(--teal-dim)','av-amber':'var(--amber-dim)'};
+  const bg=bgMap[a.color]||'var(--blue-dim)';
+  document.getElementById('academiaDetailContent').innerHTML=`
     <button class="back-btn" onclick="switchTab('academias')">← Volver a academias</button>
     <div class="academia-detail-banner" style="background:${bg};"></div>
     <div class="academia-detail-top">
-      <div class="academia-detail-logo ${av}">${a.logo}</div>
+      <div class="academia-detail-logo ${a.color||'av-blue'}">${escHtml(a.logo||'')}</div>
       <button class="btn-follow" onclick="toggleFollow(this)">seguir</button>
     </div>
-    <div class="academia-detail-name">${a.name}</div>
-    <div class="academia-detail-loc">📍 ${a.loc}</div>
-    ${a.verified
-      ? `<div class="verified-badge">✓ Academia verificada por Zeta</div>`
-      : `<div class="pending-badge">⏳ Pendiente de verificación</div>`}
-    <div class="academia-detail-desc">${a.desc || a.stats || 'Sin descripción.'}</div>
+    <div class="academia-detail-name">${escHtml(a.name||'')}</div>
+    <div class="academia-detail-loc">📍 ${escHtml(a.loc||'')}</div>
+    ${a.verified?`<div class="verified-badge">✓ Verificada por Zeta</div>`:`<div class="pending-badge">⏳ Pendiente de verificación</div>`}
+    <div class="academia-detail-desc">${escHtml(a.desc||a.stats||'Sin descripción.')}</div>
     <div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Contacto</div>
     <div class="contact-row">
-      ${a.email ? `<div class="contact-item"><div class="contact-icon">✉</div><a class="contact-link" href="mailto:${a.email}">${a.email}</a></div>` : ''}
-      ${a.phone ? `<div class="contact-item"><div class="contact-icon">📱</div><span>${a.phone}</span></div>` : ''}
-      ${a.web   ? `<div class="contact-item"><div class="contact-icon">🌐</div><a class="contact-link" href="${a.web}" target="_blank" rel="noopener">${a.web}</a></div>` : ''}
-      ${!a.email && !a.phone && !a.web ? `<div style="color:var(--text-3);font-size:13px;">No se proporcionó información de contacto.</div>` : ''}
+      ${a.email?`<div class="contact-item"><div class="contact-icon">✉</div><a class="contact-link" href="mailto:${escHtml(a.email)}">${escHtml(a.email)}</a></div>`:''}
+      ${a.phone?`<div class="contact-item"><div class="contact-icon">📱</div><span>${escHtml(a.phone)}</span></div>`:''}
+      ${a.web?`<div class="contact-item"><div class="contact-icon">🌐</div><a class="contact-link" href="${escHtml(a.web)}" target="_blank" rel="noopener">${escHtml(a.web)}</a></div>`:''}
+      ${!a.email&&!a.phone&&!a.web?`<div style="color:var(--text-3);font-size:13px;">Sin información de contacto.</div>`:''}
     </div>`;
-
-  // Switch to detail tab without touching sidebar
-  document.querySelectorAll('.tab').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-academia-detail').classList.add('active');
 };
 
 window.openNewAcademia = () => {
+  if (!requireAuth()) return;
+  ['ac-name','ac-logo','ac-loc','ac-desc','ac-email','ac-phone','ac-web'].forEach(id=>{document.getElementById(id).value='';});
+  ['fa-name','fa-loc'].forEach(id=>document.getElementById(id).classList.remove('has-error'));
   openModal('newAcademiaModal');
-  ['ac-name','ac-logo','ac-loc','ac-desc','ac-email','ac-phone','ac-web'].forEach(id => { document.getElementById(id).value=''; });
-  ['fa-name','fa-loc'].forEach(id => document.getElementById(id).classList.remove('has-error'));
 };
 
 window.publishAcademia = async () => {
-  const name  = document.getElementById('ac-name').value.trim();
-  const logo  = document.getElementById('ac-logo').value.trim() || name.slice(0,3).toUpperCase();
-  const loc   = document.getElementById('ac-loc').value.trim();
-  const desc  = document.getElementById('ac-desc').value.trim();
-  const email = document.getElementById('ac-email').value.trim();
-  const phone = document.getElementById('ac-phone').value.trim();
-  const web   = document.getElementById('ac-web').value.trim();
-
-  document.getElementById('fa-name').classList.toggle('has-error', !name);
-  document.getElementById('fa-loc').classList.toggle('has-error', !loc);
-  if (!name || !loc) return;
-
-  const btn = document.getElementById('academiaBtn');
-  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>';
-  btn.disabled = true;
-
+  const name=document.getElementById('ac-name').value.trim();
+  const logo=document.getElementById('ac-logo').value.trim()||name.slice(0,3).toUpperCase();
+  const loc=document.getElementById('ac-loc').value.trim();
+  const desc=document.getElementById('ac-desc').value.trim();
+  const email=document.getElementById('ac-email').value.trim();
+  const phone=document.getElementById('ac-phone').value.trim();
+  const web=document.getElementById('ac-web').value.trim();
+  document.getElementById('fa-name').classList.toggle('has-error',!name);
+  document.getElementById('fa-loc').classList.toggle('has-error',!loc);
+  if(!name||!loc) return;
+  const btn=document.getElementById('academiaBtn');
+  btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
   try {
-    const colorIdx = (await getDocs(collection(db,'academias'))).size % avColors.length;
-    await addDoc(collection(db,'academias'), {
-      name, logo, loc, desc, email, phone, web,
-      stats: desc,
-      color: avColors[colorIdx],
-      verified: false,          // admin tiene que aprobarla
-      submittedBy: currentUser.uid,
-      createdAt: serverTimestamp()
-    });
-    closeModal('newAcademiaModal');
-    loadAcademias();
-    toast('✓ Academia enviada — la revisaremos pronto');
-  } catch {
-    toast('Error al guardar. Intentá de nuevo.');
-  } finally {
-    btn.innerHTML = 'Enviar para revisión';
-    btn.disabled = false;
-  }
+    const ci=(await getDocs(collection(db,'academias'))).size%avColors.length;
+    await addDoc(collection(db,'academias'),{name,logo,loc,desc,email,phone,web,stats:desc,color:avColors[ci],verified:false,submittedBy:currentUser.uid,createdAt:serverTimestamp()});
+    closeModal('newAcademiaModal'); loadAcademias(); toast('✓ Academia enviada — la revisaremos pronto');
+  } catch { toast('Error al guardar.'); }
+  finally { btn.innerHTML='Enviar para revisión'; btn.disabled=false; }
 };
 
-/* ── COMMENTS ── */
-window.toggleComments = (btn) => {
-  const card = btn.closest('.post-card,.proof-card');
-  const wrap = card.querySelector('.comments-wrap');
-  const open = wrap.classList.toggle('open');
-  btn.classList.toggle('on', open);
-  if (open) setTimeout(() => card.querySelector('.comment-input')?.focus(), 50);
-};
+window.deleteAcademia = (id) => confirmDelete('¿Borrar esta academia?', async()=>{
+  try{await deleteDoc(doc(db,'academias',id));loadAcademias();toast('✓ Borrada');}catch{toast('Error.');}
+});
 
-window.submitComment = (e, input) => { if(e.key==='Enter' && input.value.trim()) addComment(input); };
-window.submitCommentBtn = (btn) => { const i=btn.previousElementSibling; if(i.value.trim()) addComment(i); };
-
-async function addComment(input) {
-  const text   = input.value.trim();
-  const postId = input.dataset.postid;
-  const wrap   = input.closest('.comments-wrap');
-  const row    = input.closest('.comment-compose');
-  const card   = input.closest('.post-card,.proof-card');
-
-  // Render optimistically
-  const c = document.createElement('div');
-  c.className = 'comment';
-  c.innerHTML = `<div class="av av-blue av-28">${(userProfile?.name||'U').charAt(0).toUpperCase()}</div><div class="comment-body"><div class="comment-user">${userProfile?.handle||'tú'}</div><div class="comment-text">${escHtml(text)}</div><div class="comment-time">ahora</div></div>`;
-  wrap.insertBefore(c, row);
-  input.value = '';
-  const cc = card.querySelector('.cc');
-  if (cc) cc.textContent = parseInt(cc.textContent)+1;
-
-  // Save to Firestore if post has an id
-  if (postId) {
-    try {
-      const postRef = doc(db, 'posts', postId);
-      const snap = await getDoc(postRef);
-      if (snap.exists()) {
-        const comments = snap.data().comments || [];
-        comments.push({ user: userProfile?.handle||'usuario', text, time: 'ahora' });
-        await updateDoc(postRef, { comments });
-      }
-    } catch { /* silent */ }
-  }
-}
-
-/* ── MISC ── */
-window.toggleLike   = (btn, base) => { const on=btn.classList.toggle('on'); btn.querySelector('span').textContent=on?base+1:base; };
-window.toggleFollow = async (btn) => {
-  const f = btn.classList.toggle('following');
-  btn.textContent = f ? 'siguiendo' : 'seguir';
-  if (!currentUser) return;
-  try {
-    await updateDoc(doc(db, 'users', currentUser.uid), { following: increment(f ? 1 : -1) });
-  } catch { /* silent - user doc may not have field yet */ }
-};
-
-window.switchTab = (tab) => {
-  document.querySelectorAll('.tab').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  document.getElementById('nav-'+tab).classList.add('active');
-  closeDropdowns();
-};
-
-/* SEARCH */
-const searchIndex = [
-  {title:'Posts de divisibilidad',meta:'Categoría',tab:'posts'},
-  {title:'Posts de desigualdades',meta:'Categoría',tab:'posts'},
-  {title:'Infinitud de primos',meta:'Proof',tab:'proofs'},
-  {title:'Principio del palomar',meta:'Proof',tab:'proofs'},
-  {title:'√2 es irracional',meta:'Proof',tab:'proofs'},
-  {title:'Olimpíada Matemática Argentina',meta:'Academia',tab:'academias'},
-  {title:'IMO 2025',meta:'Olimpiada · Mundial',tab:'olimpiadas'},
-  {title:'Iberoamericana de Matemáticas',meta:'Olimpiada',tab:'olimpiadas'},
-];
-window.doSearch = (q) => {
-  const dd = document.getElementById('searchDD');
-  if (!q.trim()) { dd.classList.remove('open'); return; }
-  const res = searchIndex.filter(d => d.title.toLowerCase().includes(q.toLowerCase()) || d.meta.toLowerCase().includes(q.toLowerCase()));
-  dd.innerHTML = res.length===0
-    ? `<div class="search-empty">Sin resultados para "<b>${q}</b>"</div>`
-    : res.map(r=>`<div class="search-item" onclick="switchTab('${r.tab}');closeAllSearch()"><div class="si-title">${hl(r.title,q)}</div><div class="si-meta">${r.meta}</div></div>`).join('');
-  dd.classList.add('open');
-};
-window.openSearch    = () => { if(document.getElementById('searchInput').value.trim()) doSearch(document.getElementById('searchInput').value); };
-window.closeAllSearch= () => { document.getElementById('searchDD').classList.remove('open'); document.getElementById('searchInput').value=''; };
-
-/* NOTIF */
-window.toggleNotif  = () => { document.getElementById('notifPanel').classList.toggle('open'); };
-window.readNotifReal = async (notifId) => {
-  try {
-    await updateDoc(doc(db, 'users', currentUser.uid, 'notifications', notifId), { read: true });
-  } catch { /* silent */ }
-};
-window.markAllRead = async () => {
-  const q = query(collection(db, 'users', currentUser.uid, 'notifications'));
-  const snap = await getDocs(q);
-  snap.docs.forEach(d => { if (!d.data().read) updateDoc(d.ref, { read: true }); });
-};
-
-/* MODALS */
-window.openModal  = (id) => document.getElementById(id).classList.add('open');
-window.closeModal = (id) => document.getElementById(id).classList.remove('open');
-document.querySelectorAll('.modal-backdrop').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); }));
-document.addEventListener('keydown', e => { if(e.key==='Escape') document.querySelectorAll('.modal-backdrop').forEach(m=>m.classList.remove('open')); });
-
-window.closeDropdowns = (e) => {
-  if (e && (e.target.closest('.header-search') || e.target.closest('.notif-wrap'))) return;
-  document.getElementById('searchDD').classList.remove('open');
-  document.getElementById('notifPanel').classList.remove('open');
-};
-
-/* TOAST */
-window.toast = (msg) => {
-  const t = document.getElementById('toast'); t.textContent=msg;
-  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 2400);
-};
-
-/* ── FEEDBACK ── */
-const ADMIN_UID = 'MJk8a3IYY5eo61Y53rOxS3O2Ue53'; // se setea en showApp
-
+/* ══════════════════════════════════════
+   FEEDBACK
+══════════════════════════════════════ */
 window.sendFeedback = async () => {
-  const text = document.getElementById('fb-text').value.trim();
-  const cat  = document.getElementById('fb-cat').value;
-  if (!text) { toast('Escribí tu sugerencia primero'); return; }
-
-  const btn = document.getElementById('sendFeedbackBtn');
-  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>';
-  btn.disabled = true;
-
+  if (!requireAuth()) return;
+  const text=document.getElementById('fb-text').value.trim();
+  const cat=document.getElementById('fb-cat').value;
+  if(!text){toast('Escribí tu sugerencia primero');return;}
+  const btn=document.getElementById('sendFeedbackBtn');
+  btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
   try {
-    await addDoc(collection(db, 'feedback'), {
-      text,
-      cat,
-      fromUid:    currentUser.uid,
-      fromHandle: userProfile.handle || 'usuario',
-      fromName:   userProfile.name   || 'Usuario',
-      read:       false,
-      createdAt:  serverTimestamp()
-    });
-    document.getElementById('fb-text').value = '';
-    toast('✓ Sugerencia enviada, gracias!');
-    loadMyFeedback();
-  } catch(e) {
-    toast('Error al enviar. Intentá de nuevo.');
-    console.warn(e);
-  } finally {
-    btn.innerHTML = 'Enviar sugerencia';
-    btn.disabled = false;
-  }
+    await addDoc(collection(db,'feedback'),{text,cat,fromUid:currentUser.uid,fromHandle:userProfile.handle||'usuario',fromName:userProfile.name||'Usuario',read:false,createdAt:serverTimestamp()});
+    document.getElementById('fb-text').value=''; toast('✓ Sugerencia enviada, gracias!'); loadMyFeedback();
+  } catch(e){toast('Error al enviar.');console.warn(e);}
+  finally{btn.innerHTML='Enviar sugerencia';btn.disabled=false;}
 };
 
-// Muestra las sugerencias que el propio usuario mandó
 async function loadMyFeedback() {
   try {
-    const q = query(collection(db,'feedback'), orderBy('createdAt','desc'));
-    const snap = await getDocs(q);
-    const mine = snap.docs
-      .map(d => ({id:d.id,...d.data()}))
-      .filter(f => f.fromUid === currentUser.uid);
-
-    const list = document.getElementById('myFeedbackList');
-    if (!list) return;
-    if (mine.length === 0) { list.innerHTML = ''; return; }
-
-    list.innerHTML = `<div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Tus sugerencias anteriores</div>` +
-      mine.map(f => {
-        const catLabels = {feature:'Nueva funcionalidad',bug:'Bug',diseno:'Diseño',contenido:'Contenido',otro:'Otro'};
-        const ts = f.createdAt?.toDate ? timeAgo(f.createdAt.toDate()) : 'ahora';
-        return `<div class="card" style="padding:14px 16px;margin-bottom:8px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-            <span class="tag tag-blue" style="font-size:10px;">${catLabels[f.cat]||f.cat}</span>
-            <span style="font-size:11px;color:var(--text-3);">${ts}</span>
-          </div>
-          <div style="font-size:13px;color:var(--text-2);">${escHtml(f.text)}</div>
-        </div>`;
-      }).join('');
-  } catch { /* silent */ }
+    const snap=await getDocs(query(collection(db,'feedback'),orderBy('createdAt','desc')));
+    const mine=snap.docs.map(d=>({id:d.id,...d.data()})).filter(f=>f.fromUid===currentUser.uid);
+    const list=document.getElementById('myFeedbackList'); if(!list) return;
+    const catLabels={feature:'Nueva funcionalidad',bug:'Bug',diseno:'Diseño',contenido:'Contenido',otro:'Otro'};
+    list.innerHTML=!mine.length?'':
+      `<div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Tus sugerencias anteriores</div>`+
+      mine.map(f=>`<div class="card" style="padding:14px 16px;margin-bottom:8px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <span class="tag tag-blue" style="font-size:10px;">${catLabels[f.cat]||f.cat}</span>
+          <span style="font-size:11px;color:var(--text-3);">${f.createdAt?.toDate?timeAgo(f.createdAt.toDate()):'ahora'}</span>
+        </div>
+        <div style="font-size:13px;color:var(--text-2);">${escHtml(f.text)}</div>
+      </div>`).join('');
+  } catch{}
 }
 
-// Admin: ve todas las sugerencias
-let allFeedbackCache = [];
 async function loadAdminFeedback() {
-  try {
-    const q = query(collection(db,'feedback'), orderBy('createdAt','desc'));
-    onSnapshot(q, snap => {
-      allFeedbackCache = snap.docs.map(d => ({id:d.id,...d.data()}));
-
-      // update dot indicator
-      const unread = allFeedbackCache.filter(f => !f.read).length;
-      const dot = document.getElementById('feedbackDot');
-      if (dot) dot.style.display = unread > 0 ? 'block' : 'none';
-
-      renderAdminFeedback(allFeedbackCache);
-    });
-  } catch(e) { console.warn('loadAdminFeedback:', e); }
+  const q=query(collection(db,'feedback'),orderBy('createdAt','desc'));
+  onSnapshot(q, snap=>{
+    allFeedbackCache=snap.docs.map(d=>({id:d.id,...d.data()}));
+    const unread=allFeedbackCache.filter(f=>!f.read).length;
+    const dot=document.getElementById('feedbackDot');
+    if(dot) dot.style.display=unread>0?'inline-block':'none';
+    renderAdminFeedback(allFeedbackCache);
+  });
 }
 
 window.filterFeedback = (cat, btn) => {
-  document.querySelectorAll('#tab-admin .filter-pill').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#tab-admin .filter-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const filtered = cat === 'todos' ? allFeedbackCache : allFeedbackCache.filter(f => f.cat === cat);
-  renderAdminFeedback(filtered);
+  renderAdminFeedback(cat==='todos'?allFeedbackCache:allFeedbackCache.filter(f=>f.cat===cat));
 };
 
 function renderAdminFeedback(items) {
-  const list = document.getElementById('adminFeedbackList');
-  if (!list) return;
-  if (items.length === 0) {
-    list.innerHTML = `<div class="empty"><div class="empty-icon">∅</div><div class="empty-text">Sin sugerencias en esta categoría.</div></div>`;
-    return;
-  }
-  const catLabels = {feature:'Nueva funcionalidad',bug:'Bug',diseno:'Diseño',contenido:'Contenido',otro:'Otro'};
-  const catClass  = {feature:'tag-blue',bug:'tag-amber',diseno:'tag-purple',contenido:'tag-teal',otro:'tag-blue'};
-  list.innerHTML = items.map(f => {
-    const ts   = f.createdAt?.toDate ? timeAgo(f.createdAt.toDate()) : 'ahora';
-    const init = (f.fromName||'U').charAt(0).toUpperCase();
-    const av   = avColors[Math.abs(hashStr(f.fromHandle||'')) % avColors.length];
-    return `<div class="card" style="padding:16px;margin-bottom:10px;${f.read?'':'border-left:3px solid var(--blue);'}" onclick="markFeedbackRead('${f.id}')">
+  const list=document.getElementById('adminFeedbackList'); if(!list) return;
+  const catLabels={feature:'Nueva funcionalidad',bug:'Bug',diseno:'Diseño',contenido:'Contenido',otro:'Otro'};
+  const catClass={feature:'tag-blue',bug:'tag-amber',diseno:'tag-purple',contenido:'tag-teal',otro:'tag-blue'};
+  if(!items.length){list.innerHTML=`<div class="empty"><div class="empty-icon">∅</div><div>Sin sugerencias.</div></div>`;return;}
+  list.innerHTML=items.map(f=>{
+    const init=(f.fromName||'U').charAt(0).toUpperCase();
+    const av=avColors[Math.abs(hashStr(f.fromHandle||''))%avColors.length];
+    const ts=f.createdAt?.toDate?timeAgo(f.createdAt.toDate()):'ahora';
+    return`<div class="card" style="padding:16px;margin-bottom:10px;${f.read?'':'border-left:3px solid var(--blue);'}" onclick="markFeedbackRead('${f.id}')">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
         <div class="av ${av} av-32">${init}</div>
-        <div style="flex:1;">
-          <div style="font-size:13px;font-weight:500;">${f.fromHandle||'usuario'}</div>
-          <div style="font-size:11px;color:var(--text-3);">${ts}</div>
-        </div>
+        <div style="flex:1;"><div style="font-size:13px;font-weight:500;">${escHtml(f.fromHandle||'usuario')}</div><div style="font-size:11px;color:var(--text-3);">${ts}</div></div>
         <span class="tag ${catClass[f.cat]||'tag-blue'}">${catLabels[f.cat]||f.cat}</span>
-        ${f.read ? '' : '<span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;flex-shrink:0;"></span>'}
+        ${f.read?'':'<span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;flex-shrink:0;"></span>'}
       </div>
       <div style="font-size:13.5px;color:var(--text-1);line-height:1.6;">${escHtml(f.text)}</div>
       <div style="margin-top:10px;display:flex;justify-content:flex-end;">
@@ -1367,115 +1436,60 @@ function renderAdminFeedback(items) {
   }).join('');
 }
 
-window.markFeedbackRead = async (id) => {
-  try { await updateDoc(doc(db,'feedback',id), { read: true }); } catch { /* silent */ }
+window.markFeedbackRead = async(id) => { try{await updateDoc(doc(db,'feedback',id),{read:true});}catch{} };
+window.deleteFeedback   = (id) => confirmDelete('¿Archivar esta sugerencia?', async()=>{
+  try{await deleteDoc(doc(db,'feedback',id));toast('✓ Archivada');}catch{toast('Error');}
+});
+
+/* ══════════════════════════════════════
+   MISC
+══════════════════════════════════════ */
+window.switchTab = (tab) => {
+  document.querySelectorAll('.tab').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const tp=document.getElementById('tab-'+tab);
+  const nb=document.getElementById('nav-'+tab);
+  if(tp) tp.classList.add('active');
+  if(nb) nb.classList.add('active');
+  closeDropdowns();
 };
 
-window.deleteFeedback = (id) => {
-  confirmDelete('¿Archivar esta sugerencia?', async () => {
-    try { await deleteDoc(doc(db,'feedback',id)); toast('✓ Archivada'); } catch { toast('Error'); }
-  });
-};
-</script>
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function hl(t,q) { return t.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<b>$1</b>'); }
-function hashStr(s) { let h=0; for(let i=0;i<s.length;i++) h=(Math.imul(31,h)+s.charCodeAt(i))|0; return h; }
-function timeAgo(date) {
-  const s = Math.floor((Date.now()-date)/1000);
-  if (s<60) return 'ahora'; if (s<3600) return `hace ${Math.floor(s/60)} min`;
-  if (s<86400) return `hace ${Math.floor(s/3600)}h`; return `hace ${Math.floor(s/86400)}d`;
-}
-
-/* ── EDIT PROFILE ── */
-window.openEditProfile = () => {
-  document.getElementById('ep-name').value    = userProfile.name    || '';
-  document.getElementById('ep-handle').value  = userProfile.handle  || '';
-  document.getElementById('ep-country').value = userProfile.country || '';
-  document.getElementById('ep-bio').value     = userProfile.bio     || '';
-  document.getElementById('ep-badges').value  = (userProfile.badges || []).join(', ');
-  openModal('editProfileModal');
+window.toggleLike = (btn, base) => {
+  if (!requireAuth()) return;
+  const on=btn.classList.toggle('on');
+  btn.querySelector('span').textContent=on?base+1:base;
 };
 
-window.saveProfile = async () => {
-  const name    = document.getElementById('ep-name').value.trim();
-  const handle  = document.getElementById('ep-handle').value.trim().replace('@','');
-  const country = document.getElementById('ep-country').value.trim();
-  const bio     = document.getElementById('ep-bio').value.trim();
-  const badges  = document.getElementById('ep-badges').value.split(',').map(b=>b.trim()).filter(Boolean);
-
-  if (!name || !handle) { toast('Nombre y usuario son obligatorios'); return; }
-
-  const btn = document.getElementById('saveProfileBtn');
-  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>';
-  btn.disabled = true;
-
-  try {
-    await updateDoc(doc(db, 'users', currentUser.uid), { name, handle, country, bio, badges, updatedAt: serverTimestamp() });
-    await updateProfile(currentUser, { displayName: name });
-    userProfile = { ...userProfile, name, handle, country, bio, badges };
-
-    // Update UI
-    const initials = name.charAt(0).toUpperCase();
-    document.getElementById('profileAv').textContent    = initials;
-    document.getElementById('profileName').textContent  = name;
-    document.getElementById('profileHandle').textContent= `@${handle} · ${country}`;
-    document.getElementById('profileBio').textContent   = bio || 'Matemático olímpico en Zeta.';
-    document.getElementById('chipAv').textContent       = initials;
-    document.getElementById('chipName').textContent     = handle;
-    ['pav1','pav2','pav3'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=initials; });
-
-    // Update badges display
-    const badgeRow = document.getElementById('myBadges');
-    if (badgeRow) {
-      const colors = ['var(--blue)','var(--purple)','var(--teal)','var(--amber)'];
-      badgeRow.innerHTML = badges.map((b,i) => `<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)} <span style="font-size:10px;color:var(--text-3);">· pendiente verificación</span></span>`).join('');
-    }
-
-    closeModal('editProfileModal');
-    toast('✓ Perfil actualizado');
-  } catch(e) {
-    toast('Error al guardar. Intentá de nuevo.');
-    console.warn(e);
-  } finally {
-    btn.innerHTML = 'Guardar';
-    btn.disabled = false;
-  }
+window.toggleFollow = async(btn) => {
+  if (!requireAuth()) return;
+  const f=btn.classList.toggle('following'); btn.textContent=f?'siguiendo':'seguir';
+  if (!currentUser) return;
+  try{ await updateDoc(doc(db,'users',currentUser.uid),{following:increment(f?1:-1)}); }catch{}
 };
 
-/* ── CONFIRM DELETE HELPER ── */
-function confirmDelete(message, onConfirm) {
-  const modal = document.getElementById('confirmDeleteModal');
-  modal.querySelector('div:nth-child(2)').textContent = message;
-  const btn = document.getElementById('confirmDeleteBtn');
-  const newBtn = btn.cloneNode(true); // remove old listeners
-  btn.parentNode.replaceChild(newBtn, btn);
-  newBtn.addEventListener('click', async () => {
-    closeModal('confirmDeleteModal');
-    await onConfirm();
-  });
+window.openModal  = (id) => document.getElementById(id).classList.add('open');
+window.closeModal = (id) => document.getElementById(id).classList.remove('open');
+document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-backdrop').forEach(m=>m.classList.remove('open'));});
+
+window.closeDropdowns = (e) => {
+  if(e&&(e.target.closest('.header-search')||e.target.closest('.notif-wrap'))) return;
+  document.getElementById('searchDD').classList.remove('open');
+  document.getElementById('notifPanel').classList.remove('open');
+};
+
+window.toast = (msg) => {
+  const t=document.getElementById('toast'); t.textContent=msg;
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400);
+};
+
+function confirmDelete(msg, onConfirm) {
+  document.getElementById('confirmDeleteMsg').textContent = msg;
+  const btn=document.getElementById('confirmDeleteBtn');
+  const nb=btn.cloneNode(true); btn.parentNode.replaceChild(nb,btn);
+  nb.addEventListener('click',async()=>{closeModal('confirmDeleteModal');await onConfirm();});
   openModal('confirmDeleteModal');
 }
-
-/* ── DELETE MESSAGE ── */
-window.deleteMessage = (msgId) => {
-  confirmDelete('¿Borrar este mensaje? No se puede deshacer.', async () => {
-    try {
-      await deleteDoc(doc(db, 'users', currentUser.uid, 'messages', msgId));
-      toast('✓ Mensaje borrado');
-    } catch { toast('Error al borrar.'); }
-  });
-};
-
-/* ── DELETE ACADEMIA ── */
-window.deleteAcademia = (academiaId) => {
-  confirmDelete('¿Borrar esta academia? No se puede deshacer.', async () => {
-    try {
-      await deleteDoc(doc(db, 'academias', academiaId));
-      loadAcademias();
-      toast('✓ Academia borrada');
-    } catch { toast('Error al borrar.'); }
-  });
-};
 </script>
 </body>
 </html>
