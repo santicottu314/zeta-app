@@ -506,7 +506,16 @@ select.input{appearance:none;cursor:pointer;}
           <h2 style="font-family:var(--font-serif);font-size:22px;font-weight:400;margin-bottom:6px;">Panel de administración</h2>
           <p style="font-size:13px;color:var(--text-3);margin-bottom:24px;">Solo vos podés ver esto.</p>
 
-          <!-- ADMIN: Olimpiadas -->
+          <div class="card" style="padding:20px;margin-bottom:24px;">
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px;">✓ Verificar usuarios</div>
+            <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;">Los verificados tienen ✓ al lado de su nombre en toda la plataforma.</p>
+            <div class="field" style="margin-bottom:10px;">
+              <label class="label">Buscar usuario</label>
+              <input class="input" id="verifySearch" type="text" placeholder="@usuario…" oninput="searchVerifyUsers(this.value)"/>
+            </div>
+            <div id="verifyUserResults" style="display:flex;flex-direction:column;gap:6px;max-height:300px;overflow-y:auto;"></div>
+          </div>
+
           <div class="card" style="padding:20px;margin-bottom:24px;">
             <div style="font-size:15px;font-weight:500;margin-bottom:14px;">➕ Agregar olimpiada</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
@@ -517,7 +526,6 @@ select.input{appearance:none;cursor:pointer;}
             </div>
           </div>
 
-          <!-- ADMIN: Sugerencias -->
           <div style="font-size:15px;font-weight:500;margin-bottom:14px;">📬 Sugerencias recibidas</div>
           <div class="filters" style="margin-bottom:16px;">
             <button class="filter-pill active" onclick="filterFeedback('todos',this)">Todas</button>
@@ -531,7 +539,6 @@ select.input{appearance:none;cursor:pointer;}
         </div>
       </div>
 
-      <!-- PERFIL DE USUARIO -->
       <div id="tab-user-profile" class="tab">
         <div class="profile-wrap" id="userProfileContent"></div>
       </div>
@@ -877,6 +884,7 @@ function showApp(guest) {
   document.getElementById('loadingScreen').style.display = 'none';
   document.getElementById('auth-screen').style.display   = 'none';
   document.getElementById('app').style.display           = 'flex';
+  document.getElementById('nav-admin').style.display     = 'none';
 
   if (guest) {
     document.getElementById('chipAv').textContent   = '?';
@@ -910,7 +918,11 @@ function updateUIUser() {
   };
   setAv('chipAv'); setAv('profileAv');
   document.getElementById('chipName').textContent          = userProfile.handle||'…';
-  document.getElementById('profileName').textContent       = userProfile.name||'…';
+  if (userProfile.verified) {
+    document.getElementById('profileName').innerHTML = `${escHtml(userProfile.name||'…')} <span style="color:var(--teal);font-size:18px;" title="Verificado">✓</span>`;
+  } else {
+    document.getElementById('profileName').textContent = userProfile.name||'…';
+  }
   document.getElementById('profileHandle').textContent     = `@${userProfile.handle||'…'} · ${userProfile.country||'Argentina'}`;
   document.getElementById('profileBio').textContent        = userProfile.bio||'Matemático olímpico en Zeta.';
   ['pav1','pav2','pav3'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=init; });
@@ -959,7 +971,7 @@ function renderPosts(posts) {
         <div class="av ${av} av-32" style="${p.authorAvatar?`background-image:url(${p.authorAvatar});background-size:cover;`:''}">${p.authorAvatar?'':init}</div>
         <div class="post-user">
           <div class="post-username" style="cursor:pointer;" onclick="openUserProfile('${p.authorId}','${escHtml(p.authorHandle||'')}')">
-            ${escHtml(p.authorHandle||'usuario')} ${isOwn?'<span class="post-own-badge">tuyo</span>':''}
+            ${escHtml(p.authorHandle||'usuario')} ${isOwn?'<span class="post-own-badge">tuyo</span>':''} ${p.authorVerified?'<span style="color:var(--teal);font-size:12px;" title="Verificado">✓</span>':''}
           </div>
           <div class="post-meta">${escHtml(p.authorCountry||'')} · ${ts}</div>
         </div>
@@ -1037,6 +1049,7 @@ window.publishPost = async () => {
       authorId:currentUser.uid, authorName:userProfile.name,
       authorHandle:userProfile.handle, authorCountry:userProfile.country||'Argentina',
       authorAvatar:userProfile.avatar||'',
+      authorVerified:userProfile.verified||false,
       likes:0, comments:[], createdAt:serverTimestamp()
     });
     closeModal('newPostModal');
@@ -1186,7 +1199,7 @@ window.openUserProfile = async (uid, handle) => {
         <div class="profile-av ${av}" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
         ${isMe?`<button class="btn btn-ghost btn-sm" onclick="switchTab('cuenta')">Mi perfil</button>`:''}
       </div>
-      <div class="profile-name">${escHtml(u.name||handle)}</div>
+      <div class="profile-name">${escHtml(u.name||handle)} ${u.verified?'<span style="color:var(--teal);font-size:18px;" title="Verificado">✓</span>':''}</div>
       <div class="profile-handle">@${escHtml(u.handle||handle)} · ${escHtml(u.country||'')}</div>
       <div class="profile-bio" style="margin-bottom:16px;">${escHtml(u.bio||'Matemático olímpico en Zeta.')}</div>
       ${u.badges?.length?`<div class="badge-row" style="margin-bottom:16px;">${u.badges.map((b,i)=>`<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)}</span>`).join('')}</div>`:''}
@@ -1607,6 +1620,40 @@ function confirmDelete(msg, onConfirm) {
   nb.addEventListener('click',async()=>{closeModal('confirmDeleteModal');await onConfirm();});
   openModal('confirmDeleteModal');
 }
+
+window.searchVerifyUsers = async (q) => {
+  const res = document.getElementById('verifyUserResults'); if(!res) return;
+  if (!q.trim()) { res.innerHTML=''; return; }
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    const users = snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(u=>(u.handle||'').toLowerCase().includes(q.toLowerCase())||(u.name||'').toLowerCase().includes(q.toLowerCase()))
+      .slice(0,8);
+    res.innerHTML = users.map(u => {
+      const init = (u.name||'U').charAt(0).toUpperCase();
+      const av   = avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
+      const isV  = u.verified === true;
+      return `<div class="card" style="padding:12px 14px;display:flex;align-items:center;gap:10px;">
+        <div class="av ${av} av-32">${init}</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:500;">@${escHtml(u.handle||'')} ${isV?'<span style="color:var(--teal);">✓</span>':''}</div>
+          <div style="font-size:11px;color:var(--text-3);">${escHtml(u.name||'')} · ${escHtml(u.country||'')}</div>
+        </div>
+        <button class="btn btn-sm ${isV?'btn-ghost':'btn-solid'}" onclick="toggleVerified('${u.id}',${isV})">
+          ${isV?'Quitar ✓':'Verificar ✓'}
+        </button>
+      </div>`;
+    }).join('');
+  } catch(e) { console.warn(e); }
+};
+
+window.toggleVerified = async (uid, currently) => {
+  try {
+    await updateDoc(doc(db,'users',uid), { verified: !currently });
+    toast(currently ? 'Verificación retirada' : '✓ Usuario verificado');
+    searchVerifyUsers(document.getElementById('verifySearch').value);
+  } catch(e) { toast('Error.'); console.warn(e); }
+};
 </script>
 </body>
 </html>
