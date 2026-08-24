@@ -6,6 +6,9 @@
 <title>ζ Zeta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 <style>
 :root {
   --black:#080808;--white:#f9f9f7;--surface:#ffffff;--surface-2:#f4f4f1;--surface-3:#eeecea;
@@ -146,6 +149,7 @@ select.input{appearance:none;cursor:pointer;}
 .problem-block{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:15px;font-family:var(--font-mono);font-size:13px;line-height:1.75;color:var(--text-1);margin-bottom:10px;position:relative;}
 .problem-block::before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:3px;background:var(--blue);border-radius:0 3px 3px 0;}
 .post-desc{font-size:13px;color:var(--text-2);margin-bottom:12px;line-height:1.6;}
+.post-content-text{font-size:13.5px;color:var(--text-1);margin-bottom:12px;line-height:1.65;white-space:pre-wrap;word-break:break-word;}
 .post-actions{display:flex;gap:6px;}
 .comments-wrap{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
 .comments-wrap.open{display:block;animation:fadeUp .15s var(--ease-out);}
@@ -242,6 +246,37 @@ select.input{appearance:none;cursor:pointer;}
 .cat-opt{border:1.5px solid var(--border);border-radius:var(--r-md);padding:8px 6px;text-align:center;font-size:12px;font-weight:500;cursor:pointer;transition:all .12s;background:none;font-family:var(--font-sans);color:var(--text-2);}
 .cat-opt:hover{border-color:var(--border-2);color:var(--text-1);}
 .cat-opt.selected{border-color:var(--blue);background:var(--blue-dim);color:var(--blue);}
+.verified-tick{display:inline-flex;align-items:center;justify-content:center;background:var(--black);color:var(--white);border-radius:50%;flex-shrink:0;font-weight:700;line-height:1;}
+.verified-tick.vt-sm{width:14px;height:14px;font-size:8px;}
+.verified-tick.vt-lg{width:20px;height:20px;font-size:11px;}
+.latex-preview{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:12px 14px;font-size:13px;line-height:1.6;color:var(--text-2);}
+.latex-preview:empty{display:none;}
+.forums-wrap{max-width:700px;margin:0 auto;}
+.forum-card{padding:16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;}
+.forum-icon{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--blue-dim);color:var(--blue);}
+.forum-info{flex:1;min-width:0;}
+.forum-name{font-size:14px;font-weight:500;}
+.forum-desc{font-size:12px;color:var(--text-3);margin-top:2px;}
+.forum-meta{font-size:11px;color:var(--text-3);margin-top:4px;}
+.thread-card{padding:15px 16px;margin-bottom:8px;cursor:pointer;}
+.thread-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.thread-title{font-size:13.5px;font-weight:500;margin-bottom:4px;}
+.thread-preview{font-size:12.5px;color:var(--text-2);line-height:1.5;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.thread-foot{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:11.5px;color:var(--text-3);}
+.thread-header-card{padding:20px;margin-bottom:16px;}
+.thread-img{max-width:100%;border-radius:var(--r-md);margin-top:12px;border:1px solid var(--border);}
+.reply-card{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid var(--surface-2);}
+.reply-body{flex:1;}
+.reply-head{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+.reply-author{font-size:12.5px;font-weight:500;}
+.reply-time{font-size:11px;color:var(--text-3);}
+.reply-text{font-size:13px;color:var(--text-1);line-height:1.6;}
+.img-upload-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-pill);padding:6px 14px;cursor:pointer;transition:background .12s;}
+.img-upload-btn:hover{background:var(--surface-3);}
+.img-preview-wrap{position:relative;display:inline-block;margin-top:8px;}
+.img-preview-wrap img{max-height:120px;border-radius:var(--r-md);border:1px solid var(--border);}
+.img-preview-remove{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--black);color:var(--white);border:none;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.pending-forum-row{display:flex;align-items:center;gap:10px;padding:12px 14px;}
 
 /* ══ BOTTOM NAV (mobile only) ══ */
 .bottom-nav{
@@ -420,16 +455,8 @@ select.input{appearance:none;cursor:pointer;}
       <!-- POSTS -->
       <div id="tab-posts" class="tab active">
         <div class="feed-wrap">
-          <div class="filters">
-            <button class="filter-pill active" onclick="filterPosts('todos',this)">Todos</button>
-            <button class="filter-pill" onclick="filterPosts('divisibilidad',this)">Divisibilidad</button>
-            <button class="filter-pill" onclick="filterPosts('desigualdades',this)">Desigualdades</button>
-            <button class="filter-pill" onclick="filterPosts('funciones',this)">Funciones</button>
-            <button class="filter-pill" onclick="filterPosts('combinatoria',this)">Combinatoria</button>
-            <button class="filter-pill" onclick="filterPosts('geometria',this)">Geometría</button>
-          </div>
           <div id="postsFeed"><div style="text-align:center;padding:40px 0;"><div class="spinner" style="margin:auto;"></div></div></div>
-          <div id="emptyFeed" class="empty" style="display:none;"><div class="empty-icon">∅</div><div>No hay posts en esta categoría.</div></div>
+          <div id="emptyFeed" class="empty" style="display:none;"><div class="empty-icon">∅</div><div>No hay posts todavía. ¡Publicá el primero!</div></div>
         </div>
       </div>
 
@@ -540,6 +567,21 @@ select.input{appearance:none;cursor:pointer;}
           </div>
 
           <div class="card" style="padding:20px;margin-bottom:24px;">
+            <div style="font-size:15px;font-weight:500;margin-bottom:14px;">💬 Crear foro oficial</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div class="field"><label class="label">Nombre</label><input class="input" id="of-name" type="text" placeholder="Ej: Combinatoria"/></div>
+              <div class="field"><label class="label">Descripción</label><input class="input" id="of-desc" type="text" placeholder="¿De qué se trata?"/></div>
+              <div style="display:flex;justify-content:flex-end;"><button class="btn btn-solid btn-sm" onclick="createOfficialForum()">Crear foro</button></div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:24px;">
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px;">🕓 Foros propuestos</div>
+            <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;">Aprobá o rechazá los foros que propone la comunidad.</p>
+            <div id="pendingForumsList"><div style="font-size:12.5px;color:var(--text-3);">Cargando…</div></div>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:24px;">
             <div style="font-size:15px;font-weight:500;margin-bottom:14px;">➕ Agregar olimpiada</div>
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div class="field"><label class="label">Nombre</label><input class="input" id="ol-name" type="text" placeholder="IMO 2026"/></div>
@@ -622,23 +664,69 @@ select.input{appearance:none;cursor:pointer;}
   <div class="modal modal-wide">
     <button class="modal-close" onclick="closeModal('newPostModal')">✕</button>
     <div class="modal-title">Nuevo post</div>
-    <div class="modal-sub">Compartí un problema matemático con la comunidad.</div>
+    <div class="modal-sub">Compartí algo con la comunidad. Podés usar $formula$ para escribir LaTeX.</div>
     <div style="display:flex;flex-direction:column;gap:14px;">
-      <div class="field"><label class="label">Categoría</label>
-        <div class="category-grid">
-          <button class="cat-opt selected" data-cat="divisibilidad" onclick="selectCat(this)">Divisibilidad</button>
-          <button class="cat-opt" data-cat="desigualdades" onclick="selectCat(this)">Desigualdades</button>
-          <button class="cat-opt" data-cat="funciones" onclick="selectCat(this)">Funciones</button>
-          <button class="cat-opt" data-cat="combinatoria" onclick="selectCat(this)">Combinatoria</button>
-          <button class="cat-opt" data-cat="geometria" onclick="selectCat(this)">Geometría</button>
-          <button class="cat-opt" data-cat="otro" onclick="selectCat(this)">Otro</button>
-        </div>
+      <div class="field" id="f-problem">
+        <textarea class="input" id="np-problem" placeholder="¿Qué querés compartir? Ej: Encontré una forma linda de resolver este límite: $\lim_{x\to0}\frac{\sin x}{x}=1$" style="min-height:130px;" oninput="previewLatex('np-problem','npLatexPreview')"></textarea>
+        <span class="field-error">Escribí algo antes de publicar.</span>
       </div>
-      <div class="field" id="f-problem"><label class="label">Enunciado *</label><textarea class="input" id="np-problem" placeholder="Escribí el enunciado. Podés usar: √ ∑ ∫ ≤ ≥ ∞ ∈ ∀ ∃ ∎" style="min-height:100px;"></textarea><span class="field-error">El enunciado es obligatorio.</span></div>
-      <div class="field"><label class="label">Descripción (opcional)</label><textarea class="input" id="np-desc" placeholder="Contexto, hint, fuente…" style="min-height:64px;"></textarea></div>
+      <div id="npLatexPreview" class="latex-preview" style="display:none;"></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;">
         <button class="btn btn-ghost" onclick="closeModal('newPostModal')">Cancelar</button>
         <button class="btn btn-solid" id="publishBtn" onclick="publishPost()">Publicar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: PROPONER FORO -->
+<div class="modal-backdrop" id="proposeForumModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('proposeForumModal')">✕</button>
+    <div class="modal-title">Proponer un foro</div>
+    <div class="modal-sub">Será revisado antes de aparecer públicamente.</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="field" id="f-forumname"><label class="label">Nombre del foro *</label><input class="input" id="pf-name" type="text" placeholder="Ej: Geometría olímpica"/><span class="field-error">Campo requerido.</span></div>
+      <div class="field"><label class="label">Descripción</label><textarea class="input" id="pf-desc" placeholder="¿De qué se trata este foro?" style="min-height:70px;"></textarea></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn btn-ghost" onclick="closeModal('proposeForumModal')">Cancelar</button>
+        <button class="btn btn-solid" id="proposeForumBtn" onclick="proposeForum()">Enviar para revisión</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: NUEVO HILO -->
+<div class="modal-backdrop" id="newThreadModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('newThreadModal')">✕</button>
+    <div class="modal-title">Nuevo hilo</div>
+    <div class="modal-sub" id="newThreadForumName">Publicá un problema en este foro.</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div class="field"><label class="label">Olimpiada</label><input class="input" id="th-olympiad" type="text" placeholder="Ej: OMA"/></div>
+        <div class="field"><label class="label">Año</label><input class="input" id="th-year" type="text" placeholder="2025"/></div>
+        <div class="field"><label class="label">Nivel</label><input class="input" id="th-level" type="text" placeholder="Nivel 3"/></div>
+      </div>
+      <div class="field" id="f-threadstatement">
+        <label class="label">Enunciado *</label>
+        <textarea class="input" id="th-statement" placeholder="Escribí el enunciado del problema. Usá $formula$ para LaTeX" style="min-height:110px;" oninput="previewLatex('th-statement','thStatementPreview')"></textarea>
+        <span class="field-error">El enunciado es obligatorio.</span>
+      </div>
+      <div id="thStatementPreview" class="latex-preview" style="display:none;"></div>
+      <div class="field">
+        <label class="label">Descripción (opcional)</label>
+        <textarea class="input" id="th-desc" placeholder="Contexto, fuente, hint…" style="min-height:60px;" oninput="previewLatex('th-desc','thDescPreview')"></textarea>
+      </div>
+      <div id="thDescPreview" class="latex-preview" style="display:none;"></div>
+      <div>
+        <label class="img-upload-btn" for="threadImageInput">📎 Adjuntar imagen</label>
+        <input type="file" id="threadImageInput" accept="image/*" style="display:none;" onchange="handleThreadImage(this)"/>
+        <div id="threadImagePreviewWrap"></div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;">
+        <button class="btn btn-ghost" onclick="closeModal('newThreadModal')">Cancelar</button>
+        <button class="btn btn-solid" id="publishThreadBtn" onclick="publishThread()">Publicar hilo</button>
       </div>
     </div>
   </div>
@@ -772,22 +860,21 @@ const OWNER_UID = 'MJk8a3IYY5eo61Y53rOxS3O2Ue53';
 let currentUser      = null;
 let userProfile      = null;
 let isGuest          = false;
-let selectedCat      = 'divisibilidad';
-let currentFilter    = 'todos';
 let postsUnsubscribe = null;
 let allPostsCache    = [];
 let allFeedbackCache = [];
 let pendingAvatarDataURL = null; // foto pendiente antes de guardar
 
+let forumsLoaded         = false;
+let currentForumId       = null;
+let currentForumName     = '';
+let currentThreadId      = null;
+let threadsUnsub         = null;
+let repliesUnsub         = null;
+let pendingThreadImageDataURL = null;
+let pendingReplyImageDataURL  = null;
+
 const avColors = ['av-blue','av-purple','av-teal','av-amber'];
-const catMeta  = {
-  divisibilidad: { label:'Divisibilidad', cls:'tag-blue'   },
-  desigualdades: { label:'Desigualdades', cls:'tag-purple' },
-  funciones:     { label:'Funciones',     cls:'tag-teal'   },
-  combinatoria:  { label:'Combinatoria',  cls:'tag-amber'  },
-  geometria:     { label:'Geometría',     cls:'tag-teal'   },
-  otro:          { label:'Otro',          cls:'tag-blue'   },
-};
 const scopeTag = {
   argentina:     'tag-blue',
   regional:      'tag-teal',
@@ -942,7 +1029,7 @@ function updateUIUser() {
   setAv('chipAv'); setAv('profileAv');
   document.getElementById('chipName').textContent          = userProfile.handle||'…';
   if (userProfile.verified) {
-    document.getElementById('profileName').innerHTML = `${escHtml(userProfile.name||'…')} <span style="color:var(--teal);font-size:18px;" title="Verificado">✓</span>`;
+    document.getElementById('profileName').innerHTML = `${escHtml(userProfile.name||'…')} <span class="verified-tick vt-lg" title="Cuenta verificada">✓</span>`;
   } else {
     document.getElementById('profileName').textContent = userProfile.name||'…';
   }
@@ -976,14 +1063,12 @@ function listenPosts() {
 }
 
 function renderPosts(posts) {
-  const feed     = document.getElementById('postsFeed');
-  const filtered = currentFilter==='todos' ? posts : posts.filter(p=>p.cat===currentFilter);
-  document.getElementById('emptyFeed').style.display = filtered.length===0 ? 'block':'none';
-  if (filtered.length===0) { feed.innerHTML=''; return; }
+  const feed = document.getElementById('postsFeed');
+  document.getElementById('emptyFeed').style.display = posts.length===0 ? 'block':'none';
+  if (posts.length===0) { feed.innerHTML=''; return; }
 
   const myInit = (userProfile?.name||'U').charAt(0).toUpperCase();
-  feed.innerHTML = filtered.map(p => {
-    const meta     = catMeta[p.cat] || catMeta.otro;
+  feed.innerHTML = posts.map(p => {
     const init     = (p.authorName||'U').charAt(0).toUpperCase();
     const av       = avColors[Math.abs(hashStr(p.authorHandle||''))%avColors.length];
     const isOwn    = !isGuest && currentUser && p.authorId===currentUser.uid;
@@ -994,15 +1079,13 @@ function renderPosts(posts) {
         <div class="av ${av} av-32" style="${p.authorAvatar?`background-image:url(${p.authorAvatar});background-size:cover;`:''}">${p.authorAvatar?'':init}</div>
         <div class="post-user">
           <div class="post-username" style="cursor:pointer;" onclick="openUserProfile('${p.authorId}','${escHtml(p.authorHandle||'')}')">
-            ${escHtml(p.authorHandle||'usuario')} ${isOwn?'<span class="post-own-badge">tuyo</span>':''} ${p.authorVerified?'<span style="color:var(--teal);font-size:12px;" title="Verificado">✓</span>':''}
+            ${escHtml(p.authorHandle||'usuario')} ${isOwn?'<span class="post-own-badge">tuyo</span>':''} ${p.authorVerified?'<span class="verified-tick vt-sm" title="Cuenta verificada">✓</span>':''}
           </div>
           <div class="post-meta">${escHtml(p.authorCountry||'')} · ${ts}</div>
         </div>
-        <span class="tag ${meta.cls}">${meta.label}</span>
         ${isOwn?`<button onclick="deletePost('${p.id}')" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:13px;padding:0;margin-left:4px;">🗑</button>`:''}
       </div>
-      <div class="problem-block">${escHtml(p.problem)}</div>
-      ${p.desc?`<div class="post-desc">${escHtml(p.desc)}</div>`:''}
+      <div class="post-content-text">${escHtml(p.content||'')}</div>
       <div class="post-actions">
         <button class="action-pill" onclick="${isGuest?`openModal('loginRequiredModal')`:`toggleLike(this,${p.likes||0})`}">▲ <span>${p.likes||0}</span></button>
         <button class="action-pill" onclick="toggleComments(this)">◎ <span class="cc">${comments.length}</span></button>
@@ -1024,14 +1107,8 @@ function renderPosts(posts) {
       </div>
     </div>`;
   }).join('');
+  renderLatexIn(feed);
 }
-
-window.filterPosts = (cat, btn) => {
-  document.querySelectorAll('#tab-posts .filter-pill').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentFilter = cat;
-  renderPosts(allPostsCache);
-};
 
 function updateMyPostCount(posts) {
   if (!currentUser) return;
@@ -1047,28 +1124,20 @@ window.openNewPost = () => {
   if (!requireAuth()) return;
   openModal('newPostModal');
   document.getElementById('np-problem').value = '';
-  document.getElementById('np-desc').value    = '';
   document.getElementById('f-problem').classList.remove('has-error');
-  selectedCat = 'divisibilidad';
-  document.querySelectorAll('.cat-opt').forEach(b=>b.classList.toggle('selected',b.dataset.cat==='divisibilidad'));
-};
-
-window.selectCat = (btn) => {
-  document.querySelectorAll('.cat-opt').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');
-  selectedCat = btn.dataset.cat;
+  const prev = document.getElementById('npLatexPreview');
+  prev.style.display='none'; prev.innerHTML='';
 };
 
 window.publishPost = async () => {
-  const problem = document.getElementById('np-problem').value.trim();
-  const desc    = document.getElementById('np-desc').value.trim();
-  document.getElementById('f-problem').classList.toggle('has-error',!problem);
-  if (!problem) return;
+  const content = document.getElementById('np-problem').value.trim();
+  document.getElementById('f-problem').classList.toggle('has-error',!content);
+  if (!content) return;
   const btn = document.getElementById('publishBtn');
   btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
   try {
     await addDoc(collection(db,'posts'),{
-      cat:selectedCat, problem, desc,
+      content,
       authorId:currentUser.uid, authorName:userProfile.name,
       authorHandle:userProfile.handle, authorCountry:userProfile.country||'Argentina',
       authorAvatar:userProfile.avatar||'',
@@ -1076,8 +1145,7 @@ window.publishPost = async () => {
       likes:0, comments:[], createdAt:serverTimestamp()
     });
     closeModal('newPostModal');
-    switchTab('posts'); currentFilter='todos';
-    document.querySelectorAll('#tab-posts .filter-pill').forEach((b,i)=>b.classList.toggle('active',i===0));
+    switchTab('posts');
     toast('✓ Post publicado');
   } catch(e) { toast('Error al publicar.'); console.warn(e); }
   finally { btn.innerHTML='Publicar'; btn.disabled=false; }
@@ -1085,6 +1153,353 @@ window.publishPost = async () => {
 
 window.deletePost = (id) => confirmDelete('¿Borrar este post?', async()=>{
   try { await deleteDoc(doc(db,'posts',id)); toast('✓ Post borrado'); } catch { toast('Error.'); }
+});
+
+/* ══════════════════════════════════════
+   LATEX
+══════════════════════════════════════ */
+function renderLatexIn(el, attempts) {
+  attempts = attempts || 0;
+  if (!el) return;
+  if (window.renderMathInElement) {
+    try {
+      renderMathInElement(el, {
+        delimiters: [
+          {left:'$$', right:'$$', display:true},
+          {left:'$', right:'$', display:false}
+        ],
+        throwOnError:false
+      });
+    } catch(e) {}
+  } else if (attempts < 25) {
+    setTimeout(()=>renderLatexIn(el, attempts+1), 150);
+  }
+}
+
+window.previewLatex = (taId, prevId) => {
+  const ta = document.getElementById(taId);
+  const prev = document.getElementById(prevId);
+  if (!ta || !prev) return;
+  const val = ta.value.trim();
+  if (!val) { prev.style.display='none'; prev.innerHTML=''; return; }
+  prev.style.display='block';
+  prev.innerHTML = escHtml(ta.value).replace(/\n/g,'<br>');
+  renderLatexIn(prev);
+};
+
+/* ══════════════════════════════════════
+   FORUMS
+══════════════════════════════════════ */
+async function loadForums() {
+  try {
+    const snap = await getDocs(query(collection(db,'forums'), where('approved','==',true)));
+    const forums = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
+      const ta=a.createdAt?.toDate?.()?.getTime()||0;
+      const tb=b.createdAt?.toDate?.()?.getTime()||0;
+      return ta-tb;
+    });
+    renderForumsList(forums);
+    forumsLoaded = true;
+  } catch(e) { console.warn('loadForums:',e); renderForumsList([]); }
+}
+
+function renderForumsList(forums) {
+  const list = document.getElementById('forumsList');
+  if (!list) return;
+  if (!forums.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">💬</div><div class="empty-text">Todavía no hay foros. ¡Proponé el primero!</div></div>`;
+    return;
+  }
+  list.innerHTML = forums.map(f => {
+    const icon = (f.name||'?').charAt(0).toUpperCase();
+    return `<div class="card forum-card" onclick="openForum('${f.id}','${escHtml(f.name||'').replace(/'/g,"\\'")}')">
+      <div class="forum-icon">${icon}</div>
+      <div class="forum-info">
+        <div class="forum-name">${escHtml(f.name||'')} ${f.isOfficial?'<span class="verified-tick vt-sm" title="Foro oficial">✓</span>':''}</div>
+        <div class="forum-desc">${escHtml(f.description||'Sin descripción.')}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.showForumsList = () => {
+  document.getElementById('forums-list-view').style.display = 'block';
+  document.getElementById('forums-threads-view').style.display = 'none';
+  document.getElementById('forums-thread-view').style.display = 'none';
+  currentForumId = null; currentForumName = ''; currentThreadId = null;
+  if (threadsUnsub) { threadsUnsub(); threadsUnsub=null; }
+  if (repliesUnsub) { repliesUnsub(); repliesUnsub=null; }
+};
+
+window.showThreadsList = () => {
+  document.getElementById('forums-list-view').style.display = 'none';
+  document.getElementById('forums-threads-view').style.display = 'block';
+  document.getElementById('forums-thread-view').style.display = 'none';
+  currentThreadId = null;
+  if (repliesUnsub) { repliesUnsub(); repliesUnsub=null; }
+};
+
+window.openForum = (forumId, forumName) => {
+  currentForumId = forumId;
+  currentForumName = forumName;
+  document.getElementById('forums-list-view').style.display = 'none';
+  document.getElementById('forums-threads-view').style.display = 'block';
+  document.getElementById('forums-thread-view').style.display = 'none';
+  document.getElementById('forumThreadsHeader').innerHTML = `<h2 style="font-family:var(--font-serif);font-size:20px;font-weight:400;">${escHtml(forumName)}</h2>`;
+  loadThreads(forumId);
+};
+
+function loadThreads(forumId) {
+  document.getElementById('threadsList').innerHTML = `<div style="text-align:center;padding:30px 0;"><div class="spinner" style="margin:auto;"></div></div>`;
+  if (threadsUnsub) threadsUnsub();
+  const q = query(collection(db,'forums',forumId,'threads'), orderBy('createdAt','desc'));
+  threadsUnsub = onSnapshot(q, snap => {
+    const threads = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderThreads(threads);
+  });
+}
+
+function renderThreads(threads) {
+  const list = document.getElementById('threadsList');
+  if (!list) return;
+  if (!threads.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">✎</div><div class="empty-text">Sin hilos todavía. ¡Publicá el primero!</div></div>`;
+    return;
+  }
+  list.innerHTML = threads.map(t => {
+    const ts = t.createdAt?.toDate ? timeAgo(t.createdAt.toDate()) : 'ahora';
+    const tagsHtml = [t.olympiad, t.year, t.level].filter(Boolean).map(x=>`<span class="tag tag-blue">${escHtml(x)}</span>`).join('');
+    return `<div class="card thread-card" onclick="openThread('${t.id}')">
+      ${tagsHtml?`<div class="thread-tags">${tagsHtml}</div>`:''}
+      <div class="thread-preview">${escHtml(t.statement||'')}</div>
+      <div class="thread-foot">
+        <span>${escHtml(t.authorHandle||'usuario')}</span>${t.authorVerified?' <span class="verified-tick vt-sm">✓</span>':''}
+        <span>· ${ts}</span>
+        <span>· ${t.replyCount||0} respuestas</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.openThread = async (threadId) => {
+  currentThreadId = threadId;
+  document.getElementById('forums-threads-view').style.display = 'none';
+  document.getElementById('forums-thread-view').style.display = 'block';
+  document.getElementById('threadContent').innerHTML = `<div style="text-align:center;padding:30px 0;"><div class="spinner" style="margin:auto;"></div></div>`;
+  document.getElementById('threadReplies').innerHTML = '';
+  try {
+    const snap = await getDoc(doc(db,'forums',currentForumId,'threads',threadId));
+    if (!snap.exists()) { toast('Hilo no encontrado.'); return; }
+    const t = snap.data();
+    const ts = t.createdAt?.toDate ? timeAgo(t.createdAt.toDate()) : 'ahora';
+    const init = (t.authorName||'U').charAt(0).toUpperCase();
+    const av = avColors[Math.abs(hashStr(t.authorHandle||''))%avColors.length];
+    const tagsHtml = [t.olympiad, t.year, t.level].filter(Boolean).map(x=>`<span class="tag tag-blue">${escHtml(x)}</span>`).join('');
+    document.getElementById('threadContent').innerHTML = `
+      <div class="card thread-header-card">
+        ${tagsHtml?`<div class="thread-tags">${tagsHtml}</div>`:''}
+        <div class="post-content-text" style="font-size:14.5px;">${escHtml(t.statement||'')}</div>
+        ${t.description?`<div class="post-desc">${escHtml(t.description)}</div>`:''}
+        ${t.image?`<img class="thread-img" src="${t.image}"/>`:''}
+        <div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+          <div class="av ${av} av-28" style="${t.authorAvatar?`background-image:url(${t.authorAvatar});background-size:cover;`:''}">${t.authorAvatar?'':init}</div>
+          <span style="font-size:12.5px;font-weight:500;cursor:pointer;" onclick="openUserProfile('${t.authorId}','${escHtml(t.authorHandle||'')}')">${escHtml(t.authorHandle||'usuario')}</span>
+          ${t.authorVerified?'<span class="verified-tick vt-sm">✓</span>':''}
+          <span style="font-size:11px;color:var(--text-3);">· ${ts}</span>
+        </div>
+      </div>`;
+    renderLatexIn(document.getElementById('threadContent'));
+    listenReplies(threadId);
+  } catch(e) { console.warn(e); toast('Error al cargar el hilo.'); }
+};
+
+function listenReplies(threadId) {
+  if (repliesUnsub) repliesUnsub();
+  const q = query(collection(db,'forums',currentForumId,'threads',threadId,'replies'), orderBy('createdAt','asc'));
+  repliesUnsub = onSnapshot(q, snap => {
+    const replies = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderReplies(replies);
+  });
+}
+
+function renderReplies(replies) {
+  const list = document.getElementById('threadReplies');
+  if (!list) return;
+  if (!replies.length) {
+    list.innerHTML = `<div style="font-size:12.5px;color:var(--text-3);padding:6px 0 14px;">Sin respuestas todavía. Sé el primero.</div>`;
+  } else {
+    list.innerHTML = `<div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">${replies.length} respuestas</div>` +
+      replies.map(r => {
+        const init = (r.authorName||'U').charAt(0).toUpperCase();
+        const av = avColors[Math.abs(hashStr(r.authorHandle||''))%avColors.length];
+        const ts = r.createdAt?.toDate ? timeAgo(r.createdAt.toDate()) : 'ahora';
+        return `<div class="reply-card">
+          <div class="av ${av} av-32" style="${r.authorAvatar?`background-image:url(${r.authorAvatar});background-size:cover;`:''}">${r.authorAvatar?'':init}</div>
+          <div class="reply-body">
+            <div class="reply-head">
+              <span class="reply-author" style="cursor:pointer;" onclick="openUserProfile('${r.authorId}','${escHtml(r.authorHandle||'')}')">${escHtml(r.authorHandle||'usuario')}</span>
+              ${r.authorVerified?'<span class="verified-tick vt-sm">✓</span>':''}
+              <span class="reply-time">${ts}</span>
+            </div>
+            <div class="reply-text">${escHtml(r.text||'')}</div>
+          </div>
+        </div>`;
+      }).join('');
+  }
+  renderLatexIn(list);
+}
+
+window.submitReply = async () => {
+  if (!requireAuth()) return;
+  const text = document.getElementById('replyText').value.trim();
+  if (!text) { toast('Escribí algo primero'); return; }
+  if (!currentForumId || !currentThreadId) return;
+  try {
+    await addDoc(collection(db,'forums',currentForumId,'threads',currentThreadId,'replies'), {
+      text,
+      authorId:currentUser.uid, authorName:userProfile.name,
+      authorHandle:userProfile.handle, authorAvatar:userProfile.avatar||'',
+      authorVerified:userProfile.verified||false,
+      createdAt:serverTimestamp()
+    });
+    await updateDoc(doc(db,'forums',currentForumId,'threads',currentThreadId), {replyCount:increment(1)});
+    document.getElementById('replyText').value='';
+    const prev = document.getElementById('replyLatexPreview');
+    prev.style.display='none'; prev.innerHTML='';
+  } catch(e) { toast('Error al responder.'); console.warn(e); }
+};
+
+window.openProposeForumModal = () => {
+  if (!requireAuth()) return;
+  document.getElementById('pf-name').value = '';
+  document.getElementById('pf-desc').value = '';
+  document.getElementById('f-forumname').classList.remove('has-error');
+  openModal('proposeForumModal');
+};
+
+window.proposeForum = async () => {
+  const name = document.getElementById('pf-name').value.trim();
+  const desc = document.getElementById('pf-desc').value.trim();
+  document.getElementById('f-forumname').classList.toggle('has-error', !name);
+  if (!name) return;
+  const btn = document.getElementById('proposeForumBtn');
+  btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
+  try {
+    await addDoc(collection(db,'forums'), {
+      name, description:desc, approved:false, isOfficial:false,
+      submittedBy:currentUser.uid, submittedByHandle:userProfile.handle,
+      createdAt:serverTimestamp()
+    });
+    closeModal('proposeForumModal');
+    toast('✓ Foro enviado — lo revisaremos pronto');
+  } catch(e) { toast('Error al enviar.'); console.warn(e); }
+  finally { btn.innerHTML='Enviar para revisión'; btn.disabled=false; }
+};
+
+window.openNewThreadModal = () => {
+  if (!requireAuth()) return;
+  document.getElementById('th-olympiad').value='';
+  document.getElementById('th-year').value='';
+  document.getElementById('th-level').value='';
+  document.getElementById('th-statement').value='';
+  document.getElementById('th-desc').value='';
+  document.getElementById('f-threadstatement').classList.remove('has-error');
+  const sp = document.getElementById('thStatementPreview'); sp.style.display='none'; sp.innerHTML='';
+  const dp = document.getElementById('thDescPreview'); dp.style.display='none'; dp.innerHTML='';
+  document.getElementById('threadImagePreviewWrap').innerHTML='';
+  document.getElementById('threadImageInput').value='';
+  pendingThreadImageDataURL = null;
+  document.getElementById('newThreadForumName').textContent = `Publicá un problema en "${currentForumName}".`;
+  openModal('newThreadModal');
+};
+
+window.handleThreadImage = (input) => {
+  const file = input.files[0]; if(!file) return;
+  if (file.size > 600*1024) { toast('La imagen no puede superar 600KB'); input.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    pendingThreadImageDataURL = e.target.result;
+    document.getElementById('threadImagePreviewWrap').innerHTML = `
+      <div class="img-preview-wrap">
+        <img src="${e.target.result}"/>
+        <button class="img-preview-remove" onclick="removeThreadImage()">✕</button>
+      </div>`;
+  };
+  reader.readAsDataURL(file);
+};
+window.removeThreadImage = () => {
+  pendingThreadImageDataURL = null;
+  document.getElementById('threadImagePreviewWrap').innerHTML='';
+  document.getElementById('threadImageInput').value='';
+};
+
+window.publishThread = async () => {
+  const olympiad = document.getElementById('th-olympiad').value.trim();
+  const year = document.getElementById('th-year').value.trim();
+  const level = document.getElementById('th-level').value.trim();
+  const statement = document.getElementById('th-statement').value.trim();
+  const desc = document.getElementById('th-desc').value.trim();
+  document.getElementById('f-threadstatement').classList.toggle('has-error', !statement);
+  if (!statement) return;
+  if (!currentForumId) { toast('Error: no hay foro seleccionado.'); return; }
+  const btn = document.getElementById('publishThreadBtn');
+  btn.innerHTML='<div class="spinner" style="width:14px;height:14px;border-width:2px;"></div>'; btn.disabled=true;
+  try {
+    await addDoc(collection(db,'forums',currentForumId,'threads'), {
+      olympiad, year, level, statement, description:desc,
+      image: pendingThreadImageDataURL||'',
+      authorId:currentUser.uid, authorName:userProfile.name,
+      authorHandle:userProfile.handle, authorAvatar:userProfile.avatar||'',
+      authorVerified:userProfile.verified||false,
+      replyCount:0, createdAt:serverTimestamp()
+    });
+    closeModal('newThreadModal');
+    toast('✓ Hilo publicado');
+  } catch(e) { toast('Error al publicar.'); console.warn(e); }
+  finally { btn.innerHTML='Publicar hilo'; btn.disabled=false; }
+};
+
+window.createOfficialForum = async () => {
+  const name = document.getElementById('of-name').value.trim();
+  const desc = document.getElementById('of-desc').value.trim();
+  if (!name) { toast('Ponele un nombre al foro'); return; }
+  try {
+    await addDoc(collection(db,'forums'), {
+      name, description:desc, approved:true, isOfficial:true,
+      submittedBy:currentUser.uid, submittedByHandle:userProfile.handle,
+      createdAt:serverTimestamp()
+    });
+    document.getElementById('of-name').value='';
+    document.getElementById('of-desc').value='';
+    toast('✓ Foro creado');
+    forumsLoaded=false;
+  } catch(e) { toast('Error.'); console.warn(e); }
+};
+
+async function loadPendingForums() {
+  try {
+    const snap = await getDocs(query(collection(db,'forums'), where('approved','==',false)));
+    const pending = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const list = document.getElementById('pendingForumsList');
+    if (!list) return;
+    if (!pending.length) { list.innerHTML = `<div style="font-size:12.5px;color:var(--text-3);">No hay foros pendientes.</div>`; return; }
+    list.innerHTML = pending.map(f => `<div class="card pending-forum-row" style="margin-bottom:8px;">
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:500;">${escHtml(f.name||'')}</div>
+        <div style="font-size:11.5px;color:var(--text-3);">${escHtml(f.description||'')} · propuesto por @${escHtml(f.submittedByHandle||'')}</div>
+      </div>
+      <button class="btn btn-solid btn-sm" onclick="approveForum('${f.id}')">Aprobar</button>
+      <button class="btn btn-ghost btn-sm" onclick="rejectForum('${f.id}')">Rechazar</button>
+    </div>`).join('');
+  } catch(e) { console.warn(e); }
+}
+
+window.approveForum = async (id) => {
+  try { await updateDoc(doc(db,'forums',id), {approved:true}); toast('✓ Foro aprobado'); loadPendingForums(); forumsLoaded=false; }
+  catch(e){ toast('Error.'); }
+};
+window.rejectForum = (id) => confirmDelete('¿Rechazar y borrar este foro propuesto?', async()=>{
+  try { await deleteDoc(doc(db,'forums',id)); toast('Rechazado'); loadPendingForums(); } catch { toast('Error.'); }
 });
 
 /* ══════════════════════════════════════
@@ -1222,24 +1637,20 @@ window.openUserProfile = async (uid, handle) => {
         <div class="profile-av ${av}" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
         ${isMe?`<button class="btn btn-ghost btn-sm" onclick="switchTab('cuenta')">Mi perfil</button>`:''}
       </div>
-      <div class="profile-name">${escHtml(u.name||handle)} ${u.verified?'<span style="color:var(--teal);font-size:18px;" title="Verificado">✓</span>':''}</div>
+      <div class="profile-name">${escHtml(u.name||handle)} ${u.verified?'<span class="verified-tick vt-lg" title="Cuenta verificada">✓</span>':''}</div>
       <div class="profile-handle">@${escHtml(u.handle||handle)} · ${escHtml(u.country||'')}</div>
       <div class="profile-bio" style="margin-bottom:16px;">${escHtml(u.bio||'Matemático olímpico en Zeta.')}</div>
       ${u.badges?.length?`<div class="badge-row" style="margin-bottom:16px;">${u.badges.map((b,i)=>`<span class="badge"><span style="color:${colors[i%colors.length]}">◆</span> ${escHtml(b)}</span>`).join('')}</div>`:''}
       <div style="font-size:12px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">${posts.length} posts</div>
       ${posts.map(p=>{
-        const meta=catMeta[p.cat]||catMeta.otro;
         const ts=p.createdAt?.toDate?timeAgo(p.createdAt.toDate()):'ahora';
         return`<div class="card post-card" style="margin-bottom:10px;">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-            <span class="tag ${meta.cls}">${meta.label}</span>
-            <span style="font-size:11px;color:var(--text-3);">${ts}</span>
-          </div>
-          <div class="problem-block">${escHtml(p.problem)}</div>
-          ${p.desc?`<div class="post-desc">${escHtml(p.desc)}</div>`:''}
+          <div style="font-size:11px;color:var(--text-3);margin-bottom:8px;">${ts}</div>
+          <div class="post-content-text">${escHtml(p.content||'')}</div>
         </div>`;
       }).join('')}
       ${!posts.length?`<div class="empty"><div class="empty-icon">∅</div><div>Este usuario no publicó posts todavía.</div></div>`:''}`;
+    renderLatexIn(document.getElementById('userProfileContent'));
     document.querySelectorAll('.tab').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
     document.getElementById('tab-user-profile').classList.add('active');
@@ -1274,10 +1685,10 @@ window.doSearch = async (q) => {
 
   // Posts del cache
   const postRows = allPostsCache
-    .filter(p=>(p.problem||'').toLowerCase().includes(q.toLowerCase())||(p.authorHandle||'').toLowerCase().includes(q.toLowerCase()))
+    .filter(p=>(p.content||'').toLowerCase().includes(q.toLowerCase())||(p.authorHandle||'').toLowerCase().includes(q.toLowerCase()))
     .slice(0,4)
     .map(p=>`<div class="search-item" onclick="switchTab('posts');closeSearchDD()">
-      <div class="si-title">${hl(escHtml((p.problem||'').slice(0,60)),q)}…</div>
+      <div class="si-title">${hl(escHtml((p.content||'').slice(0,60)),q)}…</div>
       <div class="si-meta">Post · ${escHtml(p.authorHandle||'')}</div>
     </div>`);
 
@@ -1659,7 +2070,7 @@ window.searchVerifyUsers = async (q) => {
       return `<div class="card" style="padding:12px 14px;display:flex;align-items:center;gap:10px;">
         <div class="av ${av} av-32">${init}</div>
         <div style="flex:1;">
-          <div style="font-size:13px;font-weight:500;">@${escHtml(u.handle||'')} ${isV?'<span style="color:var(--teal);">✓</span>':''}</div>
+          <div style="font-size:13px;font-weight:500;">@${escHtml(u.handle||'')} ${isV?'<span class="verified-tick vt-sm">✓</span>':''}</div>
           <div style="font-size:11px;color:var(--text-3);">${escHtml(u.name||'')} · ${escHtml(u.country||'')}</div>
         </div>
         <button class="btn btn-sm ${isV?'btn-ghost':'btn-solid'}" onclick="toggleVerified('${u.id}',${isV})">
