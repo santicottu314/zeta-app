@@ -378,6 +378,10 @@ select.input{appearance:none;cursor:pointer;}
   <div class="auth-card">
     <div class="auth-logo">ζ</div>
     <div class="auth-tagline">La red de los matemáticos olímpicos</div>
+    <button class="btn btn-ghost" style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;" onclick="googleLogin()">
+      <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.1 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.5 3-2.2 5.5-4.7 7.2l7.4 5.8C43.7 37.5 46.5 31.5 46.5 24.5z"/><path fill="#FBBC05" d="M10.5 28.3c-.5-1.5-.8-3.1-.8-4.8s.3-3.3.8-4.8l-7.9-6.1C.9 15.9 0 19.8 0 24s.9 8.1 2.6 11.4l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.4 0 11.9-2.1 15.8-5.8l-7.4-5.8c-2.1 1.4-4.9 2.3-8.4 2.3-6.3 0-11.6-4.3-13.5-10l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+      Continuar con Google
+    </button>
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="authSwitch('login')">Iniciar sesión</button>
       <button class="auth-tab" onclick="authSwitch('register')">Registrarse</button>
@@ -400,6 +404,9 @@ select.input{appearance:none;cursor:pointer;}
         <div class="auth-error" id="reg-error"></div>
         <button class="btn btn-solid" id="registerBtn" style="width:100%;margin-top:4px;" onclick="doRegister()">Crear cuenta</button>
       </div>
+    </div>
+    <div style="text-align:center;font-size:11px;color:var(--text-3);margin-top:18px;line-height:1.5;">
+      Al continuar, aceptás nuestros<br/><a href="#" onclick="openModal('termsModal');return false;" style="color:var(--blue);text-decoration:none;">Términos y Condiciones</a>
     </div>
   </div>
 </div>
@@ -803,6 +810,28 @@ select.input{appearance:none;cursor:pointer;}
   </div>
 </div>
 
+<div class="modal-backdrop" id="termsModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('termsModal')">✕</button>
+    <div class="modal-title">Términos y Condiciones</div>
+    <div class="modal-sub">Última actualización: 2026</div>
+    <div style="max-height:60vh;overflow-y:auto;font-size:12.5px;color:var(--text-2);line-height:1.7;display:flex;flex-direction:column;gap:14px;padding-right:6px;">
+      <div><b style="color:var(--text-1);">1. Sobre Zeta</b><br/>Zeta es una red social para la comunidad de matemáticos olímpicos. Es un proyecto independiente, sin fines comerciales, creado para conectar a estudiantes, academias y entusiastas de las olimpiadas de matemática.</div>
+      <div><b style="color:var(--text-1);">2. Cuenta y edad mínima</b><br/>Para registrarte necesitás una cuenta válida (email o Google). Si sos menor de edad, te recomendamos usar la plataforma con el conocimiento de un adulto responsable.</div>
+      <div><b style="color:var(--text-1);">3. Contenido publicado por usuarios</b><br/>Los posts, hilos, respuestas y comentarios son responsabilidad exclusiva de quien los publica. Zeta no revisa previamente cada contenido, aunque puede moderarlo o eliminarlo si incumple estas normas.</div>
+      <div><b style="color:var(--text-1);">4. Conducta esperada</b><br/>No se permite contenido ofensivo, discriminatorio, spam, acoso, ni información falsa. Se espera un trato respetuoso entre todos los miembros de la comunidad.</div>
+      <div><b style="color:var(--text-1);">5. Verificación de cuentas</b><br/>El badge de verificación es otorgado a criterio del equipo de Zeta y no constituye una garantía de identidad legal, solo una validación informal de la comunidad.</div>
+      <div><b style="color:var(--text-1);">6. Propiedad del contenido</b><br/>Conservás los derechos sobre lo que publicás. Al compartirlo en Zeta, autorizás que sea visible para otros usuarios de la plataforma.</div>
+      <div><b style="color:var(--text-1);">7. Sin garantías</b><br/>Zeta se ofrece "tal cual". No garantizamos disponibilidad continua ni la ausencia de errores. El uso de la plataforma es bajo tu propio riesgo.</div>
+      <div><b style="color:var(--text-1);">8. Cambios y suspensión de cuentas</b><br/>Nos reservamos el derecho de modificar estos términos y de suspender cuentas que incumplan las normas de convivencia.</div>
+      <div><b style="color:var(--text-1);">9. Contacto</b><br/>Ante dudas o reportes, podés usar la sección de Sugerencias dentro de la app.</div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-top:20px;">
+      <button class="btn btn-solid" onclick="closeModal('termsModal')">Entendido</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script type="module">
@@ -810,7 +839,8 @@ import { initializeApp }                              from "https://www.gstatic.
 import { getAuth, createUserWithEmailAndPassword,
          signInWithEmailAndPassword, signOut,
          onAuthStateChanged, updateProfile,
-         signInAnonymously }                          from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+         signInAnonymously, GoogleAuthProvider,
+         signInWithPopup }                            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, getDocs,
          onSnapshot, query, orderBy, serverTimestamp,
          doc, updateDoc, getDoc, setDoc, increment,
@@ -872,7 +902,6 @@ let currentThreadId      = null;
 let threadsUnsub         = null;
 let repliesUnsub         = null;
 let pendingThreadImageDataURL = null;
-let pendingReplyImageDataURL  = null;
 
 const avColors = ['av-blue','av-purple','av-teal','av-amber'];
 const scopeTag = {
@@ -976,6 +1005,31 @@ window.guestLogin = async () => {
   try { await signInAnonymously(auth); } catch { toast('Error al entrar como invitado'); }
 };
 
+window.googleLogin = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    const cred = await signInWithPopup(auth, provider);
+    const user = cred.user;
+    const userRef = doc(db,'users',user.uid);
+    const snap = await getDoc(userRef);
+    if (!snap.exists()) {
+      const baseHandle = (user.email||'usuario').split('@')[0].replace(/[^a-zA-Z0-9_]/g,'').toLowerCase() || 'usuario';
+      await setDoc(userRef, {
+        name: user.displayName || 'Usuario',
+        handle: baseHandle,
+        country: 'Argentina',
+        email: user.email || '',
+        bio: '', badges: [], avatar: user.photoURL || '',
+        followers: 0, following: 0,
+        createdAt: serverTimestamp()
+      });
+    }
+  } catch(e) {
+    if (e.code !== 'auth/popup-closed-by-user') toast('Error al iniciar sesión con Google');
+    console.warn(e);
+  }
+};
+
 window.doLogout = async () => { await signOut(auth); };
 
 /* Guest gate — llama esto antes de cualquier acción que requiere login */
@@ -1006,6 +1060,7 @@ function showApp(guest) {
     if (currentUser.uid === OWNER_UID) {
       document.getElementById('nav-admin').style.display = 'flex';
       loadAdminFeedback();
+      loadPendingForums();
     }
     listenNotifications();
     loadMessages();
@@ -2015,6 +2070,10 @@ window.switchTab = (tab) => {
   if(tp) tp.classList.add('active');
   if(nb) nb.classList.add('active');
   if(bn) bn.classList.add('active');
+  if (tab === 'forums') {
+    showForumsList();
+    if (!forumsLoaded) loadForums();
+  }
   closeDropdowns();
 };
 
