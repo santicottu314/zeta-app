@@ -205,14 +205,36 @@ select.input{appearance:none;cursor:pointer;}
 .ranking-table tbody tr:hover td{background:var(--surface-2);}
 .rank-num{font-family:var(--font-mono);color:var(--text-3);font-weight:500;width:32px;}
 .rank-pts{font-family:var(--font-mono);font-weight:500;}
-.msgs-wrap{max-width:700px;margin:0 auto;}
-.msg-row{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:var(--r-sm);cursor:pointer;transition:background .1s;border-bottom:1px solid var(--surface-2);}
-.msg-row:hover{background:var(--surface-2);}
-.msg-info{flex:1;min-width:0;}
-.msg-name{font-size:13px;font-weight:500;}
-.msg-prev{font-size:12px;color:var(--text-3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.msg-time{font-size:11px;color:var(--text-3);}
-.msg-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+.chat-layout{display:flex;height:calc(100vh - var(--header-h) - 56px);max-width:900px;margin:0 auto;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;background:var(--surface);}
+.chat-list{width:290px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface);overflow-y:auto;}
+.chat-list-header{padding:14px 16px;border-bottom:1px solid var(--border);}
+.chat-list-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background .1s;}
+.chat-list-item:hover{background:var(--surface-2);}
+.chat-list-item.active{background:var(--blue-dim);}
+.chat-list-name{font-size:13px;font-weight:500;}
+.chat-list-prev{font-size:11.5px;color:var(--text-3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;}
+.chat-list-time{font-size:10.5px;color:var(--text-3);flex-shrink:0;}
+.chat-unread{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;}
+.friends-row{display:flex;gap:12px;overflow-x:auto;padding:6px 14px 14px;}
+.friend-chip{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;width:52px;}
+.friend-chip span{font-size:10.5px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52px;}
+.chat-window{flex:1;display:flex;flex-direction:column;background:var(--white);min-width:0;}
+.chat-empty-state{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-3);}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--surface);}
+.chat-header-name{font-size:14px;font-weight:500;flex:1;cursor:pointer;}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:8px;}
+.chat-msg{display:flex;gap:8px;max-width:80%;}
+.chat-msg.mine{align-self:flex-end;flex-direction:row-reverse;}
+.chat-bubble{background:var(--surface-2);border-radius:var(--r-lg);padding:8px 12px;font-size:13px;line-height:1.5;}
+.chat-msg.mine .chat-bubble{background:var(--blue);color:var(--white);}
+.chat-bubble.shared-post{background:var(--surface-2);border:1px solid var(--border);color:var(--text-1);}
+.chat-msg.mine .chat-bubble.shared-post{background:var(--blue-dim);color:var(--text-1);}
+.chat-msg-meta{font-size:10px;color:var(--text-3);margin-top:3px;text-align:right;}
+.chat-input-bar{padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;background:var(--surface);}
+.chat-input{flex:1;padding:8px 14px!important;border-radius:var(--r-pill)!important;font-size:13px!important;}
+.chat-send{width:36px;height:36px;border-radius:50%;background:var(--blue);border:none;color:var(--white);font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.msg-user-result{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r-sm);cursor:pointer;}
+.msg-user-result:hover{background:var(--surface-2);}
 .profile-wrap{max-width:620px;margin:0 auto;}
 .profile-banner{height:110px;background:linear-gradient(135deg,var(--blue-dim) 0%,var(--purple-dim) 100%);border-radius:var(--r-lg);margin-bottom:-38px;}
 .profile-top{display:flex;align-items:flex-end;padding:0 4px;margin-bottom:14px;}
@@ -277,6 +299,8 @@ select.input{appearance:none;cursor:pointer;}
 .img-preview-wrap img{max-height:120px;border-radius:var(--r-md);border:1px solid var(--border);}
 .img-preview-remove{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--black);color:var(--white);border:none;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 .pending-forum-row{display:flex;align-items:center;gap:10px;padding:12px 14px;}
+.mention-link{color:var(--blue);font-weight:500;text-decoration:none;}
+.mention-link:hover{text-decoration:underline;}
 
 /* ══ BOTTOM NAV (mobile only) ══ */
 .bottom-nav{
@@ -323,7 +347,10 @@ select.input{appearance:none;cursor:pointer;}
 
   /* Feed ocupa todo el ancho */
   .feed-wrap,.proofs-wrap,.academias-wrap,.olimpiadas-wrap,
-  .msgs-wrap,.profile-wrap,.academia-detail-wrap{max-width:100%;}
+  .profile-wrap,.academia-detail-wrap{max-width:100%;}
+  .chat-layout{flex-direction:column;border:none;border-radius:0;height:calc(100vh - var(--header-h) - var(--bottom-nav-h));}
+  .chat-list{width:100%;border-right:none;border-bottom:1px solid var(--border);max-height:260px;}
+  .chat-window{min-height:280px;}
 
   /* Posts más compactos */
   .post-card{padding:14px;}
@@ -418,7 +445,7 @@ select.input{appearance:none;cursor:pointer;}
     <div class="header-search">
       <div class="search-wrap">
         <span class="search-icon">⌕</span>
-        <input class="input input-pill search-input" id="searchInput" type="text" placeholder="buscar usuarios, posts…" autocomplete="off" oninput="doSearch(this.value)" onfocus="openSearchDD()"/>
+        <input class="input input-pill search-input" id="searchInput" type="text" placeholder="buscar usuarios, academias, foros, olimpiadas…" autocomplete="off" oninput="doSearch(this.value)" onfocus="openSearchDD()"/>
         <div class="search-dropdown" id="searchDD"></div>
       </div>
     </div>
@@ -507,11 +534,6 @@ select.input{appearance:none;cursor:pointer;}
             <button class="btn btn-solid btn-sm" onclick="openNewAcademia()">+ Academia</button>
           </div>
           <div class="academia-list" id="academiaList"><div style="text-align:center;padding:20px;"><div class="spinner" style="margin:auto;"></div></div></div>
-          <h2 class="section-h">Profesores</h2>
-          <div class="academia-list">
-            <div class="card academia-card"><div class="av av-blue av-40" style="border-radius:8px;">JG</div><div class="academia-info"><div class="academia-name">Juan Gómez</div><div class="academia-loc">Teoría de números · 8 años</div><div class="academia-stats">★★★★★ · 54 reseñas</div></div><button class="btn-follow" onclick="toggleFollow(this)">seguir</button></div>
-            <div class="card academia-card"><div class="av av-purple av-40" style="border-radius:8px;">MC</div><div class="academia-info"><div class="academia-name">María Castillo</div><div class="academia-loc">Geometría olímpica · Ex-IMO</div><div class="academia-stats">★★★★★ · 91 reseñas</div></div><button class="btn-follow" onclick="toggleFollow(this)">seguir</button></div>
-          </div>
         </div>
       </div>
 
@@ -537,9 +559,27 @@ select.input{appearance:none;cursor:pointer;}
 
       <!-- MENSAJES -->
       <div id="tab-mensajes" class="tab">
-        <div class="msgs-wrap">
-          <h2 class="section-h" style="margin-bottom:14px;">Mensajes</h2>
-          <div id="msgList"><div class="empty"><div class="empty-icon">✉</div><div class="empty-text">No tenés mensajes todavía.</div></div></div>
+        <div class="chat-layout">
+          <div class="chat-list">
+            <div class="chat-list-header">
+              <span style="font-family:var(--font-serif);font-size:18px;font-weight:400;">Mensajes</span>
+            </div>
+            <div style="padding:10px 12px;border-bottom:1px solid var(--border);">
+              <input class="input input-pill" id="msgUserSearch" type="text" placeholder="Buscar usuario para mensajear…" autocomplete="off" oninput="searchMsgUsers(this.value)"/>
+              <div id="msgUserResults"></div>
+            </div>
+            <div id="friendsSection">
+              <div style="padding:10px 14px 4px;font-size:11px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;">Amigos</div>
+              <div id="friendsList"><div style="font-size:12px;color:var(--text-3);padding:6px 14px 12px;">Cargando…</div></div>
+            </div>
+            <div id="chatListItems"></div>
+          </div>
+          <div class="chat-window" id="chatWindow">
+            <div class="chat-empty-state">
+              <div style="font-size:32px;margin-bottom:12px;">💬</div>
+              <div style="font-size:14px;color:var(--text-3);">Elegí un amigo o buscá a alguien para mensajear.</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -580,6 +620,12 @@ select.input{appearance:none;cursor:pointer;}
               <div class="field"><label class="label">Descripción</label><input class="input" id="of-desc" type="text" placeholder="¿De qué se trata?"/></div>
               <div style="display:flex;justify-content:flex-end;"><button class="btn btn-solid btn-sm" onclick="createOfficialForum()">Crear foro</button></div>
             </div>
+          </div>
+
+          <div class="card" style="padding:20px;margin-bottom:24px;">
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px;">🏫 Academias pendientes</div>
+            <p style="font-size:12.5px;color:var(--text-3);margin-bottom:14px;">Verificá las academias enviadas por la comunidad.</p>
+            <div id="pendingAcademiasList"><div style="font-size:12.5px;color:var(--text-3);">Cargando…</div></div>
           </div>
 
           <div class="card" style="padding:20px;margin-bottom:24px;">
@@ -807,6 +853,16 @@ select.input{appearance:none;cursor:pointer;}
       <button class="btn btn-solid" style="width:100%;" onclick="closeModal('loginRequiredModal');doLogout()">Iniciar sesión / Registrarse</button>
       <button class="btn btn-ghost" style="width:100%;" onclick="closeModal('loginRequiredModal')">Seguir como invitado</button>
     </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="sharePostModal">
+  <div class="modal" style="max-width:380px;">
+    <button class="modal-close" onclick="closeModal('sharePostModal')">✕</button>
+    <div class="modal-title" style="font-size:18px;">Compartir post</div>
+    <div class="modal-sub">Elegí a quién enviárselo.</div>
+    <input class="input input-pill" id="shareUserSearch" type="text" placeholder="Buscar usuario…" style="margin-bottom:12px;" oninput="searchShareUsers(this.value)"/>
+    <div id="shareUserResults" style="display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;"></div>
   </div>
 </div>
 
@@ -1061,9 +1117,11 @@ function showApp(guest) {
       document.getElementById('nav-admin').style.display = 'flex';
       loadAdminFeedback();
       loadPendingForums();
+      loadPendingAcademias();
     }
     listenNotifications();
-    loadMessages();
+    loadFriends();
+    listenChats();
     listenProfileStats();
     loadMyFeedback();
   }
@@ -1123,6 +1181,7 @@ function renderPosts(posts) {
   if (posts.length===0) { feed.innerHTML=''; return; }
 
   const myInit = (userProfile?.name||'U').charAt(0).toUpperCase();
+  const isAdmin = currentUser?.uid===OWNER_UID;
   feed.innerHTML = posts.map(p => {
     const init     = (p.authorName||'U').charAt(0).toUpperCase();
     const av       = avColors[Math.abs(hashStr(p.authorHandle||''))%avColors.length];
@@ -1138,19 +1197,19 @@ function renderPosts(posts) {
           </div>
           <div class="post-meta">${escHtml(p.authorCountry||'')} · ${ts}</div>
         </div>
-        ${isOwn?`<button onclick="deletePost('${p.id}')" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:13px;padding:0;margin-left:4px;">🗑</button>`:''}
+        ${(isOwn||isAdmin)?`<button onclick="deletePost('${p.id}')" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:13px;padding:0;margin-left:4px;">🗑</button>`:''}
       </div>
-      <div class="post-content-text">${escHtml(p.content||'')}</div>
+      <div class="post-content-text">${linkifyMentions(escHtml(p.content||''))}</div>
       <div class="post-actions">
         <button class="action-pill" onclick="${isGuest?`openModal('loginRequiredModal')`:`toggleLike(this,${p.likes||0})`}">▲ <span>${p.likes||0}</span></button>
         <button class="action-pill" onclick="toggleComments(this)">◎ <span class="cc">${comments.length}</span></button>
-        <button class="action-pill">↗</button>
+        <button class="action-pill" onclick="${isGuest?`openModal('loginRequiredModal')`:`openSharePost('${p.id}')`}">↗</button>
       </div>
       <div class="comments-wrap">
         ${comments.map(c=>`
           <div class="comment">
             <div class="av av-blue av-28">${(c.user||'U').charAt(0).toUpperCase()}</div>
-            <div class="comment-body"><div class="comment-user">${escHtml(c.user||'usuario')}</div><div class="comment-text">${escHtml(c.text)}</div><div class="comment-time">${c.time||'ahora'}</div></div>
+            <div class="comment-body"><div class="comment-user">${escHtml(c.user||'usuario')}</div><div class="comment-text">${linkifyMentions(escHtml(c.text))}</div><div class="comment-time">${c.time||'ahora'}</div></div>
           </div>`).join('')}
         ${isGuest
           ?`<div style="text-align:center;padding:10px 0;"><button class="btn btn-ghost btn-sm" onclick="openModal('loginRequiredModal')">Iniciá sesión para comentar</button></div>`
@@ -1713,44 +1772,87 @@ window.openUserProfile = async (uid, handle) => {
 };
 
 /* ══════════════════════════════════════
-   SEARCH (usuarios + posts)
+   SEARCH (usuarios, academias, foros, profesores, olimpiadas)
 ══════════════════════════════════════ */
 window.doSearch = async (q) => {
   const dd = document.getElementById('searchDD');
   if (!q.trim()) { dd.classList.remove('open'); return; }
+  const ql = q.toLowerCase();
+  let rows = [];
 
-  // Buscar usuarios en Firestore
-  let userRows = [];
   try {
     const snap = await getDocs(collection(db,'users'));
-    userRows = snap.docs.map(d=>({id:d.id,...d.data()}))
-      .filter(u=>(u.handle||'').toLowerCase().includes(q.toLowerCase())||(u.name||'').toLowerCase().includes(q.toLowerCase()))
+    snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(u=>(u.handle||'').toLowerCase().includes(ql)||(u.name||'').toLowerCase().includes(ql))
       .slice(0,5)
-      .map(u=>{
+      .forEach(u=>{
         const init=(u.name||'U').charAt(0).toUpperCase();
         const av=avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
-        return`<div class="search-item" onclick="openUserProfile('${u.id}','${escHtml(u.handle||'')}');closeSearchDD()">
+        rows.push(`<div class="search-item" onclick="openUserProfile('${u.id}','${escHtml(u.handle||'')}');closeSearchDD()">
           <div style="display:flex;align-items:center;gap:8px;">
             <div class="av ${av} av-28" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
             <div><div class="si-title">${hl(escHtml(u.handle||''),q)}</div><div class="si-meta">Usuario · ${escHtml(u.country||'')}</div></div>
           </div>
-        </div>`;
+        </div>`);
       });
   } catch {}
 
-  // Posts del cache
-  const postRows = allPostsCache
-    .filter(p=>(p.content||'').toLowerCase().includes(q.toLowerCase())||(p.authorHandle||'').toLowerCase().includes(q.toLowerCase()))
-    .slice(0,4)
-    .map(p=>`<div class="search-item" onclick="switchTab('posts');closeSearchDD()">
-      <div class="si-title">${hl(escHtml((p.content||'').slice(0,60)),q)}…</div>
-      <div class="si-meta">Post · ${escHtml(p.authorHandle||'')}</div>
-    </div>`);
+  try {
+    const snap = await getDocs(collection(db,'academias'));
+    snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(a=>a.verified && (a.name||'').toLowerCase().includes(ql))
+      .slice(0,4)
+      .forEach(a=>{
+        rows.push(`<div class="search-item" onclick="openAcademiaDetail(${JSON.stringify(a).replace(/"/g,'&quot;')});closeSearchDD()">
+          <div class="si-title">${hl(escHtml(a.name||''),q)}</div>
+          <div class="si-meta">Academia · ${escHtml(a.loc||'')}</div>
+        </div>`);
+      });
+  } catch {}
 
-  const all = [...userRows, ...postRows];
-  dd.innerHTML = all.length===0
+  try {
+    const snap = await getDocs(query(collection(db,'forums'), where('approved','==',true)));
+    snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(f=>(f.name||'').toLowerCase().includes(ql))
+      .slice(0,4)
+      .forEach(f=>{
+        const safeName = (f.name||'').replace(/'/g,"\\'");
+        rows.push(`<div class="search-item" onclick="switchTab('forums');openForum('${f.id}','${safeName}');closeSearchDD()">
+          <div class="si-title">${hl(escHtml(f.name||''),q)}</div>
+          <div class="si-meta">Foro</div>
+        </div>`);
+      });
+  } catch {}
+
+  try {
+    const snap = await getDocs(collection(db,'olimpiadas'));
+    snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(o=>(o.name||'').toLowerCase().includes(ql))
+      .slice(0,4)
+      .forEach(o=>{
+        rows.push(`<div class="search-item" onclick="switchTab('olimpiadas');closeSearchDD()">
+          <div class="si-title">${hl(escHtml(o.name||''),q)}</div>
+          <div class="si-meta">Olimpiada · ${escHtml(o.date||'')}</div>
+        </div>`);
+      });
+  } catch {}
+
+  try {
+    const snap = await getDocs(collection(db,'profesores'));
+    snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(p=>(p.name||'').toLowerCase().includes(ql))
+      .slice(0,4)
+      .forEach(p=>{
+        rows.push(`<div class="search-item">
+          <div class="si-title">${hl(escHtml(p.name||''),q)}</div>
+          <div class="si-meta">Profesor</div>
+        </div>`);
+      });
+  } catch {}
+
+  dd.innerHTML = rows.length===0
     ? `<div class="search-empty">Sin resultados para "<b>${escHtml(q)}</b>"</div>`
-    : all.join('');
+    : rows.join('');
   dd.classList.add('open');
 };
 
@@ -1788,33 +1890,254 @@ window.markAllRead   = async()  => {
 };
 
 /* ══════════════════════════════════════
-   MESSAGES
+   FRIENDS (mutual follow) + CHAT
 ══════════════════════════════════════ */
-function loadMessages() {
-  const q=query(collection(db,'users',currentUser.uid,'messages'),orderBy('createdAt','desc'));
-  onSnapshot(q, snap=>{
-    const msgs=snap.docs.map(d=>({id:d.id,...d.data()}));
-    const list=document.getElementById('msgList'); if(!list) return;
-    if(!msgs.length){list.innerHTML=`<div class="empty"><div class="empty-icon">✉</div><div class="empty-text">No tenés mensajes todavía.</div></div>`;return;}
-    list.innerHTML=msgs.map(m=>{
-      const init=(m.fromName||'U').charAt(0).toUpperCase();
-      const av=avColors[Math.abs(hashStr(m.fromHandle||''))%avColors.length];
-      const ts=m.createdAt?.toDate?timeAgo(m.createdAt.toDate()):'ahora';
-      return`<div class="msg-row">
-        <div class="av ${av} av-40">${init}</div>
-        <div class="msg-info"><div class="msg-name">${escHtml(m.fromHandle||'usuario')}</div><div class="msg-prev">${escHtml(m.preview||'')}</div></div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;">
-          <span class="msg-time">${ts}</span>
-          ${m.read?'':'<div class="msg-dot"></div>'}
-          <button onclick="deleteMessage('${m.id}')" style="font-size:12px;background:none;border:none;color:var(--text-3);cursor:pointer;padding:0;">🗑</button>
+let currentChatId = null;
+let chatMsgUnsub  = null;
+let chatsUnsub    = null;
+let friendsCache  = [];
+let sharePostContent = '';
+
+async function loadFriends() {
+  if (!currentUser || isGuest) return;
+  try {
+    const [followingSnap, followersSnap] = await Promise.all([
+      getDocs(collection(db,'users',currentUser.uid,'following')),
+      getDocs(collection(db,'users',currentUser.uid,'followers'))
+    ]);
+    const followingIds = new Set(followingSnap.docs.map(d=>d.id));
+    const friends = followersSnap.docs.filter(d=>followingIds.has(d.id)).map(d=>({uid:d.id,...d.data()}));
+    friendsCache = friends;
+    renderFriends(friends);
+  } catch(e) { console.warn('loadFriends:',e); }
+}
+
+function renderFriends(friends) {
+  const list = document.getElementById('friendsList');
+  if (!list) return;
+  if (!friends.length) {
+    list.innerHTML = `<div style="font-size:12px;color:var(--text-3);padding:0 14px 14px;">Todavía no tenés amigos. Seguí a alguien que también te siga.</div>`;
+    return;
+  }
+  list.innerHTML = `<div class="friends-row">` + friends.map(f=>{
+    const init=(f.name||'U').charAt(0).toUpperCase();
+    const av=avColors[Math.abs(hashStr(f.handle||''))%avColors.length];
+    const safeHandle=(f.handle||'').replace(/'/g,"\\'");
+    const safeName=(f.name||'').replace(/'/g,"\\'");
+    return `<div class="friend-chip" onclick="startChatWith('${f.uid}','${safeHandle}','${safeName}','${f.avatar||''}')">
+      <div class="av ${av} av-40" style="${f.avatar?`background-image:url(${f.avatar});background-size:cover;`:''}">${f.avatar?'':init}</div>
+      <span>${escHtml(f.handle||'')}</span>
+    </div>`;
+  }).join('') + `</div>`;
+}
+
+window.searchMsgUsers = async (q) => {
+  const res = document.getElementById('msgUserResults'); if(!res) return;
+  if (!q.trim()) { res.innerHTML=''; return; }
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    const users = snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(u=>u.id!==currentUser.uid && ((u.handle||'').toLowerCase().includes(q.toLowerCase())||(u.name||'').toLowerCase().includes(q.toLowerCase())))
+      .slice(0,6);
+    res.innerHTML = users.map(u=>{
+      const init=(u.name||'U').charAt(0).toUpperCase();
+      const av=avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
+      const safeHandle=(u.handle||'').replace(/'/g,"\\'");
+      const safeName=(u.name||'').replace(/'/g,"\\'");
+      return `<div class="msg-user-result" onclick="startChatWith('${u.id}','${safeHandle}','${safeName}','${u.avatar||''}')">
+        <div class="av ${av} av-28" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
+        <div><div style="font-size:12.5px;font-weight:500;">${escHtml(u.handle||'')}</div><div style="font-size:11px;color:var(--text-3);">${escHtml(u.name||'')}</div></div>
+      </div>`;
+    }).join('');
+  } catch(e){console.warn(e);}
+};
+
+window.startChatWith = async (uid, handle, name, avatar) => {
+  if (!requireAuth()) return;
+  if (uid === currentUser.uid) return;
+  document.getElementById('msgUserSearch').value='';
+  document.getElementById('msgUserResults').innerHTML='';
+  try {
+    const snap = await getDocs(query(collection(db,'chats'), where('members','array-contains',currentUser.uid)));
+    const existing = snap.docs.find(d=>{ const m=d.data().members||[]; return m.includes(uid) && m.length===2; });
+    if (existing) { openChat(existing.id); return; }
+    const unreadInit = {}; unreadInit[currentUser.uid]=0; unreadInit[uid]=0;
+    const chatRef = await addDoc(collection(db,'chats'), {
+      members:[currentUser.uid, uid],
+      memberNames:[userProfile.handle, handle],
+      memberAvatars:[userProfile.avatar||'', avatar||''],
+      lastMsg:'', lastAt:serverTimestamp(),
+      unread: unreadInit,
+      createdAt:serverTimestamp()
+    });
+    openChat(chatRef.id);
+  } catch(e) { toast('Error al abrir el chat.'); console.warn(e); }
+};
+
+function listenChats() {
+  if (chatsUnsub) chatsUnsub();
+  const q = query(collection(db,'chats'), where('members','array-contains',currentUser.uid));
+  chatsUnsub = onSnapshot(q, snap => {
+    const chats = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>{
+      const ta=a.lastAt?.toDate?.()?.getTime()||0;
+      const tb=b.lastAt?.toDate?.()?.getTime()||0;
+      return tb-ta;
+    });
+    renderChatList(chats);
+  });
+}
+
+function renderChatList(chats) {
+  const el = document.getElementById('chatListItems');
+  if (!el) return;
+  if (!chats.length) { el.innerHTML=''; return; }
+  el.innerHTML = `<div style="padding:10px 14px 4px;font-size:11px;font-weight:500;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;">Conversaciones</div>` +
+    chats.map(c => {
+      const otherIdx = (c.members||[])[0]===currentUser.uid ? 1 : 0;
+      const name = (c.memberNames||[])[otherIdx] || 'usuario';
+      const avatar = (c.memberAvatars||[])[otherIdx] || '';
+      const otherUid = (c.members||[])[otherIdx];
+      const init = name.charAt(0).toUpperCase();
+      const av = avColors[Math.abs(hashStr(name))%avColors.length];
+      const ts = c.lastAt?.toDate ? timeAgo(c.lastAt.toDate()) : '';
+      const unread = (c.unread && c.unread[currentUser.uid]) > 0;
+      const active = c.id === currentChatId ? 'active' : '';
+      return `<div class="chat-list-item ${active}" data-chatid="${c.id}" onclick="openChat('${c.id}')">
+        <div class="av ${av} av-40" style="${avatar?`background-image:url(${avatar});background-size:cover;`:''}">${avatar?'':init}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="chat-list-name">${escHtml(name)}</div>
+          <div class="chat-list-prev">${escHtml(c.lastMsg||'')}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+          <span class="chat-list-time">${ts}</span>
+          ${unread?'<div class="chat-unread"></div>':''}
         </div>
       </div>`;
     }).join('');
-  });
 }
-window.deleteMessage = (id) => confirmDelete('¿Borrar este mensaje?', async()=>{
-  try{await deleteDoc(doc(db,'users',currentUser.uid,'messages',id));toast('✓ Mensaje borrado');}catch{toast('Error.');}
-});
+
+window.openChat = async (chatId) => {
+  currentChatId = chatId;
+  document.querySelectorAll('.chat-list-item').forEach(el=>el.classList.toggle('active', el.dataset.chatid===chatId));
+  try {
+    const snap = await getDoc(doc(db,'chats',chatId));
+    if (!snap.exists()) return;
+    const chat = snap.data();
+    const otherIdx = (chat.members||[])[0]===currentUser.uid ? 1 : 0;
+    const otherUid = (chat.members||[])[otherIdx];
+    const otherName = (chat.memberNames||[])[otherIdx] || 'usuario';
+    const otherAvatar = (chat.memberAvatars||[])[otherIdx] || '';
+
+    updateDoc(doc(db,'chats',chatId), {[`unread.${currentUser.uid}`]:0}).catch(()=>{});
+
+    const win = document.getElementById('chatWindow');
+    win.innerHTML = `
+      <div class="chat-header">
+        <div class="av av-blue av-32" style="${otherAvatar?`background-image:url(${otherAvatar});background-size:cover;`:''}">${otherAvatar?'':otherName.charAt(0).toUpperCase()}</div>
+        <div class="chat-header-name" onclick="openUserProfile('${otherUid}','${escHtml(otherName)}')">${escHtml(otherName)}</div>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input-bar">
+        <input class="input chat-input" id="chatMsgInput" type="text" placeholder="Escribí un mensaje…" onkeydown="if(event.key==='Enter')sendChatMsg()"/>
+        <button class="chat-send" onclick="sendChatMsg()">➤</button>
+      </div>`;
+
+    if (chatMsgUnsub) chatMsgUnsub();
+    const mq = query(collection(db,'chats',chatId,'messages'), orderBy('createdAt','asc'));
+    chatMsgUnsub = onSnapshot(mq, msnap => {
+      const msgs = msnap.docs.map(d=>({id:d.id,...d.data()}));
+      const container = document.getElementById('chatMessages');
+      if (!container) return;
+      container.innerHTML = msgs.map(m=>{
+        const mine = m.senderId===currentUser.uid;
+        const ts = m.createdAt?.toDate?timeAgo(m.createdAt.toDate()):'ahora';
+        if (m.type==='shared_post') {
+          return `<div class="chat-msg ${mine?'mine':''}"><div class="chat-bubble shared-post">📤 Compartió un post:<br/><i>"${escHtml(m.postPreview||'')}"</i></div></div>`;
+        }
+        return `<div class="chat-msg ${mine?'mine':''}"><div><div class="chat-bubble">${escHtml(m.text||'')}</div><div class="chat-msg-meta">${ts}</div></div></div>`;
+      }).join('');
+      container.scrollTop = container.scrollHeight;
+    });
+    setTimeout(()=>document.getElementById('chatMsgInput')?.focus(),100);
+  } catch(e) { console.warn(e); }
+};
+
+window.sendChatMsg = async () => {
+  if (!currentChatId) return;
+  const input = document.getElementById('chatMsgInput');
+  const text = input?.value.trim(); if (!text) return;
+  input.value='';
+  try {
+    await addDoc(collection(db,'chats',currentChatId,'messages'), { text, senderId:currentUser.uid, createdAt:serverTimestamp() });
+    const chatRef = doc(db,'chats',currentChatId);
+    const snap = await getDoc(chatRef);
+    if (snap.exists()) {
+      const members = snap.data().members||[];
+      const unreadUpdate = {};
+      members.forEach(uid=>{ if(uid!==currentUser.uid) unreadUpdate[`unread.${uid}`]=increment(1); });
+      await updateDoc(chatRef, {lastMsg:text, lastAt:serverTimestamp(), ...unreadUpdate});
+    }
+  } catch(e){console.warn(e);}
+};
+
+window.openSharePost = (postId) => {
+  if (!requireAuth()) return;
+  const post = allPostsCache.find(p=>p.id===postId);
+  sharePostContent = post ? (post.content||'') : '';
+  document.getElementById('shareUserSearch').value='';
+  document.getElementById('shareUserResults').innerHTML='';
+  openModal('sharePostModal');
+};
+
+window.searchShareUsers = async (q) => {
+  const res = document.getElementById('shareUserResults'); if(!res) return;
+  if (!q.trim()) { res.innerHTML=''; return; }
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    const users = snap.docs.map(d=>({id:d.id,...d.data()}))
+      .filter(u=>u.id!==currentUser.uid && ((u.handle||'').toLowerCase().includes(q.toLowerCase())||(u.name||'').toLowerCase().includes(q.toLowerCase())))
+      .slice(0,6);
+    res.innerHTML = users.map(u=>{
+      const init=(u.name||'U').charAt(0).toUpperCase();
+      const av=avColors[Math.abs(hashStr(u.handle||''))%avColors.length];
+      const safeHandle=(u.handle||'').replace(/'/g,"\\'");
+      const safeName=(u.name||'').replace(/'/g,"\\'");
+      return `<div class="msg-user-result" onclick="sharePostWith('${u.id}','${safeHandle}','${safeName}','${u.avatar||''}')">
+        <div class="av ${av} av-28" style="${u.avatar?`background-image:url(${u.avatar});background-size:cover;`:''}">${u.avatar?'':init}</div>
+        <div style="font-size:12.5px;font-weight:500;">${escHtml(u.handle||'')}</div>
+      </div>`;
+    }).join('');
+  } catch(e){console.warn(e);}
+};
+
+window.sharePostWith = async (uid, handle, name, avatar) => {
+  try {
+    let chatId;
+    const snap = await getDocs(query(collection(db,'chats'), where('members','array-contains',currentUser.uid)));
+    const existing = snap.docs.find(d=>{ const m=d.data().members||[]; return m.includes(uid)&&m.length===2; });
+    if (existing) chatId = existing.id;
+    else {
+      const unreadInit = {}; unreadInit[currentUser.uid]=0; unreadInit[uid]=0;
+      const chatRef = await addDoc(collection(db,'chats'), {
+        members:[currentUser.uid, uid],
+        memberNames:[userProfile.handle, handle],
+        memberAvatars:[userProfile.avatar||'', avatar||''],
+        lastMsg:'', lastAt:serverTimestamp(),
+        unread: unreadInit,
+        createdAt:serverTimestamp()
+      });
+      chatId = chatRef.id;
+    }
+    await addDoc(collection(db,'chats',chatId,'messages'), {
+      type:'shared_post', postPreview: sharePostContent.slice(0,120),
+      senderId: currentUser.uid, createdAt: serverTimestamp()
+    });
+    const unreadUpdate = {}; unreadUpdate[`unread.${uid}`]=increment(1);
+    await updateDoc(doc(db,'chats',chatId), {lastMsg:'📤 Post compartido', lastAt:serverTimestamp(), ...unreadUpdate});
+    closeModal('sharePostModal');
+    toast('✓ Post compartido');
+  } catch(e) { toast('Error al compartir.'); console.warn(e); }
+};
 
 /* ══════════════════════════════════════
    PROFILE STATS LIVE
