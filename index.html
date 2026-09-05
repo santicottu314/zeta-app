@@ -417,6 +417,7 @@ select.input{appearance:none;cursor:pointer;}
       <div class="auth-form-panel active" id="af-login">
         <div class="field"><label class="label">Email</label><input class="input" id="login-email" type="email" placeholder="tu@email.com"/></div>
         <div class="field"><label class="label">Contraseña</label><input class="input" id="login-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+        <div style="text-align:right;margin-top:-6px;"><a href="#" onclick="forgotPassword();return false;" style="font-size:12px;color:var(--blue);text-decoration:none;">¿Olvidaste tu contraseña?</a></div>
         <div class="auth-error" id="login-error">Email o contraseña incorrectos.</div>
         <button class="btn btn-solid" id="loginBtn" style="width:100%;margin-top:4px;" onclick="doLogin()">Entrar</button>
         <div class="auth-sep">o</div>
@@ -896,8 +897,8 @@ import { getAuth, createUserWithEmailAndPassword,
          signInWithEmailAndPassword, signOut,
          onAuthStateChanged, updateProfile,
          signInAnonymously, GoogleAuthProvider,
-         signInWithPopup }                            from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, getDocs,
+         signInWithPopup, sendPasswordResetEmail }    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { initializeFirestore, collection, addDoc, getDocs,
          onSnapshot, query, orderBy, serverTimestamp,
          doc, updateDoc, getDoc, setDoc, increment,
          deleteDoc, where }                           from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -938,7 +939,7 @@ const firebaseConfig = {
 };
 const fbApp   = initializeApp(firebaseConfig);
 const auth    = getAuth(fbApp);
-const db      = getFirestore(fbApp);
+const db      = initializeFirestore(fbApp, { experimentalAutoDetectLongPolling: true });
 
 // ⚠️ Reemplazá con tu UID real (Firebase → Authentication → Users → User UID)
 const OWNER_UID = 'MJk8a3IYY5eo61Y53rOxS3O2Ue53';
@@ -968,10 +969,11 @@ const scopeTag = {
 };
 
 /* ── Safety timeout ── */
-setTimeout(() => {
+const safetyTimeoutId = setTimeout(() => {
   const ls = document.getElementById('loadingScreen');
   if (ls && ls.style.display !== 'none') {
     ls.style.display = 'none';
+    document.getElementById('app').style.display = 'none';
     document.getElementById('auth-screen').style.display = 'flex';
   }
 }, 6000);
@@ -980,6 +982,7 @@ setTimeout(() => {
    AUTH
 ══════════════════════════════════════ */
 onAuthStateChanged(auth, async user => {
+  clearTimeout(safetyTimeoutId);
   try {
     if (user && !user.isAnonymous) {
       currentUser = user; isGuest = false;
@@ -1024,8 +1027,28 @@ window.doLogin = async () => {
     await signInWithEmailAndPassword(auth, email, pass);
     document.getElementById('login-error').classList.remove('show');
   } catch {
+    document.getElementById('login-error').textContent = 'Email o contraseña incorrectos.';
     document.getElementById('login-error').classList.add('show');
     btn.innerHTML = 'Entrar'; btn.disabled = false;
+  }
+};
+
+window.forgotPassword = async () => {
+  const email = document.getElementById('login-email').value.trim();
+  const errEl = document.getElementById('login-error');
+  if (!email) {
+    errEl.textContent = 'Escribí tu email arriba y volvé a tocar el link.';
+    errEl.classList.add('show');
+    document.getElementById('login-email').focus();
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    errEl.classList.remove('show');
+    toast('✓ Te enviamos un email para restablecer tu contraseña');
+  } catch(e) {
+    errEl.textContent = 'No pudimos enviar el email. Revisá que esté bien escrito.';
+    errEl.classList.add('show');
   }
 };
 
