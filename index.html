@@ -1008,6 +1008,7 @@ onAuthStateChanged(auth, async user => {
   } catch(e) {
     console.error('Auth error:', e);
     document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('app').style.display           = 'none';
     document.getElementById('auth-screen').style.display   = 'flex';
   }
 });
@@ -1284,6 +1285,7 @@ window.publishPost = async () => {
     closeModal('newPostModal');
     switchTab('posts');
     toast('✓ Post publicado');
+    notifyMentions(content, 'en un post');
   } catch(e) { toast('Error al publicar.'); console.warn(e); }
   finally { btn.innerHTML='Publicar'; btn.disabled=false; }
 };
@@ -1323,6 +1325,48 @@ window.previewLatex = (taId, prevId) => {
   prev.innerHTML = escHtml(ta.value).replace(/\n/g,'<br>');
   renderLatexIn(prev);
 };
+
+/* ══════════════════════════════════════
+   MENTIONS (@usuario)
+══════════════════════════════════════ */
+function extractMentions(text) {
+  const matches = (text||'').match(/@([a-zA-Z0-9_]+)/g) || [];
+  return [...new Set(matches.map(m=>m.slice(1).toLowerCase()))];
+}
+
+function linkifyMentions(safeHtml) {
+  return (safeHtml||'').replace(/@([a-zA-Z0-9_]+)/g, (m, handle) =>
+    `<span class="mention-link" onclick="openUserProfileByHandle('${handle}')">@${handle}</span>`
+  );
+}
+
+window.openUserProfileByHandle = async (handle) => {
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    const match = snap.docs.find(d => (d.data().handle||'').toLowerCase() === handle.toLowerCase());
+    if (!match) { toast('Usuario no encontrado'); return; }
+    openUserProfile(match.id, match.data().handle);
+  } catch(e) { console.warn('openUserProfileByHandle:',e); }
+};
+
+async function notifyMentions(text, contextLabel) {
+  const mentions = extractMentions(text);
+  if (!mentions.length || !currentUser) return;
+  try {
+    const snap = await getDocs(collection(db,'users'));
+    const users = snap.docs.map(d=>({id:d.id,...d.data()}));
+    for (const handle of mentions) {
+      const u = users.find(x=>(x.handle||'').toLowerCase()===handle);
+      if (u && u.id !== currentUser.uid) {
+        addDoc(collection(db,'users',u.id,'notifications'), {
+          text: `@${userProfile.handle} te mencionó ${contextLabel}`,
+          fromName: userProfile.name, fromHandle: userProfile.handle,
+          read: false, createdAt: serverTimestamp()
+        }).catch(()=>{});
+      }
+    }
+  } catch(e) { console.warn('notifyMentions:',e); }
+}
 
 /* ══════════════════════════════════════
    FORUMS
@@ -1435,8 +1479,8 @@ window.openThread = async (threadId) => {
     document.getElementById('threadContent').innerHTML = `
       <div class="card thread-header-card">
         ${tagsHtml?`<div class="thread-tags">${tagsHtml}</div>`:''}
-        <div class="post-content-text" style="font-size:14.5px;">${escHtml(t.statement||'')}</div>
-        ${t.description?`<div class="post-desc">${escHtml(t.description)}</div>`:''}
+        <div class="post-content-text" style="font-size:14.5px;">${linkifyMentions(escHtml(t.statement||''))}</div>
+        ${t.description?`<div class="post-desc">${linkifyMentions(escHtml(t.description))}</div>`:''}
         ${t.image?`<img class="thread-img" src="${t.image}"/>`:''}
         <div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
           <div class="av ${av} av-28" style="${t.authorAvatar?`background-image:url(${t.authorAvatar});background-size:cover;`:''}">${t.authorAvatar?'':init}</div>
@@ -1478,7 +1522,7 @@ function renderReplies(replies) {
               ${r.authorVerified?'<span class="verified-tick vt-sm">✓</span>':''}
               <span class="reply-time">${ts}</span>
             </div>
-            <div class="reply-text">${escHtml(r.text||'')}</div>
+            <div class="reply-text">${linkifyMentions(escHtml(r.text||''))}</div>
           </div>
         </div>`;
       }).join('');
@@ -1503,6 +1547,7 @@ window.submitReply = async () => {
     document.getElementById('replyText').value='';
     const prev = document.getElementById('replyLatexPreview');
     prev.style.display='none'; prev.innerHTML='';
+    notifyMentions(text, 'en una respuesta');
   } catch(e) { toast('Error al responder.'); console.warn(e); }
 };
 
@@ -1592,6 +1637,7 @@ window.publishThread = async () => {
     });
     closeModal('newThreadModal');
     toast('✓ Hilo publicado');
+    notifyMentions(statement + ' ' + desc, 'en un hilo');
   } catch(e) { toast('Error al publicar.'); console.warn(e); }
   finally { btn.innerHTML='Publicar hilo'; btn.disabled=false; }
 };
@@ -1638,6 +1684,32 @@ window.approveForum = async (id) => {
 window.rejectForum = (id) => confirmDelete('¿Rechazar y borrar este foro propuesto?', async()=>{
   try { await deleteDoc(doc(db,'forums',id)); toast('Rechazado'); loadPendingForums(); } catch { toast('Error.'); }
 });
+
+async function loadPendingAcademias() {
+  try {
+    const snap = await getDocs(query(collection(db,'academias'), where('verified','==',false)));
+    const pending = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const list = document.getElementById('pendingAcademiasList');
+    if (!list) return;
+    if (!pending.length) { list.innerHTML = `<div style="font-size:12.5px;color:var(--text-3);">No hay academias pendientes.</div>`; return; }
+    list.innerHTML = pending.map(a => `<div class="card pending-forum-row" style="margin-bottom:8px;">
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:500;">${escHtml(a.name||'')}</div>
+        <div style="font-size:11.5px;color:var(--text-3);">${escHtml(a.loc||'')}</div>
+      </div>
+      <button class="btn btn-solid btn-sm" onclick="verifyAcademia('${a.id}')">Verificar</button>
+    </div>`).join('');
+  } catch(e) { console.warn('loadPendingAcademias:',e); }
+}
+
+window.verifyAcademia = async (id) => {
+  try {
+    await updateDoc(doc(db,'academias',id), {verified:true});
+    toast('✓ Academia verificada');
+    loadPendingAcademias();
+    loadAcademias();
+  } catch(e) { toast('Error.'); console.warn(e); }
+};
 
 /* ══════════════════════════════════════
    COMMENTS
