@@ -907,7 +907,36 @@ import { initializeFirestore, collection, addDoc, getDocs,
    HELPERS — siempre primero
 ══════════════════════════════════════ */
 function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s??'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+/* Para valores insertados dentro de un onclick="...('${...}')" (contexto JS
+   anidado dentro de un atributo HTML). Escapa primero para JS string literal
+   (comillas simples, backslash, saltos de línea) y luego para atributo HTML,
+   en ese orden, para que ninguna de las dos capas pueda romperse. */
+function escJsAttr(s) {
+  const jsEscaped = String(s??'')
+    .replace(/\\/g,'\\\\')
+    .replace(/'/g,"\\'")
+    .replace(/\n/g,'\\n')
+    .replace(/\r/g,'\\r')
+    .replace(/\u2028/g,'\\u2028')
+    .replace(/\u2029/g,'\\u2029');
+  return escHtml(jsEscaped);
+}
+/* Solo permite avatares/imágenes en formato data:image/* (subidos desde la
+   app) o https://. Bloquea javascript:, data:text/html y cualquier otro
+   esquema que pueda usarse para inyectar contenido activo. */
+function sanitizeImageUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  if (/^data:image\/(png|jpeg|jpg|gif|webp);base64,/i.test(trimmed)) return trimmed;
+  if (/^https:\/\//i.test(trimmed)) return trimmed;
+  return '';
 }
 function hl(t, q) {
   if (!q) return t;
@@ -1393,7 +1422,7 @@ function renderForumsList(forums) {
   }
   list.innerHTML = forums.map(f => {
     const icon = (f.name||'?').charAt(0).toUpperCase();
-    return `<div class="card forum-card" onclick="openForum('${f.id}','${escHtml(f.name||'').replace(/'/g,"\\'")}')">
+    return `<div class="card forum-card" onclick="openForum('${f.id}','${escJsAttr(f.name||'')}')">
       <div class="forum-icon">${icon}</div>
       <div class="forum-info">
         <div class="forum-name">${escHtml(f.name||'')} ${f.isOfficial?'<span class="verified-tick vt-sm" title="Foro oficial">✓</span>':''}</div>
@@ -1911,8 +1940,7 @@ window.doSearch = async (q) => {
       .filter(f=>(f.name||'').toLowerCase().includes(ql))
       .slice(0,4)
       .forEach(f=>{
-        const safeName = (f.name||'').replace(/'/g,"\\'");
-        rows.push(`<div class="search-item" onclick="switchTab('forums');openForum('${f.id}','${safeName}');closeSearchDD()">
+        rows.push(`<div class="search-item" onclick="switchTab('forums');openForum('${f.id}','${escJsAttr(f.name||'')}');closeSearchDD()">
           <div class="si-title">${hl(escHtml(f.name||''),q)}</div>
           <div class="si-meta">Foro</div>
         </div>`);
@@ -2017,10 +2045,9 @@ function renderFriends(friends) {
   list.innerHTML = `<div class="friends-row">` + friends.map(f=>{
     const init=(f.name||'U').charAt(0).toUpperCase();
     const av=avColors[Math.abs(hashStr(f.handle||''))%avColors.length];
-    const safeHandle=(f.handle||'').replace(/'/g,"\\'");
-    const safeName=(f.name||'').replace(/'/g,"\\'");
-    return `<div class="friend-chip" onclick="startChatWith('${f.uid}','${safeHandle}','${safeName}','${f.avatar||''}')">
-      <div class="av ${av} av-40" style="${f.avatar?`background-image:url(${f.avatar});background-size:cover;`:''}">${f.avatar?'':init}</div>
+    const safeAvatar = sanitizeImageUrl(f.avatar);
+    return `<div class="friend-chip" onclick="startChatWith('${f.uid}','${escJsAttr(f.handle||'')}','${escJsAttr(f.name||'')}','${escJsAttr(safeAvatar)}')">
+      <div class="av ${av} av-40" style="${safeAvatar?`background-image:url(${escHtml(safeAvatar)});background-size:cover;`:''}">${safeAvatar?'':init}</div>
       <span>${escHtml(f.handle||'')}</span>
     </div>`;
   }).join('') + `</div>`;
